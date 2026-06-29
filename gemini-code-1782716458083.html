@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Khoá học IZTeach</title>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
+<link rel="stylesheet" href="https://cdn.plyr.io/3.7.8/plyr.css" />
+<script src="https://cdn.plyr.io/3.7.8/plyr.js"></script>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Roboto','Segoe UI',Arial,sans-serif;font-size:15px;background:#f4f6fb;color:#1a1a2e;height:100vh;overflow:hidden}
+.app{display:flex;height:100vh;position:relative}
+
+/* Sidebar Layout & Transitions */
+.sidebar{width:360px;min-width:300px;background:#fff;border-right:1px solid #dde3f0;display:flex;flex-direction:column;overflow:hidden;transition:width .28s ease, transform .28s ease;flex-shrink:0}
+.sidebar.collapsed{width:0;min-width:0}
+.sb-head{padding:16px 20px;background:#1a3c72;color:#fff;flex-shrink:0}
+.sb-head h2{font-size:17px;font-weight:700;line-height:1.35;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.sb-head p{font-size:13px;opacity:.8;margin-top:4px}
+.sb-search{padding:12px 16px;border-bottom:1px solid #dde3f0;flex-shrink:0}
+.sb-search input{width:100%;padding:10px 14px;border:1px solid #c8d0e4;border-radius:8px;font-size:15px;font-family:inherit;background:#f4f6fb;outline:none}
+.sb-search input:focus{border-color:#1a3c72;background:#fff}
+.sb-body{overflow-y:auto;flex:1}
+
+/* Folder Tree Styles */
+.folder-hd{padding:14px 18px;font-size:15px;font-weight:700;cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:8px;user-select:none;border-bottom:1px solid #edf0f8;transition:background .15s}
+.folder-hd:hover{background:rgba(0,0,0,0.04)}
+.folder-hd .ch{width:18px;height:18px;flex-shrink:0;transition:transform .22s}
+.folder-hd.open .ch{transform:rotate(180deg)}
+.lvl1-hd {background:#eef1fc; color:#1a3c72; border-bottom:1px solid #e8edf8}
+.lvl2-hd {background:#f4f7ff; color:#2d4a8a; padding-left:26px; font-weight:600}
+.lvl3-hd {background:#f9fbff; color:#3a5a9a; padding-left:38px; font-weight:600}
+.lvl4-hd {background:#fff; color:#444; padding-left:50px; font-weight:500}
+.lvl5-hd {background:#fff; color:#555; padding-left:62px; font-weight:500}
+.kids{display:none}
+.kids.open{display:block}
+
+/* Leaf/Lesson Item Styles */
+.leaf{padding:12px 18px;font-size:15px;cursor:pointer;display:flex;align-items:flex-start;gap:10px;border-left:4px solid transparent;line-height:1.4;color:#2a2a40;transition:background .12s}
+.leaf.ind1 {padding-left:26px}
+.leaf.ind2 {padding-left:42px}
+.leaf.ind3 {padding-left:58px}
+.leaf.ind4 {padding-left:74px}
+.leaf.ind5 {padding-left:90px}
+.leaf:hover{background:#f0f4ff}
+.leaf.active{background:#e3ebff;border-left-color:#1a3c72;font-weight:600;color:#1a3c72}
+.leaf .li{flex-shrink:0;width:18px;height:18px;margin-top:2px;color:#8090b0;display:inline-block}
+.leaf.active .li{color:#1a3c72}
+
+/* Main Content Layout */
+.main{flex:1;display:flex;flex-direction:column;overflow:hidden;min-width:0;position:relative}
+.topbar{height:60px;background:#fff;border-bottom:1px solid #dde3f0;display:flex;align-items:center;padding:0 18px;gap:12px;flex-shrink:0}
+.menu-btn{background:none;border:none;cursor:pointer;padding:8px;border-radius:6px;color:#1a3c72;display:flex;align-items:center;flex-shrink:0}
+.menu-btn:hover{background:#eef1fc}
+.top-title{font-size:16px;font-weight:600;flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+
+/* Utilities Controls */
+.btn-support{background:#1a3c72;color:#fff;border:none;padding:8px 16px;border-radius:8px;font-size:14px;font-weight:600;cursor:pointer;display:none;align-items:center;gap:6px;font-family:inherit;transition:background .15s;flex-shrink:0}
+.btn-support:hover{background:#15305e}
+.btn-support svg{width:16px;height:16px}
+select.tsel{padding:8px 12px;border:1px solid #c8d0e4;border-radius:8px;font-size:14px;font-family:inherit;background:#f4f6fb;color:#1a1a2e;cursor:pointer;outline:none;flex-shrink:0;max-width:180px}
+select.tsel:focus{border-color:#1a3c72}
+
+.content{flex:1;overflow-y:auto;padding:20px;display:flex;flex-direction:column;gap:14px}
+.state{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:220px;gap:14px;color:#8090b0;text-align:center;flex:1}
+.state p{font-size:15px;line-height:1.6}
+.spinner{width:36px;height:36px;border:4px solid #dde3f0;border-top-color:#1a3c72;border-radius:50%;animation:spin .8s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* Modal popup */
+.modal-overlay{position:fixed;top:0;left:0;width:100vw;height:100vh;background:rgba(0,0,0,0.55);z-index:9999;display:flex;align-items:center;justify-content:center;opacity:0;visibility:hidden;transition:all .25s ease}
+.modal-overlay.show{opacity:1;visibility:visible}
+.modal-box{background:#fff;width:90%;max-width:650px;max-height:85vh;border-radius:12px;display:flex;flex-direction:column;box-shadow:0 15px 40px rgba(0,0,0,0.25);transform:translateY(-20px);transition:transform .25s ease}
+.modal-overlay.show .modal-box{transform:translateY(0)}
+.modal-head{padding:18px 24px;border-bottom:1px solid #edf0f8;display:flex;justify-content:space-between;align-items:center}
+.modal-head h3{font-size:18px;color:#1a3c72;font-weight:700;display:flex;align-items:center;gap:8px}
+.close-btn{background:none;border:none;cursor:pointer;color:#8090b0;display:flex;align-items:center;padding:4px}
+.close-btn:hover{color:#d63031}
+.modal-body{padding:24px;overflow-y:auto}
+.modal-body h2{font-size:20px;font-weight:700;margin-bottom:12px;color:#1a1a2e}
+.meta{display:flex;flex-wrap:wrap;gap:10px;font-size:14px;color:#8090b0;margin-bottom:16px}
+.badge{display:inline-flex;align-items:center;gap:5px;padding:4px 12px;border-radius:20px;font-size:13px;font-weight:600}
+.badge.video{background:#eef1fc;color:#1a3c72} .badge.pdf{background:#fff0f0;color:#c0392b} .badge.embedded{background:#e8f8ee;color:#1a7a40} .badge.other{background:#f0f0f0;color:#555}
+.attach-inline{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:16px}
+.attach-btn{display:inline-flex;align-items:center;gap:6px;padding:6px 14px;border:1px solid #dde3f0;border-radius:6px;background:#f7f9ff;color:#1a3c72;font-size:14px;font-weight:500;text-decoration:none;transition:background .12s}
+.attach-btn:hover{background:#e3ebff}
+.desc-html{font-size:15px;line-height:1.7;color:#2a2a40;padding-top:16px;border-top:1px solid #edf0f8}
+.desc-html p{margin-bottom:8px}
+
+/* Document / Video Embed Wrapper */
+.viewer-wrap {position:relative; border-radius:10px; overflow:hidden; border:1px solid #dde3f0; background:#fff}
+.viewer-wrap.dark {background:#000; border:none}
+.viewer-wrap video {width:100%; display:block; aspect-ratio:16/9; max-height:85vh}
+.viewer-wrap iframe {width:100%; height:82vh; border:none; display:block; background:#f4f6fb}
+.viewer-wrap .plyr { border-radius: 10px; overflow: hidden; width: 100%; max-height: 85vh }
+.plyr--fullscreen-active { max-height: 100vh !important; height: 100vh !important }
+.plyr--fullscreen-active video { height: 100vh !important; max-height: 100vh !important; object-fit: contain !important }
+.viewer-wrap:fullscreen {width:100vw; height:100vh; border-radius:0; border:none; background:#000}
+.viewer-wrap:fullscreen iframe {height:100vh !important; width:100vw !important}
+
+.fs-btn{position:absolute; bottom:12px; right:12px; background:rgba(0,0,0,.75); border:none; border-radius:50%; color:#fff; cursor:pointer; width:36px; height:36px; display:flex; align-items:center; justify-content:center; z-index:999; transition:background .15s}
+.fs-btn:hover{background:rgba(0,0,0,.95)}
+.notice-box{border-radius:10px;padding:20px 24px;display:flex;align-items:flex-start;gap:14px}
+.notice-box svg{flex-shrink:0;width:26px;height:26px;margin-top:2px}
+.notice-box h3{font-size:15px;font-weight:700;margin-bottom:4px}
+.notice-box p{font-size:14px;line-height:1.6}
+.notice-box.blue{background:#f0f4ff;border:1px solid #c8d8ff;color:#2d4a8a} .notice-box.blue h3{color:#1a3c72} .notice-box.blue svg{color:#1a3c72}
+.err{background:#fff3f3;border:1px solid #ffc0c0;border-radius:8px;padding:16px 20px;color:#b03030;font-size:15px;line-height:1.6;font-weight:500}
+
+/* Mobile Responsive Engine Overlay */
+.sidebar-overlay {display:none; position:fixed; top:0; left:0; width:100vw; height:100vh; background:rgba(0,0,0,0.4); z-index:1999}
+
+@media (max-width: 768px) {
+  .sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 290px;
+    min-width: 290px;
+    z-index: 2000;
+    box-shadow: 5px 0 25px rgba(0,0,0,0.15);
+    transform: translateX(0);
+  }
+  .sidebar.collapsed {
+    transform: translateX(-100%);
+    width: 290px;
+    min-width: 290px;
+  }
+  .sidebar-overlay.show {
+    display: block;
+  }
+  .topbar {
+    padding: 0 10px;
+    gap: 8px;
+    height: 56px;
+  }
+  .top-title {
+    font-size: 14px;
+  }
+  select.tsel {
+    padding: 6px 8px;
+    font-size: 12px;
+    max-width: 105px;
+  }
+  .btn-support {
+    padding: 6px 10px;
+    font-size: 12px;
+  }
+  .content {
+    padding: 10px;
+  }
+  .viewer-wrap iframe {
+    height: 70vh;
+  }
+}
+</style>
+</head>
+<body>
+<div class="app">
+<div class="sidebar-overlay" id="sidebar-overlay" onclick="toggleSB()"></div>
+<aside class="sidebar" id="sidebar">
+  <div class="sb-head"><h2 id="sb-title">Chọn khoá học</h2><p id="sb-tag"></p></div>
+  <div class="sb-search"><input type="text" id="search" placeholder="Tìm kiếm bài học..." oninput="filterLessons(this.value)"></div>
+  <div class="sb-body" id="sb-body"><div class="state" style="min-height:150px"><p>Chọn khoá học để xem danh sách bài</p></div></div>
+</aside>
+<main class="main">
+  <div class="topbar">
+    <button class="menu-btn" onclick="toggleSB()">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+        <line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/>
+      </svg>
+    </button>
+    <span class="top-title" id="top-title">Xem Khoá Học</span>
+    
+    <button class="btn-support" id="btn-support" onclick="openModal()">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+      Tài liệu
+    </button>
+
+    <select class="tsel" id="sel-res" onchange="onResChange(this.value)">
+      <option value="1080p.m3u8">1080p</option>
+      <option value="720p.m3u8">720p</option>
+    </select>
+    <select class="tsel" id="sel-course" onchange="onCourse(this.value)">
+      <option value="">-- Chọn khoá học --</option>
+    </select>
+  </div>
+  <div class="content" id="content">
+    <div class="state"><p>Đang chuẩn bị hệ thống khoá học...</p></div>
+  </div>
+</main>
+</div>
+
+<div class="modal-overlay" id="lesson-modal" onclick="closeModal(event)">
+  <div class="modal-box" onclick="event.stopPropagation()">
+    <div class="modal-head">
+      <h3>Hỗ trợ bài học</h3>
+      <button class="close-btn" onclick="closeModal(true)"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button>
+    </div>
+    <div class="modal-body" id="modal-content"></div>
+  </div>
+</div>
+
+<script>
+// ==========================================
+// CẤU HÌNH ĐÃ GỘP TỪ CODE.GS CHẠY THUẦN OFFLINE
+// ==========================================
+const EMBEDDED_CONFIG = {
+  courses1080: [{"vendor": "Cô Phạm Liễu", "vendorId": "628c020f-d083-432d-af2b-5f2a78a14364", "userId": "2fe1f486-3c88-448e-9f44-f389078468bc", "courseTitle": "CHẶNG 1- IELTS FOUNDATION (PRE-IELTS)", "courseId": "6a3a61a92df83c0002db387e", "tag": "ielts", "thumbnail": "https://d21acfi38wn3iy.cloudfront.net/resource/documents/628c020f-d083-432d-af2b-5f2a78a14364/1782211051442-ielts-1-png.png", "layoutUrl": "https://p9y4zl6vkd.execute-api.ap-southeast-1.amazonaws.com/prod/course/layout/6a3a61a92df83c0002db387e?vendorId=628c020f-d083-432d-af2b-5f2a78a14364", "unitUrl": "https://p9y4zl6vkd.execute-api.ap-southeast-1.amazonaws.com/prod/unit/{id}?userId=2fe1f486-3c88-448e-9f44-f389078468bc&_populate=video&vendorId=628c020f-d083-432d-af2b-5f2a78a14364", "resolution": "1080p.m3u8"}, {"vendor": "Cô Phạm Liễu", "vendorId": "628c020f-d083-432d-af2b-5f2a78a14364", "userId": "2fe1f486-3c88-448e-9f44-f389078468bc", "courseTitle": "CHẶNG 2- IELTS BUILDER (BASIC IELTS)", "courseId": "6a3a61a92df83c0002db387f", "tag": "ielts", "thumbnail": "https://d21acfi38wn3iy.cloudfront.net/resource/documents/628c020f-d083-432d-af2b-5f2a78a14364/1782211051443-ielts-2-png.png", "layoutUrl": "https://p9y4zl6vkd.execute-api.ap-southeast-1.amazonaws.com/prod/course/layout/6a3a61a92df83c0002db387f?vendorId=628c020f-d083-432d-af2b-5f2a78a14364", "unitUrl": "https://p9y4zl6vkd.execute-api.ap-southeast-1.amazonaws.com/prod/unit/{id}?userId=2fe1f486-3c88-448e-9f44-f389078468bc&_populate=video&vendorId=628c020f-d083-432d-af2b-5f2a78a14364", "resolution": "1080p.m3u8"}, {"vendor": "Cô Phạm Liễu", "vendorId": "628c020f-d083-432d-af2b-5f2a78a14364", "userId": "2fe1f486-3c88-448e-9f44-f389078468bc", "courseTitle": "CHẶNG 3- INTENSIVE IELTS", "courseId": "6a3a61a92df83c0002db3880", "tag": "ielts", "thumbnail": "https://d21acfi38wn3iy.cloudfront.net/resource/documents/628c020f-d083-432d-af2b-5f2a78a14364/1782211051444-ielts-3-png.png", "layoutUrl": "https://p9y4zl6vkd.execute-api.ap-southeast-1.amazonaws.com/prod/course/layout/6a3a61a92df83c0002db3880?vendorId=628c020f-d083-432d-af2b-5f2a78a14364", "unitUrl": "https://p9y4zl6vkd.execute-api.ap-southeast-1.amazonaws.com/prod/unit/{id}?userId=2fe1f486-3c88-448e-9f44-f389078468bc&_populate=video&vendorId=628c020f-d083-432d-af2b-5f2a78a14364", "resolution": "1080p.m3u8"}, {"vendor": "Cô Phạm Liễu", "vendorId": "628c020f-d083-432d-af2b-5f2a78a14364", "userId": "2fe1f486-3c88-448e-9f44-f389078468bc", "courseTitle": "[2026-2027] KHÓA 1- NỀN TẢNG NGỮ PHÁP- TỪ VỰNG", "courseId": "69b66fbb5c26c10002321c88", "tag": "thpt", "thumbnail": "", "layoutUrl": "https://p9y4zl6vkd.execute-api.ap-southeast-1.amazonaws.com/prod/course/layout/69b66fbb5c26c10002321c88?vendorId=628c020f-d083-432d-af2b-5f2a78a14364", "unitUrl": "https://p9y4zl6vkd.execute-api.ap-southeast-1.amazonaws.com/prod/unit/{id}?userId=2fe1f486-3c88-448e-9f44-f389078468bc&_populate=video&vendorId=628c020f-d083-432d-af2b-5f2a78a14364", "resolution": "1080p.m3u8"}, {"vendor": "Cô Phạm Liễu", "vendorId": "628c020f-d083-432d-af2b-5f2a78a14364", "userId": "2fe1f486-3c88-448e-9f44-f389078468bc", "courseTitle": "[2026-2027] KHÓA 2- TỪ VỰNG ĐỌC HIỂU CHUYÊN SÂU", "courseId": "69b67027f810a30002466102", "tag": "thpt", "thumbnail": "", "layoutUrl": "https://p9y4zl6vkd.execute-api.ap-southeast-1.amazonaws.com/prod/course/layout/69b67027f810a30002466102?vendorId=628c020f-d083-432d-af2b-5f2a78a14364", "unitUrl": "https://p9y4zl6vkd.execute-api.ap-southeast-1.amazonaws.com/prod/unit/{id}?userId=2fe1f486-3c88-448e-9f44-f389078468bc&_populate=video&vendorId=628c020f-d083-432d-af2b-5f2a78a14364", "resolution": "1080p.m3u8"}, {"vendor": "Cô Phạm Liễu", "vendorId": "628c020f-d083-432d-af2b-5f2a78a14364", "userId": "2fe1f486-3c88-448e-9f44-f389078468bc", "courseTitle": "[2026-2027] KHÓA 3- TỔNG ÔN- LUYỆN ĐỀ 8, 9+", "courseId": "69b6706e10081f0002ad254e", "tag": "thpt", "thumbnail": "", "layoutUrl": "https://p9y4zl6vkd.execute-api.ap-southeast-1.amazonaws.com/prod/course/layout/69b6706e10081f0002ad254e?vendorId=628c020f-d083-432d-af2b-5f2a78a14364", "unitUrl": "https://p9y4zl6vkd.execute-api.ap-southeast-1.amazonaws.com/prod/unit/{id}?userId=2fe1f486-3c88-448e-9f44-f389078468bc&_populate=video&vendorId=628c020f-d083-432d-af2b-5f2a78a14364", "resolution": "1080p.m3u8"}],
+  courses720:  [{"vendor": "Cô Phạm Liễu", "vendorId": "628c020f-d083-432d-af2b-5f2a78a14364", "userId": "2fe1f486-3c88-448e-9f44-f389078468bc", "courseTitle": "CHẶNG 1- IELTS FOUNDATION (PRE-IELTS)", "courseId": "6a3a61a92df83c0002db387e", "tag": "ielts", "thumbnail": "https://d21acfi38wn3iy.cloudfront.net/resource/documents/628c020f-d083-432d-af2b-5f2a78a14364/1782211051442-ielts-1-png.png", "layoutUrl": "https://p9y4zl6vkd.execute-api.ap-southeast-1.amazonaws.com/prod/course/layout/6a3a61a92df83c0002db387e?vendorId=628c020f-d083-432d-af2b-5f2a78a14364", "unitUrl": "https://p9y4zl6vkd.execute-api.ap-southeast-1.amazonaws.com/prod/unit/{_id}?userId=2fe1f486-3c88-448e-9f44-f389078468bc&_populate=video&vendorId=628c020f-d083-432d-af2b-5f2a78a14364", "resolution": "720p.m3u8"}, {"vendor": "Cô Phạm Liễu", "vendorId": "628c020f-d083-432d-af2b-5f2a78a14364", "userId": "2fe1f486-3c88-448e-9f44-f389078468bc", "courseTitle": "CHẶNG 2- IELTS BUILDER (BASIC IELTS)", "courseId": "6a3a61a92df83c0002db387f", "tag": "ielts", "thumbnail": "https://d21acfi38wn3iy.cloudfront.net/resource/documents/628c020f-d083-432d-af2b-5f2a78a14364/1782211051443-ielts-2-png.png", "layoutUrl": "https://p9y4zl6vkd.execute-api.ap-southeast-1.amazonaws.com/prod/course/layout/6a3a61a92df83c0002db387f?vendorId=628c020f-d083-432d-af2b-5f2a78a14364", "unitUrl": "https://p9y4zl6vkd.execute-api.ap-southeast-1.amazonaws.com/prod/unit/{_id}?userId=2fe1f486-3c88-448e-9f44-f389078468bc&_populate=video&vendorId=628c020f-d083-432d-af2b-5f2a78a14364", "resolution": "720p.m3u8"}, {"vendor": "Cô Phạm Liễu", "vendorId": "628c020f-d083-432d-af2b-5f2a78a14364", "userId": "2fe1f486-3c88-448e-9f44-f389078468bc", "courseTitle": "CHẶNG 3- INTENSIVE IELTS", "courseId": "6a3a61a92df83c0002db3880", "tag": "ielts", "thumbnail": "https://d21acfi38wn3iy.cloudfront.net/resource/documents/628c020f-d083-432d-af2b-5f2a78a14364/1782211051444-ielts-3-png.png", "layoutUrl": "https://p9y4zl6vkd.execute-api.ap-southeast-1.amazonaws.com/prod/course/layout/6a3a61a92df83c0002db3880?vendorId=628c020f-d083-432d-af2b-5f2a78a14364", "unitUrl": "https://p9y4zl6vkd.execute-api.ap-southeast-1.amazonaws.com/prod/unit/{_id}?userId=2fe1f486-3c88-448e-9f44-f389078468bc&_populate=video&vendorId=628c020f-d083-432d-af2b-5f2a78a14364", "resolution": "720p.m3u8"}, {"vendor": "Cô Phạm Liễu", "vendorId": "628c020f-d083-432d-af2b-5f2a78a14364", "userId": "2fe1f486-3c88-448e-9f44-f389078468bc", "courseTitle": "[2026-2027] KHÓA 1- NỀN TẢNG NGỮ PHÁP- TỪ VỰNG", "courseId": "69b66fbb5c26c10002321c88", "tag": "thpt", "thumbnail": "", "layoutUrl": "https://p9y4zl6vkd.execute-api.ap-southeast-1.amazonaws.com/prod/course/layout/69b66fbb5c26c10002321c88?vendorId=628c020f-d083-432d-af2b-5f2a78a14364", "unitUrl": "https://p9y4zl6vkd.execute-api.ap-southeast-1.amazonaws.com/prod/unit/{_id}?userId=2fe1f486-3c88-448e-9f44-f389078468bc&_populate=video&vendorId=628c020f-d083-432d-af2b-5f2a78a14364", "resolution": "720p.m3u8"}, {"vendor": "Cô Phạm Liễu", "vendorId": "628c020f-d083-432d-af2b-5f2a78a14364", "userId": "2fe1f486-3c88-448e-9f44-f389078468bc", "courseTitle": "[2026-2027] KHÓA 2- TỪ VỰNG ĐỌC HIỂU CHUYÊN SÂU", "courseId": "69b67027f810a30002466102", "tag": "thpt", "thumbnail": "", "layoutUrl": "https://p9y4zl6vkd.execute-api.ap-southeast-1.amazonaws.com/prod/course/layout/69b67027f810a30002466102?vendorId=628c020f-d083-432d-af2b-5f2a78a14364", "unitUrl": "https://p9y4zl6vkd.execute-api.ap-southeast-1.amazonaws.com/prod/unit/{_id}?userId=2fe1f486-3c88-448e-9f44-f389078468bc&_populate=video&vendorId=628c020f-d083-432d-af2b-5f2a78a14364", "resolution": "720p.m3u8"}, {"vendor": "Cô Phạm Liễu", "vendorId": "628c020f-d083-432d-af2b-5f2a78a14364", "userId": "2fe1f486-3c88-448e-9f44-f389078468bc", "courseTitle": "[2026-2027] KHÓA 3- TỔNG ÔN- LUYỆN ĐỀ 8, 9+", "courseId": "69b6706e10081f0002ad254e", "tag": "thpt", "thumbnail": "", "layoutUrl": "https://p9y4zl6vkd.execute-api.ap-southeast-1.amazonaws.com/prod/course/layout/69b6706e10081f0002ad254e?vendorId=628c020f-d083-432d-af2b-5f2a78a14364", "unitUrl": "https://p9y4zl6vkd.execute-api.ap-southeast-1.amazonaws.com/prod/unit/{_id}?userId=2fe1f486-3c88-448e-9f44-f389078468bc&_populate=video&vendorId=628c020f-d083-432d-af2b-5f2a78a14364", "resolution": "720p.m3u8"}]
+};
+
+let COURSES=[], COURSE=null, ALL_LEAVES=[], sbOpen=true, CUR_RES='1080p.m3u8', currentPlyr=null, currentHls=null;
+const VIDEO_BUCKET = 'https://media.izteach.vn/';
+const DOC_BUCKET   = 'https://online-learning-izteach-6-aws-source-bucket.s3-ap-southeast-1.amazonaws.com/';
+
+// Hàm khởi chạy ứng dụng trực tiếp từ cấu hình nhúng tĩnh
+function bootstrapApp() {
+  // Xác định kích thước để tự động đóng/mở sidebar ban đầu phù hợp Mobile/Desktop
+  if (window.innerWidth <= 768) {
+    sbOpen = false;
+    document.getElementById('sidebar').classList.add('collapsed');
+  } else {
+    sbOpen = true;
+    document.getElementById('sidebar').classList.remove('collapsed');
+  }
+  
+  loadCourses(CUR_RES === '720p.m3u8' ? EMBEDDED_CONFIG.courses720 : EMBEDDED_CONFIG.courses1080);
+}
+
+window.addEventListener('DOMContentLoaded', bootstrapApp);
+
+function loadCourses(list) {
+  COURSES = list || [];
+  const sel = document.getElementById('sel-course');
+  sel.innerHTML = '<option value="">-- Chọn khoá học --</option>';
+  COURSES.forEach(c => { 
+    const o = document.createElement('option'); 
+    o.value = c.courseId; 
+    o.textContent = c.courseTitle || c.title || c.courseId; 
+    sel.appendChild(o); 
+  });
+  showContent(`<div class="state"><svg width="56" height="56" viewBox="0 0 24 24" fill="none" stroke="#c0ccdf" stroke-width="1.4"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg><p>Nạp thành công <b>${COURSES.length}</b> khoá học.<br>Hãy chọn một khoá học ở góc trên bên phải để bắt đầu học.</p></div>`);
+}
+
+function onResChange(val) { 
+  CUR_RES = val; 
+  loadCourses(val === '720p.m3u8' ? EMBEDDED_CONFIG.courses720 : EMBEDDED_CONFIG.courses1080); 
+}
+
+function onCourse(id) {
+  if (!id) return; 
+  COURSE = COURSES.find(c => c.courseId === id); 
+  if (!COURSE) return;
+  
+  document.getElementById('sb-title').textContent = COURSE.courseTitle || COURSE.title || id;
+  document.getElementById('sb-tag').textContent   = COURSE.tag || '';
+  sbState('Đang tải danh sách bài học...');
+  showContent('<div class="state"><div class="spinner"></div><p>Đang tải danh sách bài học từ máy chủ...</p></div>');
+
+  fetch(COURSE.layoutUrl).then(r => r.json()).then(data => {
+      const sections = Array.isArray(data) ? data : (data.data || data.sections || []);
+      if (!sections.length) return showContent('<div class="state"><p>Khoá học này chưa có bài học.</p></div>');
+      sections.sort((a, b) => (a.index || 0) - (b.index || 0));
+      ALL_LEAVES = []; 
+      document.getElementById('sb-body').innerHTML = '';
+      sections.forEach(sec => document.getElementById('sb-body').appendChild(createNode(sec, 1)));
+      showContent(`<div class="state"><svg width="52" height="52" viewBox="0 0 24 24" fill="none" stroke="#c0ccdf" stroke-width="1.4"><polygon points="5 3 19 12 5 21 5 3"/></svg><p>Chọn bài học bên danh sách trái để bắt đầu xem.</p></div>`);
+      
+      // Trên Mobile, khi chọn khóa học xong thì đẩy mở menu để chọn bài
+      if (window.innerWidth <= 768 && !sbOpen) {
+        toggleSB();
+      }
+  }).catch(e => showErr('Lỗi tải cấu trúc bài học:\n' + e.message));
+}
+
+function createNode(node, level) {
+  const block = mk('div', 'tree-node');
+  const hd = mk('div', `folder-hd lvl${Math.min(level, 5)}-hd`);
+  hd.innerHTML = `<span>${esc(node.title || 'Thư mục')}</span>${chevSvg('ch')}`;
+  const kids = mk('div', 'kids');
+  hd.addEventListener('click', () => { hd.classList.toggle('open'); kids.classList.toggle('open'); });
+  
+  const children = (node.children || []).filter(u => !u.settings?.isDraft);
+  children.sort((a, b) => (a.index || 0) - (b.index || 0));
+  children.forEach(u => kids.appendChild(mkLeaf(u, level)));
+
+  const childSections = node.childSections || [];
+  childSections.sort((a, b) => (a.index || 0) - (b.index || 0));
+  childSections.forEach(sub => kids.appendChild(createNode(sub, level + 1)));
+  
+  block.appendChild(hd); block.appendChild(kids); 
+  return block;
+}
+
+function mkLeaf(unit, folderLevel) {
+  const id = unit.id || unit._id || '', title = unit.title || 'Bài học', type = (unit.type || 'video').toLowerCase();
+  const item = mk('div', `leaf ind${Math.min(folderLevel, 5)}`);
+  item.innerHTML = `${leafIcon(type, title)}<span>${esc(title)}</span>`;
+  item.dataset.title = title.toLowerCase();
+  item.addEventListener('click', () => selectLesson(item, id, title));
+  ALL_LEAVES.push(item); 
+  return item;
+}
+
+function selectLesson(el, unitId, title) {
+  ALL_LEAVES.forEach(i => i.classList.remove('active')); 
+  el.classList.add('active');
+  document.getElementById('top-title').textContent = title;
+  document.getElementById('btn-support').style.display = 'none';
+  showContent('<div class="state"><div class="spinner"></div><p>Đang nạp nội dung bài học...</p></div>');
+  
+  // Tự động đóng sidebar gọn gàng nếu đang xem trên Mobile
+  if (window.innerWidth <= 768) {
+    toggleSB();
+  }
+  
+  const url = (COURSE.unitUrl || '').replace(/\{_?id\}/, unitId);
+  fetch(url).then(r => r.json()).then(unit => renderLesson(unit)).catch(e => showErr('Lỗi tải dữ liệu bài: ' + e.message));
+}
+
+function setupHlsPlayer(vel, murl, section) {
+  if (currentPlyr) { currentPlyr.destroy(); currentPlyr = null; }
+  if (currentHls) { currentHls.destroy(); currentHls = null; }
+  vel.style.display = 'block';
+
+  currentPlyr = new Plyr(vel, {
+    controls: ['play-large', 'play', 'progress', 'current-time', 'duration', 'mute', 'volume', 'settings', 'pip', 'fullscreen'],
+    tooltips: { controls: true, seek: true }
+  });
+
+  if (typeof Hls !== 'undefined' && Hls.isSupported()) {
+    currentHls = new Hls({ maxBufferLength: 30 });
+    currentHls.loadSource(murl); 
+    currentHls.attachMedia(vel);
+    currentHls.on(Hls.Events.ERROR, (_, d) => { if (d.fatal) showVideoErrorOverlay(vel, murl, section); });
+  } else if (vel.canPlayType('application/vnd.apple.mpegurl')) { 
+    vel.src = murl; 
+    vel.addEventListener('error', () => showVideoErrorOverlay(vel, murl, section), { once: true });
+  }
+}
+
+function showVideoErrorOverlay(section, originalUrl, wrapper) {
+  if (wrapper.querySelector('.video-error-overlay')) return;
+  section.style.display = 'none';
+  if (currentPlyr) { currentPlyr.destroy(); currentPlyr = null; }
+  const fallbackUrl = originalUrl.replace(/(1080p\.m3u8|720p\.m3u8)$/, 'playlist.m3u8');
+  
+  const overlay = mk('div', 'video-error-overlay state');
+  overlay.style.cssText = 'position:absolute;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.9);color:#fff;z-index:10;display:flex;flex-direction:column;gap:14px;justify-content:center;align-items:center;padding:20px;text-align:center;border-radius:10px;';
+  
+  const msg = document.createElement('div');
+  msg.innerHTML = '<p style="color:#ffbe76;font-weight:600;margin-bottom:4px;">Không tải được luồng video gốc</p>';
+  overlay.appendChild(msg);
+
+  const btn = document.createElement('button');
+  btn.className = 'btn-support';
+  btn.style.cssText = 'display:flex;background:#e1b12c;color:#1a1a2e;padding:10px 20px;';
+  btn.textContent = 'Chuyển nguồn phát phụ';
+  btn.addEventListener('click', () => {
+    wrapper.innerHTML = '';
+    const vel = document.createElement('video'); vel.controls = true; vel.setAttribute('playsinline', 'true');
+    wrapper.appendChild(vel); setupHlsPlayer(vel, fallbackUrl, wrapper);
+  });
+  
+  overlay.appendChild(btn); wrapper.appendChild(overlay);
+}
+
+function addFsBtn(section) {
+  const fsBtn = mk('button', 'fs-btn');
+  fsBtn.innerHTML = `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"/></svg>`;
+  
+  fsBtn.addEventListener('click', () => {
+    if (!document.fullscreenElement) {
+      section.requestFullscreen().catch(err => console.warn("Lỗi Toàn màn hình:", err));
+    } else {
+      document.exitFullscreen();
+    }
+  });
+
+  section.addEventListener('fullscreenchange', () => {
+    if (document.fullscreenElement === section) {
+      fsBtn.innerHTML = `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 14h6v6m10-6h-6v6M4 10h6V4m10 6h-6V4"/></svg>`;
+    } else {
+      fsBtn.innerHTML = `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"/></svg>`;
+    }
+  });
+
+  section.appendChild(fsBtn);
+}
+
+function renderLesson(unit) {
+  const area = document.getElementById('content'); area.innerHTML = '';
+  const type = (unit.type || 'video').toLowerCase();
+  const titleLower = (unit.title || '').toLowerCase();
+  let hasSupportInfo = false;
+  const mBody = document.getElementById('modal-content'); mBody.innerHTML = '';
+  
+  mBody.innerHTML = `<h2>${esc(unit.title || 'Bài học')}</h2><div class="meta"><span class="badge ${type==='video'?'video':type==='pdf'?'pdf':type==='embedded'?'embedded':'other'}">${typeLabel(type)}</span></div>`;
+
+  if (unit.syllabus?.length) {
+    hasSupportInfo = true;
+    let attHtml = `<div class="attach-inline">`;
+    unit.syllabus.forEach(f => {
+      const bucket = (f.origin?.bucket || DOC_BUCKET).replace(/\/?$/,'/');
+      const furl = (f.link || '').startsWith('http') ? f.link : bucket + (f.link || '');
+      attHtml += `<a href="${furl}" target="_blank" class="attach-btn">${esc(f.title || 'Tài liệu')}</a>`;
+    });
+    mBody.innerHTML += attHtml + `</div>`;
+  }
+
+  if (unit.description && cleanDesc(unit.description).trim()) {
+    hasSupportInfo = true; mBody.innerHTML += `<div class="desc-html">${cleanDesc(unit.description)}</div>`;
+  }
+  
+  document.getElementById('btn-support').style.display = hasSupportInfo ? 'flex' : 'none';
+
+  if (type === 'video') {
+    let vidId = unit.link || unit.data?.link || unit.video?.link || (typeof unit.video === 'string' ? unit.video : '');
+    if (!vidId) return area.appendChild(mkNotice('blue', warnSvg(), 'Thông báo', 'Video đang cập nhật.'));
+    let murl = String(vidId).startsWith('http') ? vidId : (VIDEO_BUCKET + vidId + '/' + CUR_RES);
+    const section = mk('div', 'viewer-wrap dark');
+    const vel = document.createElement('video'); vel.controls = true; vel.setAttribute('playsinline', 'true');
+    section.appendChild(vel); area.appendChild(section);
+    setupHlsPlayer(vel, murl, section);
+  } else if (type === 'pdf') {
+    const pdf = unit.pdf || unit.data || {};
+    let pdfUrl = (pdf.link || unit.link || '').startsWith('http') ? (pdf.link || unit.link) : (pdf.origin?.bucket || DOC_BUCKET).replace(/\/?$/,'/') + (pdf.link || unit.link);
+    
+    const section = mk('div', 'viewer-wrap');
+    const iframe = document.createElement('iframe'); 
+    iframe.src = pdfUrl;
+    section.appendChild(iframe); area.appendChild(section);
+    addFsBtn(section);
+
+    if (hasSupportInfo && window.innerWidth > 768) {
+      openModal();
+    }
+  } else if (type === 'embedded' || type === 'link' || type === 'iframe') {
+    let embedUrl = unit.link || unit.url || (unit.data && unit.data.link);
+    if (!embedUrl) return area.appendChild(mkNotice('blue', warnSvg(), 'Thông báo', 'Nội dung nhúng đang cập nhật.'));
+    const section = mk('div', 'viewer-wrap');
+    const iframe = document.createElement('iframe'); 
+    iframe.src = embedUrl;
+    section.appendChild(iframe); area.appendChild(section);
+    addFsBtn(section);
+  } else if (type === 'quiz' || type === 'exam' || titleLower.includes('đề thi') || titleLower.includes('kiểm tra')) {
+    area.appendChild(mkNotice('blue', warnSvg(), 'Thông báo', 'Phần thi online chỉ hỗ trợ chính thức trên website của Cô Phạm Liễu'));
+  } else {
+    area.appendChild(mkNotice('blue', warnSvg(), 'Thông báo', 'Vui lòng nhấn nút "Tài liệu" góc trên để xem nội dung bổ sung của bài học này.'));
+  }
+}
+
+function openModal() { document.getElementById('lesson-modal').classList.add('show'); }
+function closeModal(e) { if(e === true || e.target.id === 'lesson-modal') document.getElementById('lesson-modal').classList.remove('show'); }
+
+function toggleSB() { 
+  sbOpen = !sbOpen; 
+  const sb = document.getElementById('sidebar');
+  const overlay = document.getElementById('sidebar-overlay');
+  
+  if (sbOpen) {
+    sb.classList.remove('collapsed');
+    overlay.classList.add('show');
+  } else {
+    sb.classList.add('collapsed');
+    overlay.classList.remove('show');
+  }
+}
+
+function showContent(h) { document.getElementById('content').innerHTML = h; }
+function sbState(m) { document.getElementById('sb-body').innerHTML = `<div class="state"><div class="spinner"></div><p>${esc(m)}</p></div>`; }
+function showErr(m) { document.getElementById('content').innerHTML = `<div class="err">${m}</div>`; }
+function mkNotice(c, i, t, b) { const d=mk('div','notice-box '+c); d.innerHTML=i+`<div><h3>${esc(t)}</h3><p>${esc(b)}</p></div>`; return d; }
+function mk(t,c) { const e=document.createElement(t); if(c) e.className=c; return e; }
+function esc(s) { return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+function cleanDesc(html) { const d=document.createElement('div'); d.innerHTML=html; return (d.querySelector('.ql-editor')||d).innerHTML; }
+function typeLabel(t) { return {video:'Video bài giảng',pdf:'Tài liệu PDF',embedded:'Nội dung nhúng',link:'Liên kết nhúng',quiz:'Bài thi online',exam:'Bài thi online'}[t]||'Bài học'; }
+function chevSvg(c) { return `<svg class="${c}" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>`; }
+function warnSvg() { return `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><circle cx="12" cy="16" r="1"/></svg>`; }
+
+function leafIcon(t, title) {
+  const text = (title || '').toLowerCase();
+  if (t === 'pdf') return `<svg class="li" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg> `;
+  if (t === 'link' || t === 'embedded' || t === 'iframe') return `<svg class="li" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg> `;
+  if (t === 'quiz' || t === 'exam') return `<svg class="li" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path><rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect></svg> `;
+
+  if (text.includes('bảng từ vựng') || text.includes('tài liệu') || text.includes('file pdf')) return `<svg class="li" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg> `;
+  if (text.includes('link') || text.includes('flashcard') || text.includes('game') || text.includes('nhúng') || text.includes('điểm danh')) return `<svg class="li" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg> `;
+  if (text.includes('đề thi') || text.includes('kiểm tra') || text.includes('bài thi')) return `<svg class="li" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path><rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect></svg> `;
+  
+  return `<svg class="li" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"/></svg> `;
+}
+
+function filterLessons(q) {
+  q = q.trim().toLowerCase(); ALL_LEAVES.forEach(el => el.style.display = (!q || el.dataset.title.includes(q)) ? '' : 'none');
+}
+</script>
+</body>
+</html>
