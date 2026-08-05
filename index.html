@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="vi">
 <head>
@@ -849,7 +850,7 @@ mark.exam-hl:hover { outline: 1.5px dashed rgba(0,0,0,.25); }
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
         Hỗ trợ bài học
       </button>
-      <button class="auth-toggle" id="auth-toggle" type="button" title="Cấu hình Authorization cho bài thi">Authorization</button>
+      <button class="auth-toggle" id="auth-toggle" type="button" title="Cấu hình Authorization cho toàn bộ dữ liệu">Authorization</button>
 
     </div>
 
@@ -857,7 +858,7 @@ mark.exam-hl:hover { outline: 1.5px dashed rgba(0,0,0,.25); }
 
     <div id="auth-panel">
       <div class="auth-head">
-        <div class="auth-title">Authorization bài thi</div>
+        <div class="auth-title">Authorization dữ liệu</div>
         <div class="auth-status" id="auth-status">Chưa nhập mã</div>
       </div>
       <div class="auth-row">
@@ -869,8 +870,8 @@ mark.exam-hl:hover { outline: 1.5px dashed rgba(0,0,0,.25); }
         <button class="auth-btn secondary" id="auth-clear-btn" type="button">Xóa</button>
       </div>
       <div class="auth-note">
-        Mã được lưu cục bộ trong trình duyệt bằng localStorage và chỉ dùng cho các request bài thi.
-        Không nhập mã này trên máy dùng chung.
+        Mã được lưu cục bộ trong trình duyệt bằng localStorage và dùng cho MỌI request lấy dữ liệu
+        (khoá học, bài học, bài thi...). Không nhập mã này trên máy dùng chung.
       </div>
     </div>
     <div class="content" id="content">
@@ -1250,7 +1251,7 @@ function selectTeacher(t) {
   showContent('<div class="state"><div class="spinner"></div><p>Đang tải danh sách khoá học của ' + esc(t.name) + '...</p></div>');
   startProgress();
 
-  fetch(t.coursesApi).then(r => r.json()).then(raw => {
+  apiFetch(t.coursesApi).then(raw => {
     doneProgress();
     const list = Array.isArray(raw) ? raw : (raw.data || raw.results || []);
     extractTeacherBio(t, list);
@@ -1437,7 +1438,7 @@ function selectCourse(c) {
   startProgress();
   setActiveBottomNav('bn-lessons');
 
-  fetch(COURSE.layoutUrl).then(r => r.json()).then(data => {
+  apiFetch(COURSE.layoutUrl).then(data => {
     doneProgress();
     const sections = Array.isArray(data) ? data : (data.data || data.sections || []);
     if (!sections.length) return showContent('<div class="state"><p>Khoá học này chưa có bài học.</p></div>');
@@ -1508,7 +1509,7 @@ function selectLesson(el, unitId, title) {
   autoCloseSBOnMobile();
 
   const url = (COURSE.unitUrl || '').replace(/\{_?id\}/, unitId);
-  fetch(url).then(r => r.json()).then(unit => { doneProgress(); renderLesson(unit); }).catch(e => { doneProgress(); showErr('Lỗi tải dữ liệu bài: ' + e.message); });
+  apiFetch(url).then(unit => { doneProgress(); renderLesson(unit); }).catch(e => { doneProgress(); showErr('Lỗi tải dữ liệu bài: ' + e.message); });
 }
 
 /* =====================================================================
@@ -2110,6 +2111,60 @@ async function examFetch(path, options = {}) {
     throw new Error(
       `HTTP ${response.status}: ${detail.substring(0, 1000)}`
     );
+  }
+
+  return data;
+}
+
+/* =====================================================================
+ * apiFetch: dùng CHUNG một cơ chế Authorization (localStorage) cho MỌI
+ * lệnh gọi tới các API json khác trong app (danh sách khoá học, cây bài
+ * học, nội dung bài học...), bao gồm cả apiBase p9y4zl6vkd.
+ * Trước đây Authorization chỉ được gắn cho phần bài thi (examFetch).
+ * ===================================================================== */
+async function apiFetch(url, options = {}) {
+
+  const authorization = getExamAuthorization();
+
+  if (!authorization) {
+    throw new Error(
+      'Chưa nhập Authorization. Hãy bấm nút "Authorization" trên thanh đầu trang và nhập mã trước.'
+    );
+  }
+
+  const headers = {
+    Accept: 'application/json',
+    ...(options.headers || {}),
+    Authorization: authorization
+  };
+
+  const response = await fetch(url, {
+    ...options,
+    method: options.method || 'GET',
+    headers
+  });
+
+  const body = await response.text();
+
+  let data = null;
+
+  try {
+    data = body ? JSON.parse(body) : null;
+  } catch (e) {
+    data = body;
+  }
+
+  if (!response.ok) {
+
+    let detail = '';
+
+    if (data && typeof data === 'object') {
+      detail = data.message || data.error || data.detail || JSON.stringify(data);
+    } else {
+      detail = String(data || response.statusText || '');
+    }
+
+    throw new Error(`HTTP ${response.status}: ${detail.substring(0, 1000)}`);
   }
 
   return data;
