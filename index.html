@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="vi">
 <head>
@@ -1168,7 +1167,7 @@ function goHome() {
   document.getElementById('sb-home-btn')?.classList.add('active');
   
   setBreadcrumb([]);
-  document.getElementById('sb-title').textContent = 'IZTeach';
+  document.getElementById('sb-title').textContent = 'Dominic';
   document.getElementById('sb-tag').textContent = '';
   setSupportAvailable(false);
   ALL_LEAVES = [];
@@ -1179,7 +1178,7 @@ function goHome() {
   const cards = TEACHERS.map(t => teacherCardHtml(t)).join('');
   showContent(`
     <div class="hero">
-      <h1>Chào mừng đến với IZTeach</h1>
+      <h1>Chào mừng đến với Dominic Academy</h1>
       <p>Chọn một giáo viên bên dưới để xem trọn bộ khoá học đang mở.</p>
     </div>
     <div class="section-title">
@@ -1515,55 +1514,200 @@ function selectLesson(el, unitId, title) {
 /* =====================================================================
  * TRÌNH PHÁT VIDEO (HLS + Plyr)
  * ===================================================================== */
-// Số lần tự động thử lại khi luồng lỗi TRƯỚC KHI hiện màn hình lỗi cho người học bấm "Thử lại" thủ công.
-const VIDEO_MAX_AUTO_RETRY = 3;
+const VIDEO_MAX_AUTO_RETRY = 1; // 1 lần retry cùng URL rồi chuyển candidate
 
-function setupHlsPlayer(vel, murl, section, autoRetryCount) {
+/**
+ * Danh sách URL HLS (ưu tiên media.izteach.vn có vendorId — đang chạy tốt;
+ * fallback cophamlieu-media cho bài cũ / re-up lệch CDN).
+ * videoId = video._id (KHÔNG dùng video.link path storage).
+ */
+/**
+ * Lấy videoId + metadata từ unit (hỗ trợ cả form mới lẫn form cũ).
+ *
+ * Form mới (populate): unit.video = { _id, link, migratePrefix, ... }
+ * Form cũ (sample demo): unit.video = "64b91687..." (string)
+ *                        unit.resources[0] = { id, link, origin.previewUrl, ... }
+ */
+function extractVideoMeta(unit) {
+  const teacher = (COURSE && COURSE.teacher) || {};
+  const empty = { videoId: '', vendorId: teacher.vendorId || '', migratePrefix: '', previewUrl: '', streamFile: teacher.streamFile || 'playlist.m3u8' };
+
+  if (!unit) return empty;
+
+  let videoId = '';
+  let vendorId = teacher.vendorId || unit.vendorId || '';
+  let migratePrefix = '';
+  let previewUrl = '';
+  let streamFile = teacher.streamFile || 'playlist.m3u8';
+
+  // 1) unit.video là object (sau _populate=video)
+  if (unit.video && typeof unit.video === 'object') {
+    const v = unit.video;
+    videoId = String(v._id || v.id || '').trim();
+    vendorId = v.vendorId || vendorId;
+    migratePrefix = v.migratePrefix || '';
+    previewUrl = (v.origin && v.origin.previewUrl) || v.previewUrl || '';
+    if (!videoId && v.link) {
+      const parts = String(v.link).split('/').filter(Boolean);
+      videoId = parts.length ? parts[parts.length - 1] : '';
+    }
+  }
+
+  // 2) unit.video là string ID (form cũ / chưa populate)
+  if (!videoId && typeof unit.video === 'string' && unit.video.trim()) {
+    videoId = unit.video.trim();
+  }
+
+  // 3) resources[] — form cũ hay để file video ở đây
+  const resList = Array.isArray(unit.resources) ? unit.resources : [];
+  const resVideo = resList.find(r => r && (r.type === 'video' || r.subType === 'video' || (r.origin && r.origin.mimeType && String(r.origin.mimeType).startsWith('video'))))
+    || resList[0];
+  if (resVideo) {
+    if (!videoId) videoId = String(resVideo._id || resVideo.id || '').trim();
+    if (!videoId && resVideo.link) {
+      const parts = String(resVideo.link).split('/').filter(Boolean);
+      videoId = parts.length ? parts[parts.length - 1] : '';
+    }
+    vendorId = resVideo.vendorId || vendorId;
+    migratePrefix = resVideo.migratePrefix || migratePrefix;
+    previewUrl = previewUrl || (resVideo.origin && resVideo.origin.previewUrl) || '';
+  }
+
+  // 4) unit.link thuần id
+  if (!videoId && unit.link && !/^https?:\/\//i.test(String(unit.link)) && !String(unit.link).includes('/')) {
+    videoId = String(unit.link).trim();
+  }
+
+  return { videoId, vendorId, migratePrefix, previewUrl, streamFile };
+}
+
+/**
+ * Danh sách URL HLS theo thứ tự ưu tiên.
+ * Sample 64b8ed32…: media/{vendorId}/{id}/playlist.m3u8 và cophamlieu-media/{id}/playlist.m3u8 đều 200.
+ */
+function resolveVideoCandidates(unit) {
+  const teacher = (COURSE && COURSE.teacher) || {};
+  const videoBucket = String(CFG.videoBucket || 'https://media.izteach.vn/').replace(/\/?$/, '/');
+  const meta = extractVideoMeta(unit);
+  const { videoId, vendorId, migratePrefix, previewUrl } = meta;
+  const streamFile = meta.streamFile || teacher.streamFile || 'playlist.m3u8';
+  const out = [];
+  const add = (u) => {
+    if (!u || typeof u !== 'string') return;
+    u = u.trim();
+    if (u && !out.includes(u)) out.push(u);
+  };
+
+  if (!videoId) {
+    // Không có id — chỉ còn URL tuyệt đối (nếu có)
+    for (const h of [previewUrl, unit && unit.link, unit && unit.data && unit.data.link]) {
+      if (typeof h === 'string' && /^https?:\/\//i.test(h) && h.indexOf('oss.nextidc.net') === -1) add(h);
+    }
+    return out;
+  }
+
+  // 1) media.izteach.vn/{vendorId}/{videoId}/playlist — form đúng, HTTP 200 (sample 64b91687…)
+  if (vendorId) add(videoBucket + vendorId + '/' + videoId + '/' + streamFile);
+
+  // 2) cophamlieu-media (form cũ cô Liễu — hay gặp khi media phẳng 404)
+  add('https://cophamlieu-media.izteach.vn/' + videoId + '/' + streamFile);
+
+  // 3) media phẳng
+  add(videoBucket + videoId + '/' + streamFile);
+
+  // 4) migratePrefix
+  if (migratePrefix) add(String(migratePrefix).replace(/\/?$/, '/') + videoId + '/' + streamFile);
+
+  // 5) DRM → thử playlist.m3u8 thường
+  if (streamFile !== 'playlist.m3u8') {
+    if (vendorId) add(videoBucket + vendorId + '/' + videoId + '/playlist.m3u8');
+    add('https://cophamlieu-media.izteach.vn/' + videoId + '/playlist.m3u8');
+    add(videoBucket + videoId + '/playlist.m3u8');
+  }
+
+  // 6) playlist_720
+  if (vendorId) add(videoBucket + vendorId + '/' + videoId + '/playlist_720.m3u8');
+  add('https://cophamlieu-media.izteach.vn/' + videoId + '/playlist_720.m3u8');
+
+  // 7) previewUrl sau cùng (oss.nextidc thường chết — chỉ khi mọi thứ khác fail)
+  if (previewUrl && /^https?:\/\//i.test(previewUrl)) add(previewUrl);
+
+  return out;
+}
+
+
+
+function setupHlsPlayer(vel, murlOrList, section, autoRetryCount, candidateIndex) {
   autoRetryCount = autoRetryCount || 0;
-  if (currentPlyr) { currentPlyr.destroy(); currentPlyr = null; }
-  if (currentHls) { currentHls.destroy(); currentHls = null; }
+  candidateIndex = candidateIndex || 0;
+
+  const list = Array.isArray(murlOrList) ? murlOrList.filter(Boolean) : (murlOrList ? [murlOrList] : []);
+  if (!list.length || candidateIndex >= list.length) {
+    showVideoErrorOverlay(vel, (list && list[0]) || '', section, list || []);
+    return;
+  }
+
+  const murl = list[candidateIndex];
+  section._videoCandidates = list;
+  section._videoCandidateIndex = candidateIndex;
+
+  if (currentPlyr) { try { currentPlyr.destroy(); } catch (e) {} currentPlyr = null; }
+  if (currentHls) { try { currentHls.destroy(); } catch (e) {} currentHls = null; }
   vel.style.display = 'block';
+  // Xóa overlay lỗi cũ nếu có
+  section.querySelectorAll('.video-error-overlay').forEach(el => el.remove());
+
+  const failThisUrl = () => {
+    if (candidateIndex + 1 < list.length) {
+      // Chuyển ngay sang URL kế (media → cophamlieu-media …)
+      setupHlsPlayer(vel, list, section, 0, candidateIndex + 1);
+      return;
+    }
+    showVideoErrorOverlay(vel, murl, section, list);
+  };
 
   if (typeof Hls !== 'undefined' && Hls.isSupported()) {
-    currentHls = new Hls({ maxBufferLength: 30 });
+    currentHls = new Hls({ maxBufferLength: 30, enableWorker: true });
     currentHls.loadSource(murl);
     currentHls.attachMedia(vel);
+    currentHls.on(Hls.Events.MANIFEST_PARSED, () => {
+      // Manifest OK — URL này dùng được
+      try { vel.play().catch(() => {}); } catch (e) {}
+    });
     currentHls.on(Hls.Events.ERROR, (_, d) => {
       if (!d.fatal) return;
-      // Tự động khắc phục âm thầm trước, không bắt người học phải thao tác gì.
+      // Fatal: retry 1 lần cùng URL, rồi chuyển candidate — KHÔNG kẹt startLoad() mãi
       if (autoRetryCount < VIDEO_MAX_AUTO_RETRY) {
-        setTimeout(() => {
-          if (d.type === Hls.ErrorTypes.NETWORK_ERROR) currentHls.startLoad();
-          else if (d.type === Hls.ErrorTypes.MEDIA_ERROR) currentHls.recoverMediaError();
-          else setupHlsPlayer(vel, murl, section, autoRetryCount + 1);
-        }, 900 * (autoRetryCount + 1));
+        setTimeout(() => setupHlsPlayer(vel, list, section, autoRetryCount + 1, candidateIndex), 500);
       } else {
-        showVideoErrorOverlay(vel, murl, section);
+        failThisUrl();
       }
     });
   } else if (vel.canPlayType('application/vnd.apple.mpegurl')) {
     vel.src = murl;
-    vel.addEventListener('error', () => {
+    const onErr = () => {
+      vel.removeEventListener('error', onErr);
       if (autoRetryCount < VIDEO_MAX_AUTO_RETRY) {
-        setTimeout(() => setupHlsPlayer(vel, murl, section, autoRetryCount + 1), 900 * (autoRetryCount + 1));
+        setTimeout(() => setupHlsPlayer(vel, list, section, autoRetryCount + 1, candidateIndex), 500);
       } else {
-        showVideoErrorOverlay(vel, murl, section);
+        failThisUrl();
       }
+    };
+    vel.addEventListener('error', onErr);
+    vel.addEventListener('loadedmetadata', () => {
+      try { vel.play().catch(() => {}); } catch (e) {}
     }, { once: true });
+  } else {
+    failThisUrl();
+    return;
   }
 
-  // Nhãn chất lượng chỉ mang tính hiển thị (mỗi giáo viên phát ra đúng 1 luồng cố định),
-  // giúp người học biết đang xem ở độ phân giải nào trong mục Cài đặt của trình phát.
   const qualityNum = parseInt((COURSE.teacher.resLabel || '').replace(/\D/g, ''), 10) || 1080;
 
   currentPlyr = new Plyr(vel, {
     controls: ['play-large', 'play', 'progress', 'current-time', 'duration', 'mute', 'volume', 'settings', 'pip', 'fullscreen'],
     tooltips: { controls: false, seek: false },
-    // Tắt phím tắt mặc định của Plyr - dùng bộ phím tắt tuỳ biến bên dưới (có overlay hiển thị %/giây)
-    // để tránh việc 1 lần bấm phím bị xử lý 2 lần (vừa của Plyr, vừa của app).
     keyboard: { focused: false, global: false },
-    // iosNative: trên iOS, nút toàn màn hình sẽ mở thẳng trình phát gốc của hệ điều hành
-    // (vì Plyr không thể dựng UI toàn màn hình tuỳ biến thật sự trên iOS Safari).
     fullscreen: { enabled: true, fallback: true, iosNative: true },
     quality: { default: qualityNum, options: [qualityNum], forced: true, onChange: () => {} },
     i18n: {
@@ -1578,10 +1722,16 @@ function setupHlsPlayer(vel, murl, section, autoRetryCount) {
   attachVideoKeyboardShortcuts(currentPlyr, vel, section);
 }
 
-function showVideoErrorOverlay(section, originalUrl, wrapper) {
-  if (wrapper.querySelector('.video-error-overlay')) return;
-  section.style.display = 'none';
-  if (currentPlyr) { currentPlyr.destroy(); currentPlyr = null; }
+function showVideoErrorOverlay(section, originalUrl, wrapper, candidates) {
+  if (!wrapper) wrapper = section;
+  if (wrapper.querySelector && wrapper.querySelector('.video-error-overlay')) return;
+  if (section && section.style) section.style.display = 'none';
+  if (currentPlyr) { try { currentPlyr.destroy(); } catch (e) {} currentPlyr = null; }
+  if (currentHls) { try { currentHls.destroy(); } catch (e) {} currentHls = null; }
+
+  const list = (candidates && candidates.length)
+    ? candidates
+    : (wrapper._videoCandidates || (originalUrl ? [originalUrl] : []));
 
   const overlay = mk('div', 'video-error-overlay state');
   overlay.style.cssText = 'position:absolute;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.9);color:#fff;z-index:10;display:flex;flex-direction:column;gap:14px;justify-content:center;align-items:center;padding:20px;text-align:center;border-radius:10px;';
@@ -1596,12 +1746,18 @@ function showVideoErrorOverlay(section, originalUrl, wrapper) {
   btn.textContent = 'Thử lại';
   btn.addEventListener('click', () => {
     wrapper.innerHTML = '';
-    const vel = document.createElement('video'); vel.controls = true; vel.setAttribute('playsinline', 'true');
-    wrapper.appendChild(vel); setupHlsPlayer(vel, originalUrl, wrapper, 0);
+    const vel = document.createElement('video');
+    vel.controls = true;
+    vel.setAttribute('playsinline', 'true');
+    wrapper.appendChild(vel);
+    setupHlsPlayer(vel, list.length ? list : originalUrl, wrapper, 0, 0);
   });
 
-  overlay.appendChild(btn); wrapper.appendChild(overlay);
+  overlay.appendChild(btn);
+  wrapper.appendChild(overlay);
+  if (wrapper.style) wrapper.style.position = wrapper.style.position || 'relative';
 }
+
 
 /* ===== Phím tắt kiểu YouTube + overlay hiển thị giữa video ===== */
 function videoOverlaySvg(kind) {
@@ -1716,13 +1872,14 @@ function renderLesson(unit) {
   setSupportAvailable(hasSupportInfo);
 
   if (type === 'video') {
-    let vidId = unit.link || unit.data?.link || unit.video?.link || (typeof unit.video === 'string' ? unit.video : '');
-    if (!vidId) return area.appendChild(mkNotice('blue', warnSvg(), 'Bài giảng đang được thiết lập', 'Bài giảng bạn đang xem hiện đang được thiết lập. Vui lòng chuyển sang bài giảng khác.'));
-    let murl = String(vidId).startsWith('http') ? vidId : (CFG.videoBucket + vidId + '/' + COURSE.teacher.streamFile);
+    const candidates = resolveVideoCandidates(unit);
+    if (!candidates.length) {
+      return area.appendChild(mkNotice('blue', warnSvg(), 'Bài giảng đang được thiết lập', 'Bài giảng bạn đang xem hiện đang được thiết lập. Vui lòng chuyển sang bài giảng khác.'));
+    }
     const section = mk('div', 'viewer-wrap dark');
     const vel = document.createElement('video'); vel.controls = true; vel.setAttribute('playsinline', 'true');
     section.appendChild(vel); area.appendChild(section);
-    setupHlsPlayer(vel, murl, section);
+    setupHlsPlayer(vel, candidates, section, 0, 0);
 
   } else if (type === 'pdf') {
     const pdf = unit.pdf || unit.data || {};
