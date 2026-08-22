@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<link rel="icon" type="image/png" href="https://d21acfi38wn3iy.cloudfront.net/resource/documents/fd3ced5d-236b-4594-9969-de8c644bf4d7/1786630765679-favicon-png.png">
 <title>Khoá học - Dominic</title>
 <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
@@ -974,6 +975,16 @@ const LOCAL_CONFIG = {
       streamFile: 'playlist.m3u8'
     },
     {
+      key: 'lieu',
+      name: 'TRỢ LÍ CÔ LIỄU',
+      subject: 'Tiếng Anh',
+      vendorId: '628c020f-d083-432d-af2b-5f2a78a14364',
+      userId: '2fe1f486-3c88-448e-9f44-f389078468bc',
+      coursesApi: 'https://p9y4zl6vkd.execute-api.ap-southeast-1.amazonaws.com/prod/course?authors=645f4c98146d92000807fa6c&visibleHidden=false&type=online&status=published&vendorId=628c020f-d083-432d-af2b-5f2a78a14364',
+      resLabel: '1080p',
+      streamFile: 'playlist.m3u8'
+    },
+    {
       key: 'duong',
       name: 'Cô Trần Thuỳ Dương',
       subject: 'Ngữ văn',
@@ -984,7 +995,7 @@ const LOCAL_CONFIG = {
       streamFile: 'playlist_drm.m3u8'
     },
      {
-      key: 'luong',
+      key: 'duong',
       name: 'Thầy Nguyễn Tiến Lượng',
       subject: 'Ngữ văn',
       vendorId: '38222383-c0b6-4adf-8580-2e25c8e1e235',
@@ -1215,7 +1226,7 @@ function teacherCardHtml(t) {
       <h3>${esc(t.name)}</h3>
       ${t.subject ? `<span class="subject-tag">${esc(t.subject)}</span>` : ''}
       ${bio && bio.text ? `<p class="bio">${esc(bio.text)}</p>` : ''}
-      <span class="cta">Xem khoá học
+      <span class="cta">Vào học
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 6 15 12 9 18"/></svg>
       </span>
     </div>`;
@@ -1326,7 +1337,7 @@ function categoryOf(t, c) {
     if (title.indexOf('VOD') === 0) return 'Khoá VOD';
     return 'Khác';
   }
-  if (title.indexOf('IELTS') > -1 || title.indexOf('(LIVE VIP)') > -1) return 'IELTS';
+  if (title.indexOf('IELTS') > -1 || title.indexOf('LIVE VIP') > -1) return 'IELTS';
   if (title.indexOf('TOEIC') > -1) return 'TOEIC';
   if (title.indexOf('SGK') > -1 || title.indexOf('LỚP 10') > -1 || title.indexOf('LỚP 11') > -1 ||
       title.indexOf('LỚP 12') > -1 || title.indexOf('THPT') > -1 || title.indexOf('2026-2027') > -1 ||
