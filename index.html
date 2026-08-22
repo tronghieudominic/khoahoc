@@ -982,6 +982,16 @@ const LOCAL_CONFIG = {
       coursesApi: 'https://p9y4zl6vkd.execute-api.ap-southeast-1.amazonaws.com/prod/course?authors=68c7e0f150cab5000256b6bd&visibleHidden=false&type=online&status=published&vendorId=2212701d-71cf-4311-be6b-dcd61c217148',
       resLabel: '720p',
       streamFile: 'playlist_drm.m3u8'
+    },
+     {
+      key: 'luong',
+      name: 'Thầy Nguyễn Tiến Lượng',
+      subject: 'Ngữ văn',
+      vendorId: '2212701d-71cf-4311-be6b-dcd61c217148',
+      userId: '38222383-c0b6-4adf-8580-2e25c8e1e235',
+      coursesApi: 'https://p9y4zl6vkd.execute-api.ap-southeast-1.amazonaws.com/prod/course?authors=6538f6e3cee4c10008b1dc5e&visibleHidden=false&type=online&status=published&vendorId=2212701d-71cf-4311-be6b-dcd61c217148',
+      resLabel: '720p',
+      streamFile: 'playlist.m3u8'
     }
   ]
 };
@@ -1316,7 +1326,7 @@ function categoryOf(t, c) {
     if (title.indexOf('VOD') === 0) return 'Khoá VOD';
     return 'Khác';
   }
-  if (title.indexOf('IELTS') > -1) return 'IELTS';
+  if (title.indexOf('IELTS') > -1 || title.indexOf('(LIVE VIP)') > -1) return 'IELTS';
   if (title.indexOf('TOEIC') > -1) return 'TOEIC';
   if (title.indexOf('SGK') > -1 || title.indexOf('LỚP 10') > -1 || title.indexOf('LỚP 11') > -1 ||
       title.indexOf('LỚP 12') > -1 || title.indexOf('THPT') > -1 || title.indexOf('2026-2027') > -1 ||
