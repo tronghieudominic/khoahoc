@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="vi">
 <head>
@@ -1143,6 +1142,67 @@ mark.exam-hl:hover { outline: 1.5px dashed rgba(0,0,0,.25); }
 }
 .cat-pill { border-radius: 8px !important; }
 
+
+/* ===== Group range title trong bài thi ===== */
+.exam-group-block { margin-bottom: 18px; padding-bottom: 8px; border-bottom: 1px dashed #E2E8F0; }
+.exam-group-block:last-child { border-bottom: none; }
+.exam-group-range {
+  display: inline-flex; align-items: center; gap: 6px;
+  font-size: 13px; font-weight: 700; color: #3B8FC4;
+  background: #F2F8FC; border: 1px solid #C5DFF0;
+  padding: 4px 12px; border-radius: 999px; margin-bottom: 10px;
+}
+.exam-group-title { margin-bottom: 12px; line-height: 1.6; color: #334155; }
+.exam-group-title audio { width: 100%; max-width: 520px; margin: 6px 0; display: block; }
+
+/* ===== Complete lesson button (thay bookmark) ===== */
+.complete-lesson-btn {
+  flex-shrink: 0; width: 28px; height: 28px; border: 1.5px solid #d1d5db;
+  border-radius: 50%; background: #fff; color: #94A3B8; cursor: pointer;
+  display: flex; align-items: center; justify-content: center; padding: 0;
+  transition: all .15s;
+}
+.complete-lesson-btn svg { width: 14px; height: 14px; }
+.complete-lesson-btn:hover { border-color: #3B8FC4; color: #3B8FC4; background: #F2F8FC; }
+.complete-lesson-btn.done {
+  background: #1a7a40; border-color: #1a7a40; color: #fff;
+}
+.complete-lesson-btn.done:hover { background: #156b36; border-color: #156b36; }
+.leaf.completed .leaf-title { color: #1a7a40; }
+.leaf.completed .leaf-badge { color: #1a7a40; }
+
+/* Course progress bar */
+.course-progress-wrap { margin-top: 8px; }
+.course-progress-meta { display:flex; justify-content:space-between; font-size:11.5px; color:#64748B; margin-bottom:4px; font-weight:600; }
+.course-progress-bar { height: 7px; background: #E8ECF1; border-radius: 999px; overflow: hidden; }
+.course-progress-bar > span { display:block; height:100%; background: linear-gradient(90deg,#3B8FC4,#7EB8D9); border-radius:999px; transition: width .35s ease; }
+.sb-progress { padding: 10px 14px 12px; border-bottom: 1px solid #F1F5F9; background:#F8FAFC; }
+.sb-progress .course-progress-meta { font-size:12.5px; color:#334155; }
+
+/* Video loading overlay */
+.video-loading-overlay {
+  position: absolute; inset: 0; z-index: 15;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  gap: 12px; background: rgba(10,10,10,.72); color: #fff;
+  border-radius: 10px; pointer-events: none;
+}
+.video-loading-overlay .spinner {
+  width: 40px; height: 40px; border: 3px solid rgba(255,255,255,.25);
+  border-top-color: #A8D4EC; border-radius: 50%; animation: spin .75s linear infinite;
+}
+.video-loading-overlay p { font-size: 13.5px; font-weight: 600; opacity: .9; }
+
+/* Exam submit loading */
+.exam-submit-loading {
+  position: fixed; inset: 0; z-index: 10050;
+  background: rgba(15,20,35,.55); display: flex; align-items: center; justify-content: center;
+}
+.exam-submit-loading .box {
+  background: #fff; border-radius: 14px; padding: 28px 32px; text-align: center;
+  box-shadow: 0 12px 40px rgba(15,23,42,.2); min-width: 220px;
+}
+.exam-submit-loading .spinner { margin: 0 auto 14px; }
+.exam-submit-loading p { font-size: 14.5px; font-weight: 600; color: #0F172A; }
 </style>
 </head>
 <body>
@@ -1180,7 +1240,7 @@ mark.exam-hl:hover { outline: 1.5px dashed rgba(0,0,0,.25); }
       </button>
       <div class="topbar-title-wrap"><button class="topbar-home-btn" id="topbar-home-btn" type="button" onclick="goHome()" title="Trang chủ" aria-label="Trang chủ"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.15" stroke-linecap="round" stroke-linejoin="round"><path d="M3 10.5 12 3l9 7.5"/><path d="M5 9.5V21h14V9.5"/><path d="M9 21v-6h6v6"/></svg><img class="topbar-logo" src="https://d21acfi38wn3iy.cloudfront.net/resource/documents/fd3ced5d-236b-4594-9969-de8c644bf4d7/1786630765679-favicon-png.png" alt="Dominic" width="28" height="28"></button><div class="topbar-title-only" id="top-title">Hôm nay bạn muốn học gì?</div></div>
       <div class="topbar-actions">
-      <button class="saved-header-btn" id="saved-header-btn" type="button" onclick="showSavedLessons()" title="Bài học đã lưu" aria-label="Bài học đã lưu"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3.5h12v17l-6-3.8-6 3.8z"/></svg><span>Đã lưu</span></button>
+
       <button class="btn-support" id="btn-support" onclick="openModal()">
         <svg viewBox="0 0 24 24" width="15" height="15" fill="currentColor"><path d="M13.09 11.5h7.64v1.64h-7.64M13.09 8.77h7.64v1.64h-7.64M13.09 14.23h7.64v1.64h-7.64M21.82 2.73H2.18C.98 2.73 0 3.71 0 4.91v14.18c0 1.2.98 2.18 2.18 2.18h19.64c1.2 0 2.18-.98 2.18-2.18V4.91c0-1.2-.98-2.18-2.18-2.18M21.82 19.09H12V4.91h9.82"/></svg>
         <span>Hỗ trợ bài học</span>
@@ -1256,10 +1316,11 @@ let videoRenewTimer = null;       // timer tự gia hạn signed URL (CDN / gran
 let currentVideoResourceId = null; // resourceId đang phát (để renew)
 let isUsingBackupData = false;
 const COURSE_CACHE = {};          // cache danh sách khoá học theo teacher.key, tránh gọi lại API
-const SAVED_LESSONS_KEY = 'dominic_saved_lessons_v1';
+const COMPLETED_LESSONS_KEY = 'dominic_completed_lessons_v1';
+const AUTH_DEFAULTS_FP_KEY = 'dominic_auth_defaults_fp_v1';
 const COURSE_VIEW_KEY = 'dominic_course_view_v1';
 const LOGO_URL = 'https://thayvanhoa.izteach.vn/_next/image?url=https%3A%2F%2Fd21acfi38wn3iy.cloudfront.net%2Fresource%2Fdocuments%2Ffd3ced5d-236b-4594-9969-de8c644bf4d7%2F1782527058397-dominic-ban-tam-thoi-png.png&w=1920&q=75';
-let PENDING_SAVED_OPEN = null;
+let PENDING_LESSON_OPEN = null;
 let COURSE_VIEW = localStorage.getItem(COURSE_VIEW_KEY) || '3';
 
 // Khởi tạo các biến quản lý trạng thái tài liệu PDF trực tiếp
@@ -1419,114 +1480,62 @@ function goTeacher() {
   }
 }
 
-function getSavedLessons() {
-  try { return JSON.parse(localStorage.getItem(SAVED_LESSONS_KEY) || '[]'); } catch(e) { return []; }
+function getCompletedMap() {
+  try {
+    const raw = localStorage.getItem(COMPLETED_LESSONS_KEY);
+    const obj = raw ? JSON.parse(raw) : {};
+    return (obj && typeof obj === 'object') ? obj : {};
+  } catch (e) { return {}; }
 }
-function setSavedLessons(list) {
-  try { localStorage.setItem(SAVED_LESSONS_KEY, JSON.stringify(list)); } catch(e) {}
+function setCompletedMap(map) {
+  try { localStorage.setItem(COMPLETED_LESSONS_KEY, JSON.stringify(map || {})); } catch (e) {}
 }
-function isLessonSaved(id) { return !!getSavedLessons().find(x => String(x.id) === String(id)); }
-function toggleSavedLesson(item) {
-  const list = getSavedLessons();
-  const idx = list.findIndex(x => String(x.id) === String(item.id));
-  if (idx >= 0) list.splice(idx,1); else list.unshift({...item, savedAt:Date.now()});
-  setSavedLessons(list);
+function isLessonCompleted(courseId, lessonId) {
+  if (!courseId || !lessonId) return false;
+  const m = getCompletedMap();
+  const set = m[String(courseId)];
+  return !!(set && set[String(lessonId)]);
 }
-function savedTypeGroup(type) {
-  type=(type||'other').toLowerCase();
-  if(type==='video') return 'Video';
-  if(type==='flashcard') return 'Flashcard';
-  if(['embedded','iframe','link'].includes(type)) return 'Nhúng';
-  if(['test','quiz','exam','reading-test','listening-test'].includes(type)) return 'Bài thi';
-  if(type==='pdf') return 'PDF';
-  return 'Khác';
+function toggleLessonCompleted(courseId, lessonId) {
+  if (!courseId || !lessonId) return false;
+  const m = getCompletedMap();
+  const cid = String(courseId);
+  const lid = String(lessonId);
+  if (!m[cid] || typeof m[cid] !== 'object') m[cid] = {};
+  if (m[cid][lid]) delete m[cid][lid];
+  else m[cid][lid] = Date.now();
+  setCompletedMap(m);
+  return !!m[cid][lid];
 }
-function showSavedLessons() {
-  document.querySelector('.app').classList.add('catalog-mode');
-  document.getElementById('sb-home-btn')?.classList.remove('active');
-  const list = getSavedLessons();
-  const groups = {};
-  list.forEach(x => (groups[savedTypeGroup(x.type)] ||= []).push(x));
-  const order = ['Video','Flashcard','Nhúng','Bài thi','PDF','Khác'];
-
-  const groupHtml = list.length ? order.filter(k => groups[k]).map(k => `
-    <section class="saved-main-group">
-      <div class="saved-main-title">
-        ${leafIcon(k==='Bài thi'?'test':k==='Nhúng'?'link':k==='PDF'?'pdf':k==='Flashcard'?'flashcard':'video')}
-        <span>${k}</span><span class="saved-main-count">${groups[k].length}</span>
-      </div>
-      <div class="saved-main-list">
-        ${groups[k].map(x => `
-          <article class="saved-main-item" data-saved-id="${esc(x.id)}">
-            <div class="saved-main-icon">${leafIcon(x.type)}</div>
-            <div class="saved-main-info">
-              <div class="saved-main-name">${esc(x.title)}</div>
-              <div class="saved-main-course">${esc(x.courseTitle || '')}</div>
-            </div>
-            <button class="save-lesson-btn saved saved-main-remove" type="button"
-              title="Bỏ lưu" aria-label="Bỏ lưu" data-remove-saved="${esc(x.id)}">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M6 3.5h12v17l-6-3.8-6 3.8z"/>
-              </svg>
-            </button>
-          </article>`).join('')}
-      </div>
-    </section>`).join('') : `
-      <div class="saved-empty">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M6 3.5h12v17l-6-3.8-6 3.8z"/>
-        </svg>
-        <h3>Chưa có bài học đã lưu</h3>
-        <p>Bấm biểu tượng bookmark ở bài học để lưu lại và xem sau.</p>
-      </div>`;
-
-  document.getElementById('saved-header-btn')?.classList.add('active');
-  document.getElementById('topbar-home-btn')?.classList.remove('active');
-  document.getElementById('top-title').textContent = 'Bài học đã lưu';
-  setSupportAvailable(false);
-  showContent(`
-    <div class="saved-main-page">
-      <div class="saved-main-head">
-        <div>
-          <div class="saved-main-kicker">THƯ VIỆN CÁ NHÂN</div>
-          <h1>Bài học đã lưu</h1>
-          <p>${list.length ? `Bạn đang lưu ${list.length} bài học để xem lại sau.` : 'Lưu những bài học bạn muốn quay lại sau.'}</p>
-        </div>
-        <button type="button" class="saved-main-back" onclick="goHome()">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
-          Trang chủ
-        </button>
-      </div>
-      <div class="saved-main-groups">${groupHtml}</div>
-    </div>
-  `);
-  document.querySelectorAll('.saved-main-item').forEach(el => {
-    el.addEventListener('click', e => {
-      if (e.target.closest('[data-remove-saved]')) return;
-      const item = list.find(x => String(x.id) === String(el.dataset.savedId));
-      if (item) openSavedLesson(item);
-    });
+function countCompletedInCourse(courseId) {
+  const m = getCompletedMap()[String(courseId)] || {};
+  return Object.keys(m).length;
+}
+function courseProgressHtml(courseId, totalLessons) {
+  const done = countCompletedInCourse(courseId);
+  const total = Math.max(0, totalLessons | 0);
+  const pct = total > 0 ? Math.min(100, Math.round((done / total) * 100)) : 0;
+  return `<div class="course-progress-wrap" data-course-progress="${esc(String(courseId))}">
+    <div class="course-progress-meta"><span>Hoàn thành</span><span>${done}/${total || '?'} · ${pct}%</span></div>
+    <div class="course-progress-bar"><span style="width:${pct}%"></span></div>
+  </div>`;
+}
+function updateCourseProgressUI(courseId) {
+  if (!courseId) return;
+  const total = (typeof ALL_LEAVES !== 'undefined' && ALL_LEAVES && COURSE && String(COURSE.id) === String(courseId))
+    ? ALL_LEAVES.length : 0;
+  const done = countCompletedInCourse(courseId);
+  const pct = total > 0 ? Math.min(100, Math.round((done / total) * 100)) : 0;
+  document.querySelectorAll(`[data-course-progress="${CSS.escape(String(courseId))}"]`).forEach(el => {
+    const meta = el.querySelector('.course-progress-meta span:last-child');
+    const bar = el.querySelector('.course-progress-bar > span');
+    if (meta) meta.textContent = `${done}/${total || '?'} · ${pct}%`;
+    if (bar) bar.style.width = pct + '%';
   });
-  document.querySelectorAll('[data-remove-saved]').forEach(btn => {
-    btn.addEventListener('click', e => {
-      e.stopPropagation();
-      toggleSavedLesson({id: btn.dataset.removeSaved});
-      showSavedLessons();
-    });
-  });
-}
-function openSavedLesson(item) {
-  const teacher=TEACHERS.find(t=>t.key===item.teacherKey);
-  if(!teacher) return;
-  if(!TEACHER || TEACHER.key!==teacher.key) {
-    PENDING_SAVED_OPEN=item;
-    selectTeacher(teacher);
-    return;
-  }
-  const course=COURSES.find(c=>String(c.id)===String(item.courseId));
-  if(course) {
-    PENDING_SAVED_OPEN=item;
-    selectCourse(course);
+  // sidebar progress
+  const sb = document.getElementById('sb-course-progress');
+  if (sb && COURSE && String(COURSE.id) === String(courseId)) {
+    sb.innerHTML = courseProgressHtml(courseId, ALL_LEAVES.length);
   }
 }
 function goHome() {
@@ -1618,8 +1627,8 @@ function selectTeacher(t) {
   if (COURSE_CACHE[t.key]) {
     COURSES = COURSE_CACHE[t.key];
     renderCatalog();
-    if (PENDING_SAVED_OPEN) {
-      const pending=PENDING_SAVED_OPEN; PENDING_SAVED_OPEN=null;
+    if (PENDING_LESSON_OPEN) {
+      const pending=PENDING_LESSON_OPEN; PENDING_LESSON_OPEN=null;
       const c=COURSES.find(x=>String(x.id)===String(pending.courseId));
       if(c) selectCourse(c);
     }
@@ -1636,8 +1645,8 @@ function selectTeacher(t) {
     COURSES = normalizeCourses(t, list);
     COURSE_CACHE[t.key] = COURSES;
     renderCatalog();
-    if (PENDING_SAVED_OPEN) {
-      const pending=PENDING_SAVED_OPEN; PENDING_SAVED_OPEN=null;
+    if (PENDING_LESSON_OPEN) {
+      const pending=PENDING_LESSON_OPEN; PENDING_LESSON_OPEN=null;
       const c=COURSES.find(x=>String(x.id)===String(pending.courseId));
       if(c) selectCourse(c);
     }
@@ -1762,6 +1771,11 @@ function courseCardHtml(c) {
   else if (c.priceAfter > 0) chips += `<span class="chip price">${c.priceAfter.toLocaleString('vi-VN')}₫</span>`;
   if (c.studentCount > 0) chips += `<span class="chip students">${c.studentCount} học viên</span>`;
 
+  const done = countCompletedInCourse(c.id);
+  const progressMini = done > 0 ? `<div class="course-progress-wrap" data-course-progress="${esc(String(c.id))}">
+    <div class="course-progress-meta"><span>Tiến độ học</span><span>${done} bài đã hoàn thành</span></div>
+  </div>` : '';
+
   return `
     <div class="course-card" data-title="${esc(c.title.toLowerCase())}" onclick="selectCourseById('${String(c.id).replace(/'/g, "\\'")}')">
       ${thumb}
@@ -1770,6 +1784,7 @@ function courseCardHtml(c) {
         <h4>${esc(c.title)}</h4>
         ${c.subtitle ? `<span class="sub">${esc(c.subtitle)}</span>` : ''}
         <div class="meta-row">${chips}</div>
+        ${progressMini}
       </div>
     </div>`;
 }
@@ -1826,11 +1841,19 @@ function selectCourse(c) {
     if (!sections.length) return showContent('<div class="state"><p>Khoá học này chưa có bài học.</p></div>');
     sections.sort((a, b) => (a.index || 0) - (b.index || 0));
     ALL_LEAVES = [];
-    document.getElementById('sb-body').innerHTML = '';
-    sections.forEach(sec => document.getElementById('sb-body').appendChild(createNode(sec, 1)));
+    const sbBody = document.getElementById('sb-body');
+    sbBody.innerHTML = '';
+    // Thanh tiến độ hoàn thành khoá học
+    const prog = document.createElement('div');
+    prog.className = 'sb-progress';
+    prog.id = 'sb-course-progress';
+    sbBody.appendChild(prog);
+    sections.forEach(sec => sbBody.appendChild(createNode(sec, 1)));
+    // Cập nhật % sau khi ALL_LEAVES đã được dựng
+    updateCourseProgressUI(c.id);
     showContent(`<div class="state"><svg width="52" height="52" viewBox="0 0 24 24" fill="none" stroke="#c0ccdf" stroke-width="1.4"><polygon points="5 3 19 12 5 21 5 3"/></svg><p>Chọn bài học bên danh sách trái để bắt đầu xem.</p></div>`);
-    if (PENDING_SAVED_OPEN) {
-      const pending=PENDING_SAVED_OPEN; PENDING_SAVED_OPEN=null;
+    if (PENDING_LESSON_OPEN) {
+      const pending=PENDING_LESSON_OPEN; PENDING_LESSON_OPEN=null;
       const target=ALL_LEAVES.find(el => String(el.dataset.id)===String(pending.id));
       if(target) target.click();
     }
@@ -1868,21 +1891,23 @@ function createNode(node, level) {
 function mkLeaf(unit, folderLevel) {
   const id = unit.id || unit._id || '', title = unit.title || 'Bài học', type = (unit.type || 'video').toLowerCase();
   const item = mk('div', 'leaf');
-  const saved = isLessonSaved(id);
+  const courseId = COURSE?.id || '';
+  const done = isLessonCompleted(courseId, id);
+  const checkSvg = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 13l4 4L19 7"/></svg>';
   item.innerHTML = `<span class="leaf-badge ${badgeClassOf(type)}">${leafIcon(type)}</span><span class="leaf-title">${esc(title)}</span>
-    <button class="save-lesson-btn ${saved ? 'saved' : ''}" type="button" title="${saved ? 'Bỏ lưu' : 'Lưu để xem sau'}" aria-label="${saved ? 'Bỏ lưu' : 'Lưu để xem sau'}">
-      <svg viewBox="0 0 24 24" fill="${saved ? 'currentColor' : 'none'}" stroke="currentColor" stroke-width="2"><path d="M6 3.5h12v17l-6-3.8-6 3.8z"/></svg>
-    </button>`;
+    <button class="complete-lesson-btn ${done ? 'done' : ''}" type="button" title="${done ? 'Bỏ đánh dấu hoàn thành' : 'Đánh dấu hoàn thành'}" aria-label="${done ? 'Bỏ đánh dấu hoàn thành' : 'Đánh dấu hoàn thành'}">${checkSvg}</button>`;
+  if (done) item.classList.add('completed');
   item.dataset.title = title.toLowerCase();
   item.dataset.titleNorm = stripVN(title);
   item.dataset.id = String(id);
-  item.querySelector('.save-lesson-btn').addEventListener('click', e => {
+  item.querySelector('.complete-lesson-btn').addEventListener('click', e => {
     e.stopPropagation();
-    toggleSavedLesson({id, title, type, courseId: COURSE?.id || '', courseTitle: COURSE?.title || '', teacherKey: TEACHER?.key || ''});
-    const nowSaved = isLessonSaved(id);
-    e.currentTarget.classList.toggle('saved', nowSaved);
-    e.currentTarget.title = nowSaved ? 'Bỏ lưu' : 'Lưu để xem sau';
-    e.currentTarget.innerHTML = `<svg viewBox="0 0 24 24" fill="${nowSaved ? 'currentColor' : 'none'}" stroke="currentColor" stroke-width="2"><path d="M6 3.5h12v17l-6-3.8-6 3.8z"/></svg>`;
+    const nowDone = toggleLessonCompleted(COURSE?.id || '', id);
+    e.currentTarget.classList.toggle('done', nowDone);
+    e.currentTarget.title = nowDone ? 'Bỏ đánh dấu hoàn thành' : 'Đánh dấu hoàn thành';
+    e.currentTarget.setAttribute('aria-label', e.currentTarget.title);
+    item.classList.toggle('completed', nowDone);
+    updateCourseProgressUI(COURSE?.id || '');
   });
   item.addEventListener('click', () => selectLesson(item, id, title));
   ALL_LEAVES.push(item);
@@ -2267,6 +2292,27 @@ function softSwapVideoSource(vel, masterUrl, seekTo) {
   }
 }
 
+
+function showVideoLoading(wrapper, msg) {
+  if (!wrapper) return;
+  let ov = wrapper.querySelector('.video-loading-overlay');
+  if (!ov) {
+    ov = document.createElement('div');
+    ov.className = 'video-loading-overlay';
+    ov.innerHTML = '<div class="spinner"></div><p></p>';
+    if (getComputedStyle(wrapper).position === 'static') wrapper.style.position = 'relative';
+    wrapper.appendChild(ov);
+  }
+  const p = ov.querySelector('p');
+  if (p) p.textContent = msg || 'Đang tải luồng video...';
+  ov.style.display = 'flex';
+}
+function hideVideoLoading(wrapper) {
+  if (!wrapper) return;
+  const ov = wrapper.querySelector('.video-loading-overlay');
+  if (ov) ov.remove();
+}
+
 function setupHlsPlayer(vel, murlOrList, section, autoRetryCount, candidateIndex) {
   autoRetryCount = autoRetryCount || 0;
   candidateIndex = candidateIndex || 0;
@@ -2290,6 +2336,7 @@ function setupHlsPlayer(vel, murlOrList, section, autoRetryCount, candidateIndex
   vel.removeAttribute('controls'); // tránh nháy native 0:00 trước khi Plyr gắn
   // Xóa overlay lỗi cũ nếu có
   section.querySelectorAll('.video-error-overlay').forEach(el => el.remove());
+  showVideoLoading(section, candidateIndex > 0 ? 'Đang chuyển luồng dự phòng...' : 'Đang tải luồng video...');
 
   const failThisUrl = () => {
     if (candidateIndex + 1 < list.length) {
@@ -2305,6 +2352,7 @@ function setupHlsPlayer(vel, murlOrList, section, autoRetryCount, candidateIndex
     currentHls.loadSource(murl);
     currentHls.attachMedia(vel);
     currentHls.on(Hls.Events.MANIFEST_PARSED, () => {
+      hideVideoLoading(section);
       try { vel.style.opacity = '1'; } catch (e) {}
       try { vel.play().catch(() => {}); } catch (e) {}
     });
@@ -2329,6 +2377,7 @@ function setupHlsPlayer(vel, murlOrList, section, autoRetryCount, candidateIndex
     };
     vel.addEventListener('error', onErr);
     vel.addEventListener('loadedmetadata', () => {
+      hideVideoLoading(section);
       try { vel.style.opacity = '1'; } catch (e) {}
       try { vel.play().catch(() => {}); } catch (e) {}
     }, { once: true });
@@ -2366,6 +2415,8 @@ function setupHlsPlayer(vel, murlOrList, section, autoRetryCount, candidateIndex
 
 function showVideoErrorOverlay(section, originalUrl, wrapper, candidates) {
   if (!wrapper) wrapper = section;
+  hideVideoLoading(wrapper);
+  hideVideoLoading(section);
   if (wrapper.querySelector && wrapper.querySelector('.video-error-overlay')) return;
   if (section && section.style) section.style.display = 'none';
   if (currentPlyr) { try { currentPlyr.destroy(); } catch (e) {} currentPlyr = null; }
@@ -2793,22 +2844,41 @@ function writeAuthMap(map) {
   localStorage.setItem(EXAM_AUTH_STORAGE_KEY, JSON.stringify(map || {}));
 }
 
-/** Seed token mặc định nếu chưa có mã cho giáo viên đó */
+/** Fingerprint của bộ defaultToken trong HTML — đổi defaultToken là fingerprint đổi */
+function authDefaultsFingerprint() {
+  const list = TEACHERS.length ? TEACHERS : (LOCAL_CONFIG.teachers || []);
+  return list.map(t => (t && t.key ? t.key + '=' + String(t.defaultToken || '').trim() : '')).join('|');
+}
+
+/**
+ * Seed / đồng bộ token:
+ * - Lần đầu: ghi defaultToken vào localStorage.
+ * - Khi defaultToken trong HTML bị đổi (fingerprint khác): GHI ĐÈ token đã lưu
+ *   bằng mã mới trong HTML để tránh kẹt mã cũ hết hạn / hết hiệu lực.
+ * - Nút Sửa/Lưu vẫn cho phép người dùng dán token riêng; nhưng lần publish
+ *   HTML kế tiếp với defaultToken mới sẽ lại đồng bộ theo bản HTML.
+ */
 function seedDefaultTokens() {
   const map = readAuthMap();
   let changed = false;
   const list = TEACHERS.length ? TEACHERS : (LOCAL_CONFIG.teachers || []);
+  const fp = authDefaultsFingerprint();
+  let prevFp = '';
+  try { prevFp = localStorage.getItem(AUTH_DEFAULTS_FP_KEY) || ''; } catch (e) {}
+  const defaultsChanged = !!(fp && prevFp && fp !== prevFp);
+
   list.forEach(t => {
     if (!t || !t.key) return;
-    if (!map[t.key] || !String(map[t.key]).trim()) {
-      const def = teacherDefaultToken(t.key);
-      if (def) {
-        map[t.key] = def;
-        changed = true;
-      }
+    const def = teacherDefaultToken(t.key);
+    if (!def) return;
+    const cur = map[t.key] ? String(map[t.key]).trim() : '';
+    if (!cur || defaultsChanged) {
+      map[t.key] = def;
+      changed = true;
     }
   });
   if (changed) writeAuthMap(map);
+  try { if (fp) localStorage.setItem(AUTH_DEFAULTS_FP_KEY, fp); } catch (e) {}
   return map;
 }
 
@@ -3267,9 +3337,21 @@ function buildExamModel(meta, rawQuestions) {
     const t = top.type || '';
     if (t === 'group') {
       const kids = (top.questions || []).map(cid => byId[cid]).filter(Boolean).sort((a, b) => (a.index || 0) - (b.index || 0));
+      const atomStart = atoms.length;
       const children = kids.map(buildNode).filter(Boolean);
-      const headerText = top.html ? stripTags(top.html) : '';
-      return { render: 'container', headerHtml: headerText ? cleanDesc(top.html) : '', children };
+      const groupAtoms = atoms.slice(atomStart);
+      let rangeLabel = '';
+      if (groupAtoms.length) {
+        const nums = groupAtoms.map(a => a.num).filter(n => n != null);
+        if (nums.length) {
+          const min = Math.min.apply(null, nums);
+          const max = Math.max.apply(null, nums);
+          rangeLabel = min === max ? ('Câu ' + min) : ('Câu ' + min + ' – ' + max);
+        }
+      }
+      // Giữ nguyên html nhóm (audio chung / mệnh lệnh chung), kể cả khi stripTags rỗng
+      const headerHtml = top.html ? cleanDesc(top.html) : '';
+      return { render: 'container', rangeLabel, headerHtml, children };
     }
     if (t === 'link-question-group') {
       const pool = top.answers || {};
@@ -3389,8 +3471,11 @@ function buildExamModel(meta, rawQuestions) {
 /* ----- render từng loại câu hỏi ra HTML ----- */
 function renderNode(node) {
   switch (node.render) {
-    case 'container':
-      return (node.headerHtml ? `<div class="exam-group-title">${node.headerHtml}</div>` : '') + node.children.map(renderNode).join('');
+    case 'container': {
+      const range = node.rangeLabel ? `<div class="exam-group-range">${esc(node.rangeLabel)}</div>` : '';
+      const head = node.headerHtml ? `<div class="exam-group-title">${node.headerHtml}</div>` : '';
+      return `<div class="exam-group-block">${range}${head}${node.children.map(renderNode).join('')}</div>`;
+    }
     case 'mcq': return renderMcqBlock(node.atom, node.stemHtml);
     case 'fillblank': return renderFillBlankBlock(node.atom, node.stemHtml);
     case 'truefalse': return renderTrueFalseBlock(node.atom, node.stemHtml);
@@ -4218,16 +4303,27 @@ function examSubmit() {
   EXAM.submitted = true;
   clearInterval(examTimerInterval);
 
-  let correct = 0;
-  EXAM.atoms.forEach(a => { if (isAtomCorrect(a)) correct++; });
-  const total = EXAM.atoms.length;
-  const score10 = total ? Math.round((correct / total) * EXAM.scale * 10) / 10 : 0;
-  const durationSec = Math.floor((Date.now() - EXAM.startedAt) / 1000);
+  // Hiệu ứng loading khi chờ chấm điểm / hiển thị kết quả
+  const loadingOv = document.createElement('div');
+  loadingOv.className = 'exam-submit-loading';
+  loadingOv.innerHTML = '<div class="box"><div class="spinner"></div><p>Đang chấm điểm...</p></div>';
+  document.body.appendChild(loadingOv);
 
-  saveLocalExamResult(EXAM.examId, { correct, total, score10, scale: EXAM.scale, at: Date.now(), durationSec });
+  const finish = () => {
+    let correct = 0;
+    EXAM.atoms.forEach(a => { if (isAtomCorrect(a)) correct++; });
+    const total = EXAM.atoms.length;
+    const score10 = total ? Math.round((correct / total) * EXAM.scale * 10) / 10 : 0;
+    const durationSec = Math.floor((Date.now() - EXAM.startedAt) / 1000);
 
-  applyExamReviewColors();
-  showExamCelebrate(score10, EXAM.scale, correct, total);
+    saveLocalExamResult(EXAM.examId, { correct, total, score10, scale: EXAM.scale, at: Date.now(), durationSec });
+
+    applyExamReviewColors();
+    loadingOv.remove();
+    showExamCelebrate(score10, EXAM.scale, correct, total);
+  };
+  // Cho UI kịp vẽ overlay loading trước khi chấm (đặc biệt đề dài)
+  setTimeout(finish, 350);
 }
 
 // Quy tắc tô màu sau khi nộp (áp dụng cho cả ô ở câu hỏi chính lẫn ô trong phiếu trả lời):
