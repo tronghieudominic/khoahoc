@@ -520,9 +520,9 @@ a.attach-row:hover { background: #EEF2F7; border-color: #C5DFF0; }
 .exam-letter { width: 24px; height: 24px; border-radius: 50%; border: 1px solid #d1d5db; background: #f9fafb; color: #4b5563; font-size: 13px; font-weight: 700; cursor: pointer; transition: all .12s; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
 .exam-letter:hover { border-color: #3B8FC4; color: #3B8FC4; }
 .exam-letter.picked { background: #3B8FC4; border-color: #3B8FC4; color: #fff; }
-.exam-letter.res-correct-fill { background: #1a7a40; border-color: #1a7a40; color: #fff; cursor: default; }
-.exam-letter.res-wrong-fill { background: #c0392b; border-color: #c0392b; color: #fff; cursor: default; }
-.exam-letter.res-correct-outline { background: #fff; border-color: #1a7a40; color: #1a7a40; cursor: default; }
+.exam-letter.res-correct-fill { background: #1a7a40 !important; border-color: #1a7a40 !important; color: #fff !important; cursor: default; }
+.exam-letter.res-wrong-fill { background: #c0392b !important; border-color: #c0392b !important; color: #fff !important; cursor: default; }
+.exam-letter.res-correct-outline { background: #fff !important; border-color: #1a7a40 !important; color: #1a7a40 !important; cursor: default; }
 .exam-sheet-dropdown-preview { flex:1; min-width:0; height:32px; border:1px solid #d1d5db; background:#fff; border-radius:8px; padding:0 12px; font-size:13px; font-weight:600; color:#111827; display:flex; align-items:center; cursor:pointer; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
 .exam-sheet-dropdown-preview.is-empty { color:#9aa3b5; font-weight:400; }
 .exam-sheet-dropdown-preview:hover { border-color:#3B8FC4; }
@@ -2746,6 +2746,107 @@ mark.exam-hl {
 /* Ẩn hẳn theme trong toolbar bài thi nếu còn sót */
 .exam-theme-wrap, #exam-theme-toggle, #exam-theme-panel { display: none !important; }
 
+/* =====================================================================
+   V16 — Chốt lại: đồng bộ font Roboto Regular 16px cho bài đọc/bài nghe,
+   tắt hover ở đáp án, nút ABCD dùng đúng font Roboto, phiếu trả lời nền
+   trắng + tự cuộn theo câu đang xem. Khối này cố tình đặt SAU CÙNG trong
+   <style> để thắng mọi rule !important phía trên cho cùng selector.
+   ===================================================================== */
+.exam-runner,
+.exam-runner .exam-passage,
+.exam-runner .exam-questions,
+.exam-runner .exam-q-title,
+.exam-runner .exam-q-num,
+.exam-runner .exam-choice-text,
+.exam-runner .exam-choice-row,
+.exam-runner .exam-group-title,
+.exam-runner .exam-tf-row,
+.exam-runner .exam-tf-text,
+.exam-runner .exam-tf-btn,
+.exam-runner .exam-nav,
+.exam-runner .exam-nav *,
+.exam-runner .exam-sheet-row,
+.exam-runner .exam-sheet-row .qnum,
+.exam-runner .exam-blank-input,
+.exam-runner .exam-inline-select,
+.exam-runner .exam-sheet-textmini,
+.exam-runner .exam-match-card,
+.exam-runner .exam-dragbank-item,
+.exam-runner .exam-mobile-answerbar,
+.exam-runner .exam-mobile-answerbar *,
+.exam-runner .exam-stats-panel,
+.exam-runner .exam-stats-panel * {
+  font-family: 'Roboto', Arial, Helvetica, sans-serif !important;
+}
+/* Nội dung bài đọc / câu hỏi / đáp án: Roboto Regular, tối thiểu 16px (nút A-/A+ vẫn chỉnh được, chỉ nâng sàn tối thiểu) */
+.exam-runner .exam-passage,
+.exam-runner .exam-questions,
+.exam-runner .exam-q-title,
+.exam-runner .exam-choice-text,
+.exam-runner .exam-tf-text,
+.exam-runner .exam-blank-input,
+.exam-runner .exam-inline-select,
+.exam-runner .exam-sheet-textmini {
+  font-size: var(--exam-font-size, 16px) !important;
+  font-weight: 400 !important;
+}
+/* Nút chữ cái ABCD: Roboto rõ ràng, đậm vừa phải, không còn font lẫn lộn trông xấu */
+.exam-runner .exam-letter {
+  font-family: 'Roboto', Arial, Helvetica, sans-serif !important;
+  font-weight: 700 !important;
+}
+/* Tắt hiệu ứng hover khi rê chuột vào đáp án (giữ nguyên màu/kiểu như lúc chưa hover) */
+.exam-runner .exam-letter:hover:not(:disabled):not(.picked):not(.res-correct-fill):not(.res-wrong-fill):not(.res-correct-outline) {
+  background: #F3F5F8 !important;
+  border-color: #D0D7E2 !important;
+  color: #1E293B !important;
+  transform: none !important;
+}
+.exam-runner.dark-mode .exam-letter:hover:not(:disabled):not(.picked):not(.res-correct-fill):not(.res-wrong-fill):not(.res-correct-outline) {
+  background: #1e232c !important;
+  border-color: #313847 !important;
+  color: #c3cadb !important;
+  transform: none !important;
+}
+.exam-runner .exam-choice-row:hover,
+.exam-runner.dark-mode .exam-choice-row:hover {
+  background: transparent !important;
+}
+
+/* Phiếu trả lời nền trắng (thay vì xám nhạt), và dòng câu đang xem được tô nhẹ khi tự cuộn theo */
+.exam-runner .exam-nav {
+  background: #fff !important;
+}
+.exam-runner .exam-sheet-row.active-jump {
+  background: #EAF4FC !important;
+  border-radius: 8px;
+}
+.exam-runner.dark-mode .exam-sheet-row.active-jump {
+  background: #1e2836 !important;
+}
+
+/* Thống kê nhanh dùng lại đúng bố cục phiếu trả lời thường (ABCD tròn, xanh/đỏ/viền xanh) để dễ đối chiếu */
+.exam-stats-panel .exam-stats-mirror {
+  display: flex; flex-direction: column; gap: 2px;
+}
+.exam-stats-panel .exam-stats-mirror .exam-sheet-row {
+  padding: 6px 2px; border-bottom: 1px solid #F1F5F9;
+}
+.exam-runner.dark-mode .exam-stats-panel .exam-stats-mirror .exam-sheet-row {
+  border-bottom-color: #262c38;
+}
+.exam-stats-panel .exam-stats-mirror .exam-letter,
+.exam-stats-panel .exam-stats-mirror .exam-sheet-match-opt,
+.exam-stats-panel .exam-stats-mirror .exam-sheet-textmini,
+.exam-stats-panel .exam-stats-mirror .exam-inline-select,
+.exam-stats-panel .exam-stats-mirror .exam-sheet-dot {
+  pointer-events: none !important;
+}
+.exam-stats-panel .exam-stats-mirror .qnum,
+.exam-stats-panel .exam-stats-mirror .exam-sheet-dropdown-preview {
+  cursor: pointer;
+}
+
 </style>
 </head>
 <body>
@@ -3209,6 +3310,22 @@ function courseProgressHtml(courseId, totalLessons) {
     <div class="course-progress-bar"><span style="width:${pct}%"></span></div>
   </div>`;
 }
+// Lưu lại tổng số bài thật của từng khoá (chỉ biết chính xác sau khi đã mở khoá đó ít nhất 1 lần)
+// để trang danh sách khoá học (chưa mở khoá) có thể tính % đúng thay vì áng chừng.
+const COURSE_TOTALS_KEY = 'dominic_course_totals_v1';
+function getCourseTotalsMap() {
+  try { const raw = localStorage.getItem(COURSE_TOTALS_KEY); return raw ? JSON.parse(raw) : {}; } catch (e) { return {}; }
+}
+function saveCourseTotal(courseId, total) {
+  if (!courseId || !(total > 0)) return;
+  const m = getCourseTotalsMap();
+  m[String(courseId)] = total;
+  try { localStorage.setItem(COURSE_TOTALS_KEY, JSON.stringify(m)); } catch (e) {}
+}
+function getKnownCourseTotal(courseId) {
+  const m = getCourseTotalsMap();
+  return m[String(courseId)] || 0;
+}
 function updateCourseProgressUI(courseId) {
   if (!courseId) return;
   const total = (typeof ALL_LEAVES !== 'undefined' && ALL_LEAVES && COURSE && String(COURSE.id) === String(courseId))
@@ -3466,10 +3583,14 @@ function courseCardHtml(c) {
   if (c.studentCount > 0) chips += `<span class="chip students">${c.studentCount} học viên</span>`;
 
   const done = countCompletedInCourse(c.id);
-  const progressMini = done > 0 ? `<div class="course-progress-wrap" data-course-progress="${esc(String(c.id))}">
-    <div class="course-progress-meta"><span>Tiến độ học</span><span>${done} bài đã học</span></div>
-    <div class="course-progress-bar"><span style="width:${Math.min(100, done * 8)}%"></span></div>
-  </div>` : '';
+  // % chỉ tính khi đã biết tổng số bài THẬT của khoá này (tức đã từng mở khoá ra xem
+  // danh sách bài học ít nhất 1 lần) — tránh hiện % ảo/sai như trước (áng chừng done*8%).
+  const knownTotal = getKnownCourseTotal(c.id);
+  const progressMini = done > 0 ? (knownTotal > 0
+    ? courseProgressHtml(c.id, knownTotal)
+    : `<div class="course-progress-wrap" data-course-progress="${esc(String(c.id))}">
+        <div class="course-progress-meta"><span>Tiến độ học</span><span>${done} bài đã học</span></div>
+      </div>`) : '';
 
   return `
     <div class="course-card" data-title="${esc(c.title.toLowerCase())}" onclick="selectCourseById('${String(c.id).replace(/'/g, "\\'")}')">
@@ -3544,7 +3665,9 @@ function selectCourse(c) {
     prog.id = 'sb-course-progress';
     sbBody.appendChild(prog);
     sections.forEach(sec => sbBody.appendChild(createNode(sec, 1)));
-    // Cập nhật % sau khi ALL_LEAVES đã được dựng
+    // Cập nhật % sau khi ALL_LEAVES đã được dựng, đồng thời lưu lại tổng số bài thật
+    // của khoá này để trang danh sách khoá học hiển thị đúng % (không còn áng chừng).
+    saveCourseTotal(c.id, ALL_LEAVES.length);
     updateCourseProgressUI(c.id);
     showContent(`<div class="state"><svg width="52" height="52" viewBox="0 0 24 24" fill="none" stroke="#c0ccdf" stroke-width="1.4"><polygon points="5 3 19 12 5 21 5 3"/></svg><p>Chọn bài học bên danh sách trái để bắt đầu xem.</p></div>`);
     if (PENDING_LESSON_OPEN) {
@@ -5498,6 +5621,40 @@ function renderExamRunner(unit, examId, meta, rawQuestions, requestedPart) {
   }
   if (EXAM.submitted) applyExamReviewColors();
   if (isReading) updateExamStatsPanel();
+  if (!isReading) initExamSheetScrollSync();
+}
+
+// Tự điều hướng phiếu trả lời theo câu đang xem khi cuộn đề bài (chỉ áp dụng khi có
+// sidebar phiếu trả lời thật, tức bài nghe/kiểu không split — bài đọc dùng bảng
+// "Thống kê nhanh" nổi thay cho phiếu trả lời nên không cần).
+let _examScrollSyncObserver = null;
+function initExamSheetScrollSync() {
+  if (_examScrollSyncObserver) { _examScrollSyncObserver.disconnect(); _examScrollSyncObserver = null; }
+  const questionsEl = document.getElementById('exam-questions');
+  const sheetEl = document.getElementById('exam-sheet-pages');
+  if (!questionsEl || !sheetEl || typeof IntersectionObserver === 'undefined') return;
+  const targets = Array.from(questionsEl.querySelectorAll('[id^="eq-"]'));
+  if (!targets.length) return;
+  let currentActive = null;
+  const setActive = qid => {
+    if (!qid || qid === currentActive) return;
+    currentActive = qid;
+    sheetEl.querySelectorAll('.exam-sheet-row.active-jump').forEach(r => r.classList.remove('active-jump'));
+    const qnumEl = sheetEl.querySelector(`.qnum[data-jump="${CSS.escape(qid)}"]`);
+    const row = qnumEl ? qnumEl.closest('.exam-sheet-row') : null;
+    if (row) { row.classList.add('active-jump'); row.scrollIntoView({ block: 'nearest', behavior: 'smooth' }); }
+  };
+  _examScrollSyncObserver = new IntersectionObserver(entries => {
+    let best = null, bestTop = Infinity;
+    entries.forEach(en => {
+      if (en.isIntersecting) {
+        const top = Math.abs(en.boundingClientRect.top);
+        if (top < bestTop) { bestTop = top; best = en.target; }
+      }
+    });
+    if (best) setActive(best.id.replace(/^eq-/, ''));
+  }, { root: questionsEl, threshold: [0, .25, .5, .75, 1], rootMargin: '0px 0px -55% 0px' });
+  targets.forEach(t => _examScrollSyncObserver.observe(t));
 }
 
 function startExamTimer() {
@@ -5652,7 +5809,7 @@ function wireExamEvents() {
   });
 
   if (fontDecBtn) fontDecBtn.addEventListener('click', () => {
-    fontSize = Math.max(13, fontSize - 1);
+    fontSize = Math.max(15, fontSize - 1); // không cho nhỏ hơn 15px để chữ đề thi không bị quá bé
     runnerEl.style.setProperty('--exam-font-size', fontSize + 'px');
   });
 
@@ -6078,7 +6235,7 @@ function updateExamStatsPanel() {
   if (!panel || !EXAM) return;
   const atoms = EXAM.atoms || [];
   let answered = 0, correct = 0, wrong = 0, blank = 0;
-  const rows = atoms.map(a => {
+  atoms.forEach(a => {
     const done = isAtomAnswered(a);
     if (!done) blank++;
     else {
@@ -6088,18 +6245,7 @@ function updateExamStatsPanel() {
         else wrong++;
       }
     }
-    let status = 'blank', statusLabel = 'Chưa làm';
-    if (EXAM.submitted) {
-      if (!done) { status = 'blank'; statusLabel = 'Chưa làm'; }
-      else if (isAtomCorrect(a)) { status = 'ok'; statusLabel = 'Đúng'; }
-      else { status = 'bad'; statusLabel = 'Sai'; }
-    } else if (done) {
-      status = 'done'; statusLabel = 'Đã làm';
-    }
-    return `<button type="button" class="exam-stats-item ${status}" data-jump="${esc(String(a.id))}">
-      <b>${a.num}</b><span>${statusLabel}</span>
-    </button>`;
-  }).join('');
+  });
 
   const summary = EXAM.submitted
     ? `<div class="exam-stats-summary">
@@ -6113,18 +6259,27 @@ function updateExamStatsPanel() {
          <span><b>${atoms.length}</b> câu</span>
        </div>`;
 
+  // Dùng LẠI đúng hàm dựng hàng của "phiếu trả lời" thông thường (examSheetRowHtml) để
+  // Thống kê nhanh hiện đúng các ô ABCD tròn (và tự nhận màu xanh/đỏ/viền xanh khi đã nộp
+  // bài, vì cùng dùng chung class="exam-letter" + data-qid/data-key với phần câu hỏi chính),
+  // thay vì các ô vuông trừu tượng như trước — dễ đối chiếu hơn hẳn.
+  const rowsHtml = atoms.map(examSheetRowHtml).join('');
+
   panel.innerHTML = `
     <div class="exam-stats-head">
       <strong>Thống kê nhanh</strong>
       <button type="button" class="exam-stats-close" id="exam-stats-close" aria-label="Đóng">×</button>
     </div>
     ${summary}
-    <div class="exam-stats-grid">${rows}</div>`;
+    <div class="exam-stats-mirror">${rowsHtml}</div>`;
 
-  panel.querySelectorAll('.exam-stats-item').forEach(btn => {
-    btn.addEventListener('click', () => {
-      const el = document.getElementById('eq-' + btn.dataset.jump);
-      if (el) el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  // Trong bảng thống kê chỉ cho bấm số câu (và ô dropdown) để nhảy tới câu đó rồi tự đóng
+  // bảng lại — không cho bấm chọn đáp án từ đây để tránh đổi nhầm đáp án.
+  panel.querySelectorAll('.exam-stats-mirror .qnum, .exam-stats-mirror .exam-sheet-dropdown-preview').forEach(el => {
+    el.addEventListener('click', () => {
+      const qid = el.dataset.jump || el.dataset.qid;
+      const target = document.getElementById('eq-' + qid);
+      if (target) target.scrollIntoView({ behavior: 'smooth', block: 'center' });
       panel.setAttribute('hidden', '');
       document.getElementById('exam-stats-btn')?.classList.remove('active');
     });
@@ -6132,6 +6287,34 @@ function updateExamStatsPanel() {
   document.getElementById('exam-stats-close')?.addEventListener('click', () => {
     panel.setAttribute('hidden', '');
     document.getElementById('exam-stats-btn')?.classList.remove('active');
+  });
+
+  // Tô lại màu đã chọn/đúng/sai cho các ô ABCD vừa render trong bảng này — KHÔNG gọi lại
+  // applyExamReviewColors() ở đây vì hàm đó còn chèn thêm lời giải/gợi ý đáp án (sẽ bị lặp
+  // lại mỗi lần mở bảng), nên chỉ đồng bộ đúng phần class màu cho riêng bảng thống kê.
+  syncStatsMirrorColors();
+  updateMatchingSheetUI();
+}
+function syncStatsMirrorColors() {
+  if (!EXAM) return;
+  const panel = document.getElementById('exam-stats-panel');
+  if (!panel) return;
+  EXAM.atoms.forEach(atom => {
+    if (atom.kind !== 'mcq' || atom.sheetKind === 'dropdown') return;
+    const selected = EXAM.answers[atom.id];
+    Object.keys(atom.answers).forEach(key => {
+      panel.querySelectorAll(`.exam-letter[data-qid="${atom.id}"][data-key="${key}"]`).forEach(btn => {
+        btn.classList.remove('picked', 'res-correct-fill', 'res-wrong-fill', 'res-correct-outline');
+        if (EXAM.submitted) {
+          btn.disabled = true;
+          if (key === atom.correct && key === selected) btn.classList.add('res-correct-fill');
+          else if (key === atom.correct) btn.classList.add('res-correct-outline');
+          else if (key === selected) btn.classList.add('res-wrong-fill');
+        } else if (selected != null && String(selected) === key) {
+          btn.classList.add('picked');
+        }
+      });
+    });
   });
 }
 
