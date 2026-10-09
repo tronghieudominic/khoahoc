@@ -1,0 +1,2251 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+<title>Moon.vn - Ngữ Pháp Tiếng Anh Toàn Diện</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700;900&display=swap" rel="stylesheet">
+<script>
+window.MathJax={tex:{inlineMath:[['$','$'],['\\(','\\)']],displayMath:[['$$','$$']],processEscapes:true},chtml:{scale:1.15},options:{skipHtmlTags:['script','noscript','style','textarea','pre']}};
+</script>
+<script async id="MathJax-script" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<link rel="stylesheet" href="https://cdn.plyr.io/3.7.8/plyr.css"/>
+<script src="https://cdn.plyr.io/3.7.8/plyr.js"></script>
+<script src="https://unpkg.com/docx@8.5.0/build/index.umd.js"></script>
+<style>
+:root{--moon:#0247df;--hdr:56px;--plyr-color-main:#0247df;--plyr-border-radius:0}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0;overflow-x:hidden;width:100%;max-width:100vw}
+body{font-family:Roboto,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:#f0f4f8;color:#1e293b;font-size:18px;line-height:1.55;-webkit-font-smoothing:antialiased}
+body.mode-full{overflow:hidden}
+img,video,svg{max-width:100%;height:auto}
+table{max-width:100%;display:block;overflow-x:auto}
+.q-card,.panel,.layout,.col-main,#contentRoot{max-width:100%}
+.math-body,.q-body,.solution-box,.opt-row,.sec-inline{
+  overflow-wrap:break-word;
+  word-wrap:break-word;
+  word-break:break-word;
+  white-space:normal;
+}
+.opt-row{flex-wrap:wrap}
+.opt-row>span:last-child{min-width:0;flex:1 1 auto}
+mjx-container{max-width:100%;overflow-x:auto;overflow-y:hidden}
+
+.text-moon{color:var(--moon)}.bg-moon{background:var(--moon)}
+.plyr{border-radius:0!important;background:#000!important}
+.vid-main .plyr{max-height:none}
+body:not(.mode-full) .q-card ~ .panel .plyr, .panel .plyr{max-height:70vh}
+.plyr__video-wrapper{background:#000!important}
+mjx-container{outline:none;margin:3px 0!important}
+
+#splash{position:fixed;inset:0;z-index:9999;background:#fff;display:flex;align-items:center;justify-content:center;transition:opacity .4s ease}
+#splash.hide{opacity:0;pointer-events:none}
+
+.sk{background:linear-gradient(90deg,#e8ecf1 25%,#f5f7fa 37%,#e8ecf1 63%);background-size:400% 100%;animation:shimmer 1.15s ease infinite;border-radius:10px}
+@keyframes shimmer{0%{background-position:100% 0}100%{background-position:0 0}}
+
+.chip{display:inline-flex;align-items:center;gap:8px;padding:7px 12px 7px 8px;background:#f1f5f9;border:1px solid #e2e8f0;border-radius:999px;font-size:15px;font-weight:500;color:#334155;cursor:pointer}
+.chip:hover{background:#e8eef5}
+.chip .x{color:#94a3b8;border:none;background:none;cursor:pointer;padding:0 2px;font-size:16px;line-height:1}
+.chip .x:hover{color:#64748b}
+
+.panel{background:#fff;border:1px solid #e5eaf0;border-radius:14px;box-shadow:0 1px 3px rgba(15,23,42,.04)}
+.q-card{background:#fff;border:1px solid #e5eaf0;border-radius:12px;overflow:hidden;margin-bottom:16px}
+.sec-inline{color:#1f67f0;font-weight:700;font-size:17px;margin-bottom:10px;line-height:1.45}
+.solution-box{background:#fff9e8;border-top:1px solid #f5e6b8;padding:16px 18px;line-height:1.6;font-size:17px;color:#333}
+.opt-row{display:flex;gap:8px;align-items:flex-start;margin:7px 0;font-size:18px}
+.opt-key{font-weight:700;min-width:1.5em}
+.opt-row.correct,.opt-row.correct .opt-key{color:#16a34a}
+.opt-row.correct .opt-key{font-weight:800}
+
+.ds-table{width:100%;border-collapse:collapse;margin:8px 0;border:1px solid #e2e8f0;border-radius:8px;overflow:hidden}
+.ds-table th,.ds-table td{border:1px solid #e2e8f0;padding:10px 12px;vertical-align:middle;font-size:16px}
+.ds-table th{background:#f1f5f9;font-weight:700}
+.ds-table th.d{background:#059669;color:#fff;width:42px;text-align:center}
+.ds-table th.s{background:#dc2626;color:#fff;width:42px;text-align:center}
+.ds-table td.t{text-align:center;font-weight:700}
+.ds-table td.t.y{color:#059669}.ds-table td.t.n{color:#dc2626}
+
+.math-body img{vertical-align:middle!important;height:auto!important;max-height:1.55em!important;width:auto!important;max-width:100%!important;display:inline-block!important;cursor:zoom-in}
+.math-body.ans img,.solution-box img{max-height:2em!important}
+.math-body img.fig{max-height:none!important;max-width:min(100%,440px)!important;display:block!important;margin:.45em 0}
+
+.q-body{padding:16px 18px;font-size:18px;line-height:1.55}
+.meta-line{display:flex;justify-content:space-between;align-items:center;padding-top:10px;margin-top:8px;border-top:1px solid #f1f5f9;font-size:16px}
+.meta-line .ans-label{color:#1d4ed8;font-weight:700}
+.meta-line .qid{color:#1e293b;font-weight:500}
+
+.q-toolbar{display:flex;align-items:center;justify-content:space-around;padding:12px 8px;border-top:1px solid #eceff3;background:#fff}
+.q-toolbar button{display:inline-flex;align-items:center;gap:7px;color:#334155;background:none;border:none;cursor:pointer;font-size:15px;font-weight:500;font-family:Roboto,sans-serif}
+.q-toolbar button:hover{color:#0f172a}
+.q-toolbar button i{color:#1e293b}
+
+/* header fixed */
+
+/* custom scrollbar */
+.col-main::-webkit-scrollbar,
+#answerGrid::-webkit-scrollbar{width:8px}
+.col-main::-webkit-scrollbar-track,
+#answerGrid::-webkit-scrollbar-track{background:transparent}
+.col-main::-webkit-scrollbar-thumb,
+#answerGrid::-webkit-scrollbar-thumb{background:#c5cdd8;border-radius:8px;border:2px solid transparent;background-clip:padding-box}
+.col-main::-webkit-scrollbar-thumb:hover,
+#answerGrid::-webkit-scrollbar-thumb:hover{background:#94a3b8;border:2px solid transparent;background-clip:padding-box}
+.col-main,.col-main * ,#answerGrid{scrollbar-width:thin;scrollbar-color:#c5cdd8 transparent}
+
+header.sticky-h{position:fixed;top:0;left:0;right:0;height:var(--hdr);z-index:40;background:#fff;border-bottom:1px solid #e5eaf0}
+.logo-link{cursor:pointer}
+
+/* layout: under fixed header */
+.layout{display:flex;align-items:stretch;max-width:1400px;margin:0 auto;padding:calc(var(--hdr) + 12px) 14px 16px;gap:16px;width:100%;min-height:calc(100vh - var(--hdr))}
+body.mode-full .layout{height:calc(100vh - var(--hdr));min-height:0;padding-top:calc(var(--hdr) + 8px);padding-bottom:8px;overflow:hidden}
+
+.col-main{flex:1 1 0;min-width:0;max-width:1100px}
+body.mode-full .col-main{max-width:none;height:100%;overflow-y:auto;overflow-x:hidden;padding-right:4px;word-break:break-word}
+body:not(.mode-full) .col-main{margin:0 auto}
+
+/* right ~ half of main feel: ~420px, 18px text, own scroll */
+.col-right{display:none;flex:0 0 420px;width:420px;max-width:42%;}
+body.mode-full .col-right.show{display:flex;flex-direction:column;height:100%;min-height:0}
+.grid-wrap{background:#fff;border:1px solid #e5eaf0;border-radius:14px;padding:14px;box-shadow:0 1px 3px rgba(15,23,42,.04);display:flex;flex-direction:column;height:100%;min-height:0;overflow:hidden}
+.grid-title{font-weight:800;font-size:16px;color:#1e293b;line-height:1.35;margin-bottom:12px;flex-shrink:0}
+#answerGrid{flex:1;min-height:0;overflow-y:auto;overflow-x:hidden;padding-right:2px}
+.part-label{font-weight:700;font-size:16px;color:#0f172a;margin:12px 0 8px}
+.part-label:first-of-type{margin-top:0}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.g3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px}
+.g4{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:7px}
+.g-btn{background:#fff;border:1px solid #d1d5db;border-radius:10px;padding:10px 6px;text-align:center;font-size:17px;font-weight:500;cursor:pointer;color:#1e293b;font-family:Roboto,sans-serif;line-height:1.25}
+.g-btn:hover{border-color:#3b82f6;background:#f0f7ff}
+.g-row{display:flex;align-items:center;gap:8px;border:1px solid #d1d5db;border-radius:10px;padding:9px 10px;cursor:pointer;background:#fff;font-size:17px}
+.g-row:hover{border-color:#3b82f6;background:#f0f7ff}
+.g-row .num{font-weight:700;min-width:1.3em;flex-shrink:0}
+.tf-chain{display:inline-flex;border:1px solid #cbd5e1;border-radius:6px;overflow:hidden;background:#fff}
+.tf-chain span{display:inline-flex;align-items:center;justify-content:center;min-width:26px;height:26px;padding:0 6px;font-weight:600;font-size:14px;color:#334155;border-right:1px solid #cbd5e1}
+.tf-chain span:last-child{border-right:none}
+
+#imgLightbox{display:none;position:fixed;inset:0;z-index:200;background:rgba(15,23,42,.9);align-items:center;justify-content:center}
+#imgLightbox.open{display:flex}
+#imgLightbox img{max-width:96vw;max-height:92vh;object-fit:contain;transition:transform .08s linear;user-select:none}
+
+#toTop{position:fixed;right:16px;bottom:20px;z-index:9998;width:48px;height:48px;border-radius:999px;background:#fff;border:1px solid #e2e8f0;box-shadow:0 6px 20px rgba(15,23,42,.18);color:#334155;display:none;align-items:center;justify-content:center;cursor:pointer;font-size:17px}
+#toTop.show{display:flex!important}
+#toTop:hover{color:var(--moon);border-color:#93c5fd}
+
+/* mobile FAB for answer grid */
+#mobGridBtn{display:none;position:fixed;right:16px;bottom:16px;z-index:55;width:52px;height:52px;border-radius:999px;background:var(--moon);color:#fff;border:none;box-shadow:0 6px 20px rgba(2,71,223,.35);align-items:center;justify-content:center;font-size:18px;cursor:pointer}
+#mobSheet{display:none;position:fixed;inset:0;z-index:60}
+#mobSheet.open{display:block}
+#mobSheet .sheet-bg{position:absolute;inset:0;background:rgba(15,23,42,.45)}
+#mobSheet .sheet-panel{position:absolute;left:0;right:0;bottom:0;max-height:78vh;background:#fff;border-radius:16px 16px 0 0;padding:12px 14px 20px;display:flex;flex-direction:column;box-shadow:0 -8px 30px rgba(0,0,0,.12)}
+#mobSheet .sheet-hd{display:flex;align-items:center;justify-content:space-between;padding:4px 2px 10px;flex-shrink:0}
+#mobSheet .sheet-hd .ttl{font-weight:800;font-size:15px;color:#1e293b;line-height:1.3;padding-right:8px}
+#mobSheet .sheet-bd{flex:1;min-height:0;overflow-y:auto;-webkit-overflow-scrolling:touch}
+#mobSheet .sheet-handle{width:40px;height:4px;border-radius:4px;background:#e2e8f0;margin:0 auto 10px}
+
+@media (max-width:980px){
+  html,body{overflow-x:hidden;max-width:100vw}
+  body.mode-full{overflow:auto!important;overflow-x:hidden}
+  body.mode-full .layout{
+    height:auto!important;
+    min-height:0!important;
+    overflow:visible!important;
+    flex-direction:column;
+    padding:calc(var(--hdr) + 10px) 10px 88px;
+  }
+  body.mode-full .col-main{
+    height:auto!important;
+    max-width:100%!important;
+    overflow:visible!important;
+    padding-right:0;
+  }
+  body.mode-full .col-right{display:none!important}
+  body.mode-full #mobGridBtn{display:flex}
+  body:not(.mode-full) #mobGridBtn{display:none}
+  .layout{padding-left:10px;padding-right:10px}
+  .g-btn{font-size:15px;padding:9px 5px}
+  .g-row{font-size:15px}
+  header.sticky-h .max-w-\[1400px\]{padding-left:8px;padding-right:8px}
+  .q-body{font-size:16px;padding:14px}
+  .opt-row{font-size:16px}
+  .solution-box{font-size:15px;padding:14px}
+}
+
+@media (max-width:480px){
+  :root{--hdr:52px}
+  body{font-size:16px}
+  .chip{font-size:13px;padding:5px 10px 5px 6px}
+}
+
+
+
+
+
+/* download dropdown */
+.dl-wrap{position:relative;display:inline-block;margin-left:auto}
+.dl-btn{display:inline-flex;align-items:center;gap:6px;border:1px solid #e2e8f0;background:#fff;padding:8px 12px;border-radius:10px;font-family:inherit;font-size:13px;font-weight:600;color:#1e293b;cursor:pointer}
+.dl-btn:active{background:#f1f5f9}
+.dl-menu{display:none;position:absolute;right:0;top:calc(100% + 4px);min-width:240px;background:#fff;border:1px solid #e5eaf0;border-radius:12px;box-shadow:0 8px 24px rgba(15,23,42,.12);z-index:40;overflow:hidden}
+.dl-menu.open{display:block}
+.dl-menu button{display:block;width:100%;text-align:left;padding:11px 14px;border:none;background:#fff;font-family:inherit;font-size:13.5px;color:#1e293b;cursor:pointer;border-bottom:1px solid #f1f5f9}
+.dl-menu button:last-child{border-bottom:none}
+.dl-menu button:hover{background:#f0f7ff;color:var(--moon)}
+.view-head .dl-wrap{flex-shrink:0}
+
+/* viewer header */
+.view-head{display:flex;align-items:center;gap:10px;margin-bottom:14px;flex-wrap:wrap}
+.view-head .fc-tabs{flex:1;justify-content:flex-end}
+.view-head .back-btn{display:inline-flex;align-items:center;justify-content:center;width:38px;height:38px;border:1px solid #e2e8f0;background:#fff;border-radius:10px;cursor:pointer;color:#1e293b;flex-shrink:0;font-size:15px}
+.view-head .back-btn:active{background:#f1f5f9}
+.view-head h2{font-size:18px;font-weight:700;color:#0f172a;margin:0;line-height:1.35;flex:1;min-width:0}
+
+
+/* Video lesson — Moon Offline style */
+/* Video lesson — full width under layout */
+body.video-open{overflow:hidden!important}
+body.video-open .col-main{max-width:none!important;width:100%!important;flex:1 1 100%!important;height:calc(100vh - var(--hdr))!important;overflow:hidden!important;padding:0!important}
+body.video-open .layout{max-width:100%!important;padding:calc(var(--hdr)) 0 0!important;height:100vh!important;min-height:0!important;overflow:hidden!important}
+body.video-open #contentRoot{max-width:none;height:100%;display:flex;flex-direction:column;overflow:hidden}
+body.video-open .view-head{padding:10px 14px;margin-bottom:0;background:#fff;border-bottom:1px solid #e5eaf0;flex-shrink:0}
+.vid-layout{display:flex;flex-direction:row;align-items:stretch;background:#000;border:none;border-radius:0;overflow:hidden;flex:1;min-height:0;width:100%;margin:0;height:auto}
+.vid-main{background:#000;flex:1 1 70%;min-width:0;position:relative;display:flex;align-items:center;justify-content:center}
+.vid-main video#vPlayer{width:100%;height:100%;max-height:100%;object-fit:contain;background:#000;display:block}
+.vid-main .plyr,.vid-main .plyr--video{width:100%!important;height:100%!important;max-height:100%!important}
+.vid-main .plyr__video-wrapper{background:#000!important;height:100%}
+.vid-main .plyr.plyr--fullscreen-active{max-height:none!important;height:100%!important}
+.vid-side{flex:0 0 30%;max-width:440px;min-width:320px;background:#fff;border-left:1px solid #e5eaf0;display:flex;flex-direction:column;min-height:0;overflow:hidden}
+.vid-side-hd{padding:14px;border-bottom:1px solid #eef2f6;flex-shrink:0;display:flex;align-items:center;gap:10px}
+.vid-side-hd img.av{width:40px;height:40px;border-radius:50%;object-fit:cover;flex-shrink:0;background:#e2e8f0}
+.vid-side-hd .s-title{font-weight:700;font-size:16px;color:#0f172a;line-height:1.3}
+.vid-side-hd .s-sub{font-size:12px;color:#64748b;margin-top:2px}
+.vid-side-list{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;min-height:0}
+.vid-item{display:flex;gap:12px;width:100%;padding:12px 14px;border:none;background:#fff;cursor:pointer;text-align:left;font-family:inherit;border-bottom:1px solid #f1f5f9}
+.vid-item:last-child{border-bottom:none}
+.vid-item.active{background:#edf4ff}
+.vid-item.active .ti{color:#1f67f0!important;font-weight:700}
+.vid-item .thumb{width:140px;height:80px;border-radius:6px;object-fit:cover;background:#e2e8f0;flex-shrink:0;pointer-events:none;border:1px solid #f1f5f9}
+.vid-item .meta{flex:1;min-width:0;display:flex;flex-direction:column;justify-content:space-between;min-height:80px;padding:2px 0}
+.vid-item .meta .ti{font-size:16px;font-weight:600;color:#1e293b;line-height:1.35;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.vid-item .meta .du{font-size:14px;color:#64748b;font-weight:500}
+@media(max-width:900px){
+  body.video-open .layout{padding-left:0!important;padding-right:0!important}
+  .vid-layout{flex-direction:column;height:auto;min-height:0;max-height:none}
+  .vid-main{flex:none;width:100%;aspect-ratio:16/9;min-height:220px;max-height:56vh}
+  .vid-main .plyr,.vid-main video#vPlayer{max-height:56vh!important}
+  .vid-side{flex:none;max-width:none;min-width:0;max-height:none;border-left:none;border-top:1px solid #eef2f6}
+  .vid-side-list{max-height:42vh}
+  .vid-item{padding:10px 12px;gap:10px}
+  .vid-item .thumb{width:112px;height:63px}
+  .vid-item .meta{min-height:63px}
+  .vid-item .meta .ti{font-size:13px}
+  .vid-side-hd{padding:12px}
+}
+@media(max-width:480px){
+  .vid-main{max-height:48vh;min-height:180px}
+  .vid-main .plyr,.vid-main video#vPlayer{max-height:48vh!important}
+  .vid-item .thumb{width:96px;height:54px}
+  .vid-item .meta{min-height:54px}
+  .vid-item .meta .ti{font-size:12.5px;-webkit-line-clamp:2}
+}
+
+.reading-block{background:#fff;border:1px solid #e5eaf0;border-radius:12px;margin-bottom:14px;overflow:hidden}
+.reading-block .rb-hd{padding:14px 16px;border-bottom:1px solid #eef2f6;font-weight:700;font-size:17px;color:#1f67f0;line-height:1.45}
+.reading-block .rb-body{padding:14px 16px;font-size:18px;line-height:1.65;color:#1e293b}
+.reading-block .rb-audio{padding:12px 16px 14px;border-bottom:1px solid #f1f5f9;background:#0f172a}
+.reading-block .rb-audio .plyr{max-width:520px;--plyr-audio-controls-background:#0f172a;--plyr-audio-control-color:#e2e8f0;--plyr-color-main:#3b82f6}
+.reading-block .rb-audio audio{width:100%;max-width:520px}
+.reading-block .rb-ans{padding:12px 16px;border-top:1px solid #f5e6b8;background:#fff9e8;font-size:15px;line-height:1.55}
+.doc-frame-wrap{position:relative;background:#fff;border:1px solid #e5eaf0;border-radius:12px;overflow:hidden}
+.doc-frame-wrap iframe{width:100%;height:78vh;border:0;background:#fff;display:block}
+.doc-frame-wrap.fs-on{position:fixed;inset:0;z-index:90;border-radius:0;height:100vh;display:flex;flex-direction:column;background:#0f172a}
+.doc-frame-wrap.fs-on iframe{flex:1;height:auto!important;min-height:0}
+.doc-fs-bar{display:none;align-items:center;gap:10px;padding:10px 14px;background:#0f172a;color:#fff;flex-shrink:0}
+.doc-frame-wrap.fs-on .doc-fs-bar{display:flex}
+.doc-fs-bar button{border:1px solid #475569;background:#1e293b;color:#fff;padding:8px 14px;border-radius:8px;cursor:pointer;font-family:inherit;font-size:14px;font-weight:600}
+.doc-fs-bar button:hover{background:#334155}
+
+
+
+/* ===== Flashcards ===== */
+.fc-wrap{max-width:880px;margin:0 auto}
+.fc-tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px}
+.fc-tab{display:inline-flex;align-items:center;gap:8px;padding:11px 16px;border-radius:12px;border:1px solid #e2e8f0;background:#fff;font-family:inherit;font-size:15px;font-weight:600;color:#475569;cursor:pointer}
+.fc-tab.active{background:#eff6ff;border-color:#93c5fd;color:var(--moon);box-shadow:0 1px 3px rgba(2,71,223,.08)}
+.fc-toolbar{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:14px}
+.fc-toolbar .fc-count{font-weight:700;font-size:16px;color:#f59e0b}
+.fc-search{flex:1;min-width:160px;max-width:280px;border:1px solid #e2e8f0;border-radius:999px;padding:10px 14px 10px 38px;font-size:15px;font-family:inherit;background:#fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%2394a3b8' viewBox='0 0 24 24'%3E%3Cpath d='M15.5 14h-.79l-.28-.27A6.471 6.471 0 0016 9.5 6.5 6.5 0 109.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zM9.5 14C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z'/%3E%3C/svg%3E") 12px center/16px no-repeat;outline:none}
+.fc-search:focus{border-color:#93c5fd;box-shadow:0 0 0 3px rgba(59,130,246,.15)}
+
+/* 3D flip card */
+.fc-flip{perspective:1200px;width:100%;min-height:340px;margin:0 auto}
+.fc-flip-inner{position:relative;width:100%;min-height:340px;transition:transform .55s cubic-bezier(.4,.05,.2,1);transform-style:preserve-3d;cursor:pointer}
+.fc-flip.flipped .fc-flip-inner{transform:rotateY(180deg)}
+.fc-face{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;background:#fff;border:1px solid #e5eaf0;border-radius:20px;box-shadow:0 8px 28px rgba(15,23,42,.07);padding:28px 32px;display:flex;flex-direction:row;align-items:center;justify-content:space-between;gap:24px;text-align:left;overflow:hidden}
+.fc-face .fc-side-text{flex:1 1 45%;min-width:0;max-width:55%;display:flex;flex-direction:column;align-items:flex-start;justify-content:center;z-index:2}
+.fc-face .fc-side-img{flex:0 0 auto;max-width:48%;z-index:1}
+.fc-face .fc-side-img .fc-img{margin-top:0;width:100%;max-width:260px;max-height:200px;object-fit:cover;border-radius:14px;display:block;cursor:default;pointer-events:none}
+.fc-word{font-size:34px;font-weight:800;color:#0f172a;line-height:1.2;word-break:break-word}
+.fc-face.back{transform:rotateY(180deg)}
+.fc-word-row{display:inline-flex;align-items:center;justify-content:center;gap:12px}
+.fc-speak{flex-shrink:0;width:40px;height:40px;border-radius:999px;border:none;background:#fff7ed;color:#f97316;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;font-size:16px;line-height:1;padding:0;vertical-align:middle}
+.fc-speak:active{transform:scale(.95)}
+.fc-type{color:#94a3b8;font-size:15px;margin-top:10px}
+.fc-spell{color:#64748b;font-size:16px;margin-top:4px;font-style:italic}
+.fc-def{color:#f59e0b;font-size:22px;font-weight:700;margin-top:14px}
+.fc-img{max-width:min(220px,70%);max-height:150px;border-radius:14px;margin-top:18px;object-fit:cover;box-shadow:0 4px 12px rgba(0,0,0,.06)}
+.fc-hint{position:absolute;bottom:14px;right:18px;font-size:12px;color:#cbd5e1;font-weight:500}
+.fc-card-nav{display:flex;align-items:center;justify-content:space-between;margin-top:16px;gap:12px;flex-wrap:wrap}
+.fc-nav-btns{display:flex;gap:8px}
+.fc-nav-btns button,.fc-pager button{width:46px;height:46px;border-radius:999px;border:none;background:#3b82f6;color:#fff;cursor:pointer;font-size:16px;display:inline-flex;align-items:center;justify-content:center;box-shadow:0 4px 12px rgba(59,130,246,.3)}
+.fc-nav-btns button.ghost{background:#eff6ff;color:#3b82f6;box-shadow:none}
+.fc-pager{display:flex;align-items:center;gap:12px;font-weight:700;font-size:16px;color:#1e293b}
+.fc-list{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:14px}
+.fc-item{background:#fff;border:1px solid #e5eaf0;border-radius:14px;padding:16px;display:flex;flex-direction:column;gap:8px;min-height:200px;box-shadow:0 1px 3px rgba(15,23,42,.03)}
+.fc-item .fc-i-body{flex:1;min-width:0;display:flex;flex-direction:column}
+.fc-item .fc-i-name{font-size:17px;font-weight:700;color:#0f172a;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.fc-item .fc-i-meta{font-size:14px;color:#64748b;margin-top:4px}
+.fc-item .fc-i-def{font-size:15px;color:#f59e0b;font-weight:600;margin-top:4px;flex:1}
+.fc-item .fc-i-img{width:100%;height:110px;object-fit:cover;border-radius:10px;margin-top:8px;cursor:default;pointer-events:none}
+.fc-quiz-setup{background:#fff;border:1px solid #e5eaf0;border-radius:16px;padding:28px 24px;max-width:400px;margin:12px auto;box-shadow:0 4px 16px rgba(15,23,42,.05)}
+.fc-quiz-setup h3{text-align:center;font-size:18px;font-weight:800;margin:0 0 22px;color:#0f172a}
+.fc-quiz-row{display:flex;align-items:center;justify-content:space-between;padding:14px 0;border-bottom:1px solid #f1f5f9;font-size:16px;color:#334155}
+.fc-quiz-row:last-of-type{border-bottom:none}
+.fc-quiz-row input[type=number]{width:68px;border:1px solid #e2e8f0;border-radius:10px;padding:9px;text-align:center;font-size:16px;font-family:inherit}
+.fc-sw{position:relative;width:46px;height:28px;flex-shrink:0}
+.fc-sw input{opacity:0;width:0;height:0}
+.fc-sw span{position:absolute;inset:0;background:#cbd5e1;border-radius:999px;cursor:pointer;transition:.2s}
+.fc-sw span:before{content:'';position:absolute;width:22px;height:22px;left:3px;top:3px;background:#fff;border-radius:50%;transition:.2s;box-shadow:0 1px 3px rgba(0,0,0,.15)}
+.fc-sw input:checked+span{background:#3b82f6}
+.fc-sw input:checked+span:before{transform:translateX(18px)}
+.fc-start{display:block;width:100%;margin-top:20px;padding:14px;border:none;border-radius:12px;background:var(--moon);color:#fff;font-weight:700;font-size:16px;font-family:inherit;cursor:pointer}
+.fc-qcard{background:#fff;border:1px solid #e5eaf0;border-radius:14px;padding:22px 18px;margin-bottom:14px;box-shadow:0 2px 10px rgba(15,23,42,.04)}
+.fc-qcard .q-prompt{font-size:17px;font-weight:600;color:#0f172a;margin-bottom:14px;line-height:1.45}
+.fc-qcard .q-opts{display:flex;flex-direction:column;gap:8px}
+.fc-qcard .q-opt{text-align:left;padding:13px 14px;border:1px solid #e2e8f0;border-radius:10px;background:#fff;font-family:inherit;font-size:16px;cursor:pointer;transition:border-color .15s,background .15s}
+.fc-qcard .q-opt.correct{border-color:#16a34a;background:#f0fdf4;color:#15803d}
+.fc-qcard .q-opt.wrong{border-color:#dc2626;background:#fef2f2;color:#b91c1c}
+.fc-qcard input[type=text]{width:100%;border:1px solid #e2e8f0;border-radius:10px;padding:12px;font-size:16px;font-family:inherit}
+.fc-match{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.fc-match-col{display:flex;flex-direction:column;gap:8px}
+.fc-match button{padding:12px;border:1px solid #e2e8f0;border-radius:10px;background:#fff;font-family:inherit;font-size:15px;cursor:pointer;width:100%;text-align:left}
+.fc-match button.sel{border-color:#3b82f6;background:#eff6ff}
+.fc-match button.done{opacity:.4;pointer-events:none;border-color:#16a34a;background:#f0fdf4}
+.fc-nav-btns button.active-auto{background:#dbeafe;color:#1d4ed8}
+
+/* Document view — compact chrome, content fills */
+body.doc-open{overflow:hidden!important}
+body.doc-open .col-main{max-width:none!important;width:100%!important;height:calc(100vh - var(--hdr))!important;overflow:hidden!important;padding:0!important}
+body.doc-open .layout{max-width:100%!important;padding:calc(var(--hdr)) 0 0!important;height:100vh!important;overflow:hidden!important}
+body.doc-open #contentRoot{height:100%;display:flex;flex-direction:column;overflow:hidden;max-width:none}
+body.doc-open .view-head{padding:8px 12px;margin:0;flex-shrink:0;border-bottom:1px solid #e5eaf0;background:#fff}
+body.doc-open .doc-toolbar{display:flex;gap:8px;padding:6px 12px;flex-shrink:0;background:#f8fafc;border-bottom:1px solid #eef2f6}
+body.doc-open .doc-frame-wrap{flex:1;min-height:0;border:none;border-radius:0;display:flex;flex-direction:column}
+body.doc-open .doc-frame-wrap iframe{flex:1;height:100%!important;min-height:0}
+
+@media(max-width:640px){
+  .fc-word{font-size:26px}
+  .fc-flip,.fc-flip-inner{min-height:300px}
+  .fc-face{flex-direction:column;text-align:center;gap:16px}
+  .fc-face .fc-side-text{align-items:center}
+  .fc-list{grid-template-columns:1fr}
+  .view-head .fc-tabs{width:100%;justify-content:stretch;margin-left:0!important;gap:6px}
+  .view-head .fc-tab{flex:1;justify-content:center;padding:8px 6px;font-size:12px;gap:4px;border-radius:10px}
+  .view-head .fc-tab i{font-size:12px}
+  .view-head h2{font-size:15px;flex:1 1 100%;order:-1}
+}
+
+/* Course home — panel style đồng bộ */
+#courseHome{max-width:100%}
+.ch-hero{display:grid;grid-template-columns:286px 1fr;gap:0;background:#fff;border:1px solid #e5eaf0;border-radius:14px;overflow:hidden;box-shadow:0 1px 3px rgba(15,23,42,.04);margin-bottom:14px}
+.ch-hero-vis{aspect-ratio:16/9;background:#c2185b;overflow:hidden}
+.ch-hero-vis img{width:100%;height:100%;object-fit:cover;display:block}
+.ch-hero-body{padding:22px 24px;display:flex;flex-direction:column;justify-content:center;gap:6px}
+.ch-hero-body h1{font-size:22px;font-weight:800;color:#0f172a;line-height:1.3;margin:0}
+.ch-hero-body .teacher{font-size:16px;color:#64748b;margin:0;font-weight:500}
+.ch-meta{display:flex;flex-wrap:wrap;gap:10px 18px;margin-top:10px;font-size:15px;color:#475569}
+.ch-meta span{display:inline-flex;align-items:center;gap:6px}
+.ch-meta .ok{color:#059669;font-weight:600}
+.ch-tabs{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:14px}
+.ch-tab{border:1px solid #e2e8f0;background:#fff;font-family:inherit;font-size:15px;font-weight:500;color:#475569;padding:8px 16px;border-radius:999px;cursor:pointer}
+.ch-tab.active{background:var(--moon);color:#fff;border-color:var(--moon)}
+.ch-list{background:#fff;border:1px solid #e5eaf0;border-radius:14px;overflow:hidden;box-shadow:0 1px 3px rgba(15,23,42,.04)}
+.ch-sec{border-bottom:1px solid #eef2f6}
+.ch-sec:last-child{border-bottom:none}
+.ch-sec-hd{display:flex;align-items:center;justify-content:space-between;width:100%;padding:16px 20px;border:none;background:transparent;cursor:pointer;font-family:inherit;text-align:left}
+.ch-sec-hd h2{font-size:15px;font-weight:700;text-transform:uppercase;letter-spacing:.3px;color:#0f172a;margin:0}
+.ch-badge{min-width:28px;height:28px;padding:0 8px;border-radius:999px;background:#dc2626;color:#fff;font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center}
+.ch-sec-bd{display:none;background:#f8fafc;border-top:1px solid #eef2f6}
+.ch-sec.open .ch-sec-bd{display:block}
+.ch-panel{border-bottom:1px solid #eef2f6}
+.ch-panel:last-child{border-bottom:none}
+.ch-panel-hd{display:flex;align-items:center;justify-content:space-between;width:100%;padding:13px 20px 13px 24px;border:none;background:transparent;cursor:pointer;font-family:inherit;text-align:left}
+.ch-panel-hd h3{font-size:15px;font-weight:600;color:var(--moon);margin:0}
+.ch-panel-bd{display:none;padding:4px 12px 10px 22px}
+.ch-panel.open .ch-panel-bd{display:block}
+.ch-pbadge{min-width:24px;height:24px;padding:0 7px;border-radius:999px;background:#e2e8f0;color:#475569;font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center}
+.ch-lesson{display:flex;align-items:center;gap:12px;width:100%;padding:12px 14px;border:none;background:transparent;border-radius:10px;cursor:pointer;font-family:inherit;text-align:left;color:#1e293b;font-size:16px}
+.ch-lesson:active{background:#e8eef5}
+.ch-lesson img.ico{width:22px;height:22px;flex-shrink:0}
+.ch-lesson .nm{flex:1;line-height:1.4}
+.ch-flat{padding:8px 12px 12px 18px}
+.ch-left{display:flex;align-items:center;gap:8px;flex:1;min-width:0}
+@media(max-width:640px){
+  .ch-hero{grid-template-columns:1fr}
+  .ch-hero-body{padding:16px}
+  .ch-hero-body h1{font-size:18px}
+}
+
+/* fill/essay answers in grid — full width rows */
+.g-row.full{grid-column:1/-1}
+.g-fill-list{display:flex;flex-direction:column;gap:8px}
+.g-fill-list .g-row{display:flex;align-items:flex-start;gap:8px;border:1px solid #d1d5db;border-radius:10px;padding:10px 12px;cursor:pointer;background:#fff;font-size:15px}
+.g-fill-list .g-row .fill-ans{font-weight:600;word-break:break-word;flex:1;min-width:0;line-height:1.4}
+
+</style>
+</head>
+<body class="min-h-screen flex flex-col">
+
+<div id="splash"><img src="https://rescdn.moon.vn/assets/cdn-moon/splash/img/light-1x.png" alt="Moon.vn" style="max-width:min(240px,48vw);height:auto"/></div>
+
+<header class="sticky-h">
+  <div class="max-w-[1400px] mx-auto px-3 h-full flex items-center justify-between gap-3">
+    <a href="#" class="logo-link shrink-0 flex items-center" onclick="event.preventDefault();goHome()" title="Trang chủ">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1513 308" class="h-7 w-auto" style="min-width:100px" aria-label="Moon.vn">
+        <path fill="#0247df" fill-rule="evenodd" d="M97.54 12.72C112.48 11.76 140.14 11.12 149.71 25.07C155.14 32.99 159.37 53.25 162.76 63.2C167.12 76.02 171.69 88.83 176.82 101.37C178.33 105.06 181.02 112.32 186 112.05C191.27 111.76 194.07 99.78 195.11 95.67C199.63 77.89 200.8 59.41 205.3 41.67C206.6 36.55 208.76 30.92 212.38 27C225.51 12.81 254.17 12.08 272 12.65C278.08 12.84 284.07 12.86 290.07 13.76C299.15 15.13 308.95 16.64 316.66 22.06C324.03 27.24 327.07 36.39 323.76 44.95C319.82 55.16 307.76 59.51 304.17 70.15C301.74 77.36 302.67 85.7 303.01 93.16C303.8 110.34 306.75 127.28 309.21 144.25C312.34 165.86 317.54 187.26 321.88 208.65C323.95 218.89 324.62 231.13 329.36 240.53C333.26 248.25 342.22 250.5 346.98 257.16C352.41 264.79 349.53 274.6 343.2 280.57C334.21 289.05 319.38 291.88 307.52 292.96C285.84 294.92 263.76 295.46 242.09 292.98C230.63 291.67 215.75 288.45 209.09 277.91C207.39 275.23 206.58 272.03 206.53 268.87C206.34 258.08 216.71 254.34 219.7 245C224.1 231.2 225.25 208.85 226.25 194.11C226.73 187.04 228.81 165.26 216.54 166.86C210.21 167.69 208.92 176.16 207.65 181.06C204.52 193.11 201.46 215.89 184.76 215.08C168.31 214.29 167.85 187.64 164.51 176.04C162.86 170.33 157.91 163.63 152.42 170.8C149.27 174.91 149.08 181.69 148.81 186.63C148.17 198.87 147.12 213.72 154.13 224.47C161.4 235.63 171.33 240.12 170.4 255.29C169.79 265.37 167.63 275.37 160.33 282.78C153.33 289.88 141.27 292 131.8 292.85C113.22 294.51 94.36 295.21 75.71 294.26C61.13 293.51 43.49 293.59 31.22 284.39C21.71 277.26 16.68 264.1 19.02 252.42C21.32 241 34.33 235.19 38.94 224.34C41.9 217.37 42.85 209.6 44.37 202.24C47.56 186.73 50.3 171.11 52.86 155.46C55.44 139.74 57.8 123.99 59.31 108.12C60.27 98 61.13 87.51 58.75 77.5C57.37 71.66 54.76 65.59 50.85 60.98C43.75 52.61 32.74 47.62 38.33 34.24C40.92 28.03 48.51 23.98 54.4 21.68C68.47 16.19 82.47 13.68 97.54 12.72ZM449.01 79.36C490.59 75.2 523.78 109.73 534.35 147.08C540.97 170.45 542.24 194.6 535.63 218.21C523.86 260.25 485.57 296.56 440.24 294.52C429 294.01 417.61 291.85 407.35 287.14C399.85 283.7 392.4 279.53 386.25 273.96C362.37 252.31 350.3 217.28 354.53 185.39C357.56 162.55 366.76 142.12 379.77 123.35C396.26 99.53 419.69 82.29 449.01 79.36ZM634.1 79.35C674.74 74.32 707.48 105.69 721.24 140.94C728.92 160.64 733.12 182.97 729.67 204.08C722.48 248.01 684.31 293.94 637.17 294.63C625.51 294.8 614.09 293.27 603.05 289.56C568.02 277.77 547.31 242.7 544.55 207.2C541.02 161.91 565.78 106.69 608.03 86.17C616.26 82.16 625.09 80.47 634.1 79.35ZM813.1 105.62C817.05 106.74 819.94 104.04 822.82 101.56C829.09 96.17 834.22 89.99 841.77 86.24C859.67 77.37 885.26 76.65 903.55 85.09C922.69 93.92 921.94 110.93 921.15 129.3C920.77 138.23 920.5 147.18 921.08 156.1C922.84 183.16 937.29 213.88 945.71 239.77C950.07 253.19 960.26 273.08 945.59 283.53C935.15 290.97 921.19 292.1 908.84 293.29C900.75 294.07 892.54 293.9 884.46 293.15C866 291.43 843.86 280.83 845.3 258.92C845.87 250.26 851.91 243.6 853.02 235.24C855.24 218.57 855.56 201.53 856.85 184.76C857.83 171.95 859.44 158.09 856.33 145.46C854.98 139.96 852.24 134.14 846.44 132.23C825.38 125.29 825.43 156.18 825.65 168.56C825.7 171.68 825.9 174.8 826.22 177.91C828.01 194.78 831.13 211.55 833.25 228.38C834.94 241.81 835.5 256.52 828.73 268.8C825.34 274.93 820.57 279.03 815.21 283.36C811.1 286.67 805.7 289.09 800.68 290.66C793.15 293.02 785.25 294.03 777.38 294.31C767.22 294.68 756.32 294.01 747.05 289.52C738.25 285.27 732.62 276.24 733.86 266.38C735.12 256.39 741.07 246.41 744.74 237.13C749.88 224.13 753.7 210.64 756.84 197.03C760.13 182.73 761.93 160.58 755.54 147.08C750.3 136.02 735.65 137.57 736.31 123.07C737.25 102.35 765.54 90.7 782.27 85.82C789.27 83.77 798.23 80.77 805.28 84.26C814.62 88.88 807.73 99.14 813.1 105.62ZM1136.45 79.37C1140.64 78.66 1145.16 78.75 1149.39 78.94C1156.13 79.25 1164.49 80.71 1168.8 86.49C1172.94 92.04 1171.34 99.98 1170.5 106.32C1169.12 116.77 1168.57 127.5 1168.92 138.03C1169.21 146.5 1172.94 167.94 1184.29 168.17C1194.56 168.37 1200.67 148.64 1200.98 140.52C1201.47 127.66 1190.02 116.37 1194.22 103.97C1197.19 95.23 1205.57 89.89 1213.72 86.8C1229.94 80.67 1258.34 80.68 1271.81 93.21C1275.14 96.31 1276.91 100.49 1277.06 105C1277.58 120.54 1262.93 130.19 1254.48 141.26C1244.63 154.14 1237.76 173.7 1231.64 188.84C1222.36 211.82 1210.96 234.12 1200.18 256.43C1195.98 265.12 1191.51 273.58 1186.02 281.5C1182.21 287 1177.7 293.41 1170.56 294.63C1157.15 296.93 1150.53 282.83 1144.69 273.33C1127.81 245.83 1118.56 218.06 1109.74 187.29C1106.36 175.48 1104.69 160.75 1095.13 152.09C1090.13 147.56 1084.06 144.07 1077.98 141.22C1073.59 139.16 1068.35 137.03 1066.52 132.11C1063.07 122.84 1070.19 111.14 1076.77 104.97C1093.23 89.52 1114.77 83.04 1136.45 79.37ZM1418.67 79.41C1425.04 78.96 1431.34 79.71 1437.62 80.68C1442.55 81.45 1447.27 82.52 1451.88 84.48C1472.09 93.09 1471.55 110.39 1470.93 129.51C1470.6 139.67 1470.07 149.69 1471.04 159.83C1472.71 177.42 1479.69 194.1 1485.25 210.68C1490.62 226.69 1496.81 242.59 1501.22 258.89C1503.6 267.66 1503.93 276.42 1496.33 282.72C1486.53 290.85 1472.19 291.76 1460.13 293.22C1452.08 294.2 1443.5 294.25 1435.42 293.55C1417.25 291.96 1396.49 283.52 1394.31 262.9C1393.25 252.9 1399.98 246.13 1401.82 236.94C1403.58 228.16 1403.63 218.94 1404.26 210.03C1404.74 203.25 1405.68 196.54 1406 189.75C1406.67 175.47 1408.99 160.28 1405.7 146.16C1403.91 138.48 1399.1 131.63 1390.55 131.45C1373.59 131.09 1373.71 157.12 1374.23 168.56C1374.36 171.47 1374.62 174.38 1374.81 177.29C1375.6 188.74 1377.49 200.16 1379.23 211.5C1383.26 237.58 1388.55 267.9 1362.22 284.47C1357.42 287.49 1351.95 289.68 1346.52 291.26C1339.01 293.45 1331.08 294.55 1323.25 294.63C1312.57 294.74 1300.91 293.48 1291.69 287.64C1280.58 280.6 1280.3 267.38 1283.3 255.96C1289.95 230.62 1302.03 206.96 1306.54 180.94C1308.57 169.22 1308.17 153.82 1300.97 143.78C1294.04 134.13 1282.63 136.15 1284.82 120.58C1287.59 100.9 1315.87 90.08 1332.37 85.7C1338.65 84.03 1346.04 81.09 1352.56 83.43C1359.67 85.98 1359.29 92.35 1359.64 98.77C1359.8 101.71 1360.27 106.42 1364.34 106.26C1366.91 106.16 1369.29 103.63 1371.06 102.01C1375.44 98.04 1379.36 93.7 1384.16 90.2C1394.42 82.73 1406.24 80.29 1418.67 79.41ZM444.79 122.38C436.58 123.91 432.24 133 430.98 140.43C428.5 155.08 430.7 171.91 437.71 185.1C441.41 192.07 447.17 198.32 455.83 197C463.49 195.82 466.22 188.35 467.44 181.65C469.84 168.4 465.63 148.35 460.82 135.8C458.31 129.26 453 120.84 444.79 122.38ZM631.65 122.26C624.1 124.2 620.92 133.16 619.27 139.86C615.65 154.53 619.58 172.51 626.64 185.61C630.55 192.86 637.07 198.6 645.86 196.78C653.67 195.17 656.68 186.8 657.23 179.78C658.38 165.05 656.08 147.84 649.85 134.37C646.56 127.26 640.42 120.02 631.65 122.26ZM1008.03 193.41C1039.83 189.41 1063.67 230.41 1058.87 258.29C1054.16 285.62 1030.48 298.87 1004.2 297.86C999.48 297.67 994.8 296.53 990.38 294.93C942.35 277.57 964.08 198.94 1008.03 193.41Z"/>
+      </svg>
+    </a>
+    <div class="w-full max-w-sm">
+      <div class="flex items-center bg-[#f1f5f9] border border-[#c7d2fe] rounded-xl overflow-hidden focus-within:border-[#0247df] focus-within:ring-2 focus-within:ring-[#0247df]/15">
+        <input id="idInput" type="text" inputmode="numeric" pattern="[0-9]*" autocomplete="off" placeholder="Tìm ID" class="w-full pl-4 pr-2 py-2.5 bg-transparent text-[16px] font-medium outline-none placeholder:text-slate-400"
+          onkeydown="if(event.key==='Enter')startFetch()">
+        <button type="button" id="clearBtn" class="hidden px-2.5 text-slate-400 hover:text-slate-600" onclick="clearInput()"><i class="fa-solid fa-xmark text-lg"></i></button>
+        <button type="button" id="searchBtn" onclick="startFetch()" class="h-11 w-12 bg-moon text-white shrink-0 hover:bg-blue-700 flex items-center justify-center">
+          <i class="fa-solid fa-magnifying-glass"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+</header>
+
+<div class="layout">
+  <div class="col-main" id="colMain">
+
+    <div id="historyBox" class="panel mb-4 p-3.5 hidden">
+      <div class="flex items-center justify-between mb-2.5">
+        <span class="font-semibold text-slate-800 text-[16px]">Lịch sử tìm kiếm</span>
+        <button type="button" onclick="clearHistory()" class="text-slate-400 hover:text-slate-600 text-[15px] font-medium flex items-center gap-1.5">
+          <i class="fa-regular fa-trash-can"></i> Xóa tất cả
+        </button>
+      </div>
+      <div id="historyTags" class="flex flex-wrap gap-2.5"></div>
+    </div>
+
+    <div id="skeleton" class="hidden panel overflow-hidden">
+      <div class="p-5 space-y-3">
+        <div class="sk h-5 w-2/5"></div>
+        <div class="sk h-4 w-full"></div>
+        <div class="sk h-4 w-11/12"></div>
+        <div class="sk h-4 w-4/5"></div>
+        <div class="sk h-4 w-3/5"></div>
+      </div>
+      <div class="border-t border-amber-100 bg-[#fff9e8] p-5 space-y-2.5">
+        <div class="sk h-4 w-1/3"></div>
+        <div class="sk h-4 w-full"></div>
+        <div class="sk h-4 w-5/6"></div>
+        <div class="sk h-4 w-2/3"></div>
+      </div>
+    </div>
+
+    <div id="emptyState" style="display:block">
+      <div id="courseHome">
+        <div class="ch-hero">
+          <div class="ch-hero-vis"><img id="chBanner" src="" alt=""></div>
+          <div class="ch-hero-body">
+            <h1 id="chTitle">Đang tải…</h1>
+            <p class="teacher" id="chTeacher"></p>
+            <div class="ch-meta">
+              <span><i class="fa-solid fa-book-open" style="opacity:.55"></i> <span id="chSum">— bài</span></span>
+              <span><i class="fa-regular fa-calendar" style="opacity:.55"></i> <span id="chExpire">—</span></span>
+              <span class="ok"><i class="fa-solid fa-circle-check"></i> Đã kích hoạt</span>
+            </div>
+          </div>
+        </div>
+        <div class="ch-tabs" id="chFilters">
+          <button type="button" class="ch-tab active" data-filter="all">Tất cả</button>
+          <button type="button" class="ch-tab" data-filter="video">Video</button>
+          <button type="button" class="ch-tab" data-filter="test">Đề thi / Bài tập</button>
+          <button type="button" class="ch-tab" data-filter="file">Tài liệu</button>
+          <button type="button" class="ch-tab" data-filter="vocab">Từ vựng / Flashcard</button>
+        </div>
+        <div class="ch-list" id="chList"><div style="padding:32px;text-align:center;color:#94a3b8;font-size:14px">Đang tải đề cương…</div></div>
+      </div>
+      <div id="searchHint" class="panel text-center hidden" style="min-height:200px;display:none;flex-direction:column;align-items:center;justify-content:center;padding:40px 24px;margin-top:14px">
+        <div class="w-14 h-14 mb-3 rounded-full bg-blue-50 text-moon flex items-center justify-center text-xl"><i class="fa-solid fa-magnifying-glass"></i></div>
+        <p class="font-bold text-slate-800 text-[17px]">Tra cứu ID</p>
+        <p class="text-slate-500 mt-1.5 text-[14px] max-w-md">Nhập ID ở thanh tìm kiếm để xem câu lẻ / đề / video.</p>
+      </div>
+    </div>
+
+    <div id="contentRoot" class="hidden"></div>
+  </div>
+
+  <aside class="col-right" id="rightCol">
+    <div class="grid-wrap">
+      <div class="grid-title" id="gridTitle">Đáp án nhanh</div>
+      <div id="answerGrid"></div>
+    </div>
+  </aside>
+</div>
+
+<button type="button" id="mobGridBtn" title="Đáp án nhanh" onclick="openMobSheet()"><i class="fa-solid fa-list-ol"></i></button>
+<div id="mobSheet">
+  <div class="sheet-bg" onclick="closeMobSheet()"></div>
+  <div class="sheet-panel">
+    <div class="sheet-handle"></div>
+    <div class="sheet-hd">
+      <div class="ttl" id="mobGridTitle">Đáp án nhanh</div>
+      <button type="button" onclick="closeMobSheet()" style="border:none;background:none;font-size:22px;color:#64748b;line-height:1;padding:0 4px">&times;</button>
+    </div>
+    <div class="sheet-bd" id="mobAnswerGrid"></div>
+  </div>
+</div>
+<button type="button" id="toTop" title="Lên đầu" onclick="scrollMainTop()"><i class="fa-solid fa-arrow-up"></i></button>
+<div id="imgLightbox"><img id="lbImg" alt="" draggable="false"/></div>
+
+<script>
+const AUTH="Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1laWRlbnRpZmllciI6IjNVRzZLT1Q0MUFaS0ZTRzIiLCJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoiM1VHNktPVDQxQVpLRlNHMiIsImh0dHA6Ly9zY2hlbWFzLm1pY3Jvc29mdC5jb20vd3MvMjAwOC8wNi9pZGVudGl0eS9jbGFpbXMvcm9sZSI6Im1lbWJlciIsInVzZXJuYW1lIjoiM1VHNktPVDQxQVpLRlNHMiIsImF2YXRhciI6IjIwMjYvOS85NWQ3MDlhMC05NzU3LTRkNjgtYTE0Ny1kYzgwYzUwZGU4YzcuanBnIiwiZnVsbG5hbWUiOiJOZ-G7jWMgS2jDoW5oIiwiZXhwaXJlcyI6IjE4MjMwMDkwNzgiLCJzZXNzaW9ubG9naW50b2tlbiI6IlUzQ1pXR1NTV1BBTzVMMllDRlk0VEpBTEdKVUM1QVlCIiwibmJmIjoxNzkxNDczMDc4LCJleHAiOjE4MjMwMDkwNzgsImlzcyI6Imh0dHBzOi8vbW9vbi52biIsImF1ZCI6Imh0dHBzOi8vbW9vbi52biJ9.PeO4IBR-W0s1gxo0PnYzttnqThyqpe5vPAEsQs6_1z1KjSgFzYgddVU7G5ITlYxSkm0cSFvYMVX8BXEEjcZnBNaRsGagTJBnlLPO966lghedQvFNyiDHTksYTp9HFWKc-ItGDi9BPGm2IULNsY-2-i1WLXDWj7F7ZytD3TrmR3j8kDeTHauwNI5214Wu5tWkn77V34dTadF1q179iB2xHEfuIP9BgdJf7F1QRwYq1CEmgg-rUkUx9KmkJr8wmnpD10GTt9cYh7-KzUrkm089LfBjvRd-yi8dVTSfnYMioAKB1qN2p0iAitVVZ7GzMU4I2MDW4BDbJi7iW4QQY7KKbg";
+const COURSE="https://courseapi.moon.vn/api", CMS="https://cmsapi.moon.vn/api/admin/cms";
+const COURSE_ID=21907376;
+const CH_ICON={
+  flash:'https://rescdn.moon.vn/assets/cdn-moon/assets/assets/icons/ic_flash_card_active.svg',
+  video:'https://rescdn.moon.vn/assets/cdn-moon/assets/assets/icons/ic_lesson_video_active.svg',
+  test:'https://rescdn.moon.vn/assets/cdn-moon/assets/assets/icons/ic_test_online.svg',
+  file:'https://rescdn.moon.vn/assets/cdn-moon/assets/assets/icons/ic_lesson_file_active.svg',
+  key:'https://rescdn.moon.vn/assets/cdn-moon/assets/assets/icons/ic_keys.svg',
+  book:'https://rescdn.moon.vn/assets/cdn-moon/assets/assets/icons/ic_bookmark.svg',
+  panel:'https://rescdn.moon.vn/assets/cdn-moon/assets/assets/icons/ic_panel.svg'
+};
+let chCache={};
+let lastId=null, hls=null, lbScale=1, isFull=false;
+
+window.addEventListener('load',()=>{
+  setTimeout(()=>document.getElementById('splash').classList.add('hide'),5000);
+});
+
+function syncClearBtn(){
+  const inp=document.getElementById('idInput');
+  document.getElementById('clearBtn').classList.toggle('hidden', !inp.value.trim());
+}
+function filterIdInput(){
+  const inp=document.getElementById('idInput');
+  const v=inp.value.replace(/\D/g,'');
+  if(inp.value!==v) inp.value=v;
+  syncClearBtn();
+}
+document.addEventListener('DOMContentLoaded',()=>{
+  loadHistory();
+  const inp=document.getElementById('idInput');
+  inp.addEventListener('input',filterIdInput);
+  inp.addEventListener('focus',syncClearBtn);
+  inp.addEventListener('keyup',filterIdInput);
+  // chặn gõ chữ/desktop paste
+  inp.addEventListener('keypress',e=>{
+    if(e.key==='Enter')return;
+    if(e.ctrlKey||e.metaKey)return;
+    if(!/^[0-9]$/.test(e.key)) e.preventDefault();
+  });
+  inp.addEventListener('paste',e=>{
+    e.preventDefault();
+    const t=(e.clipboardData||window.clipboardData).getData('text')||'';
+    const digits=t.replace(/\D/g,'');
+    const start=inp.selectionStart, end=inp.selectionEnd;
+    inp.value=inp.value.slice(0,start)+digits+inp.value.slice(end);
+    filterIdInput();
+  });
+  syncClearBtn();
+  const main=document.getElementById('colMain');
+  function updateToTopBtn(){
+    var btn=document.getElementById('toTop');
+    if(!btn) return;
+    var main=document.getElementById('colMain');
+    var y=window.pageYOffset||document.documentElement.scrollTop||document.body.scrollTop||0;
+    if(main) y=Math.max(y, main.scrollTop||0);
+    var root=document.getElementById('contentRoot');
+    if(root) y=Math.max(y, root.scrollTop||0);
+    btn.classList.toggle('show', y>200);
+  }
+  window.updateToTopBtn=updateToTopBtn;
+  main.addEventListener('scroll', updateToTopBtn, {passive:true});
+  window.addEventListener('scroll', updateToTopBtn, {passive:true});
+  document.addEventListener('scroll', updateToTopBtn, {passive:true, capture:true});
+  setInterval(updateToTopBtn, 800);
+});
+
+function headers(){return{Authorization:AUTH,Accept:'application/json',Referer:'https://moon.vn/',Origin:'https://moon.vn'};}
+async function api(url){
+  try{
+    const r=await fetch(url,{headers:headers(),mode:'cors'});
+    if(r.status===401||r.status===403)return{_err:'auth'};
+    if(!r.ok)return{_err:'http'};
+    return await r.json();
+  }catch(e){return{_err:'net'};}
+}
+
+function setBusy(on){
+  if(on) stopAllVideo(true);
+  document.getElementById('skeleton').classList.toggle('hidden',!on);
+  if(on){
+    const empty=document.getElementById('emptyState');
+    empty.classList.add('hidden');
+    empty.style.display='none';
+  }
+  document.getElementById('searchBtn').disabled=on;
+}
+function clearInput(){
+  const inp=document.getElementById('idInput');
+  inp.value='';
+  document.getElementById('clearBtn').classList.add('hidden');
+  inp.focus();
+}
+function setModeFull(on){
+  isFull=!!on;
+  document.body.classList.toggle('mode-full', !!on);
+  const rc=document.getElementById('rightCol');
+  if(on) rc.classList.add('show'); else rc.classList.remove('show');
+  // mobile: never lock page scroll
+  if(window.innerWidth<=980){
+    document.body.style.overflow='';
+  }else if(on){
+    document.body.style.overflow='hidden';
+  }else{
+    document.body.style.overflow='';
+  }
+  if(!on) closeMobSheet();
+}
+
+function scrollToTopAll(){
+  try{
+    const main=document.getElementById('colMain');
+    if(main){ main.scrollTop=0; main.scrollTo({top:0,behavior:'smooth'}); }
+    window.scrollTo({top:0,behavior:'smooth'});
+    document.documentElement.scrollTop=0;
+    document.body.scrollTop=0;
+    const list=document.getElementById('chList');
+    if(list) list.scrollTop=0;
+    const root=document.getElementById('contentRoot');
+    if(root) root.scrollTop=0;
+    const fc=document.getElementById('fcRoot');
+    if(fc) fc.scrollTop=0;
+    if(typeof updateToTopBtn==='function') setTimeout(updateToTopBtn, 400);
+  }catch(e){}
+}
+
+function goHome(){
+  stopAllVideo(true);
+  document.getElementById('idInput').value='';
+  syncClearBtn();
+  document.getElementById('contentRoot').classList.add('hidden');
+  document.getElementById('contentRoot').innerHTML='';
+  document.getElementById('skeleton').classList.add('hidden');
+  const empty=document.getElementById('emptyState');
+  empty.classList.remove('hidden');
+  empty.style.display='block';
+  const ch=document.getElementById('courseHome');
+  if(ch) ch.style.display='block';
+  setModeFull(false);
+  lastId=null;
+  hideViewer();
+  if(window.hls){try{hls.destroy();}catch(e){} hls=null;}
+  loadHistory();
+  scrollMainTop();
+  if(!document.getElementById('chList').dataset.loaded) loadCourseHome();
+}
+function scrollMainTop(){
+  if(typeof scrollToTopAll==='function') scrollToTopAll();
+  else {
+    const main=document.getElementById('colMain');
+    if(isFull && window.innerWidth>980 && main) main.scrollTo({top:0,behavior:'smooth'});
+    else window.scrollTo({top:0,behavior:'smooth'});
+  }
+}
+
+async function startFetch(custom){
+  const inp=document.getElementById('idInput');
+  if(custom!=null)inp.value=custom;
+  syncClearBtn();
+  const id=inp.value.trim();
+  if(!id){Swal.fire({icon:'warning',title:'Nhập ID',confirmButtonColor:'#0247df'});return;}
+  lastId=id; saveHistory(id); loadHistory();
+  setBusy(true);
+  document.getElementById('emptyState').classList.add('hidden');
+  document.getElementById('contentRoot').classList.add('hidden');
+  setModeFull(false);
+
+  try{
+    const search=await api(COURSE+'/Course/SearchID/'+encodeURIComponent(id));
+    if(search._err==='auth')throw new Error('Token hết hạn');
+    if(!search||!search.isSuccessful||!search.id)throw new Error((search&&search.message)||'Không tìm thấy ID');
+    const mod=(search.moduleName||'').toLowerCase();
+    if(mod==='question') await loadSingle(id,search);
+    else await loadFull(id,search);
+  }catch(e){
+    Swal.fire({icon:'error',title:'Lỗi',text:e.message||String(e),confirmButtonColor:'#0247df'});
+    const empty=document.getElementById('emptyState');
+    empty.classList.remove('hidden'); empty.style.display='block';
+    setModeFull(false);
+  }finally{setBusy(false);}
+}
+
+function questionCard(o){
+  const sec=o.secTitle?`<div class="sec-inline">${o.secTitle}</div>`:'';
+  const order=o.showOrder&&o.order!=null?`<b>${o.order}.</b> `:'';
+  let mid='';
+  const t=Number(o.typeID)||0;
+  const keyStr=(o.key&&String(o.key).trim())||'';
+  if(t===0){
+    mid=['A','B','C','D'].map(L=>{
+      const h=o[L.toLowerCase()]; if(!h)return'';
+      const ok=keyStr&&keyStr.toUpperCase()===L;
+      return `<div class="opt-row${ok?' correct':''}"><span class="opt-key">${L}.</span><span>${h}</span></div>`;
+    }).join('');
+    if(mid)mid=`<div class="math-body pt-1">${mid}</div>`;
+  }else if(t===2&&o.plans&&o.plans.length){
+    const L=['a','b','c','d','e','f'];
+    mid=`<div class="math-body pt-1"><table class="ds-table"><thead><tr><th class="d">Đ</th><th class="s">S</th><th>Mệnh đề</th></tr></thead><tbody>${
+      o.plans.map((p,i)=>{const y=String(p.key)==='1';return `<tr><td class="t ${y?'y':''}">${y?'✓':''}</td><td class="t ${!y?'n':''}">${!y?'✓':''}</td><td><b>${L[i]||i+1}.</b> ${p.content||''}</td></tr>`;}).join('')
+    }</tbody></table></div>`;
+  }else if(t===1){
+    const fk=(o.fillKey&&String(o.fillKey).trim())||keyStr;
+    if(fk) mid=`<div class="pt-2"><span class="inline-block px-3 py-1.5 border border-blue-200 rounded-md text-blue-600 font-bold">${esc(fk)}</span></div>`;
+  }
+  const ansLabel=(t===1||!keyStr)?'<span></span>':`<span class="ans-label">Đáp án ${esc(keyStr)}</span>`;
+  const qid=o.bookId!=null?`<span class="qid">[${o.bookId}]</span>`:'';
+  const vidBtn=o.isVideo?`<button type="button" onclick="playVideo('${o.bookId||o.idLabel}')"><i class="fa-solid fa-circle-play"></i> Video lời giải</button>`:'';
+  const toolbar=o.hideToolbar?'':`<div class="q-toolbar">
+    <button type="button" onclick="void(0)"><i class="fa-regular fa-bookmark"></i> ${o.bookmarks||0} Save</button>
+    <button type="button" onclick="void(0)"><i class="fa-regular fa-comment"></i> ${o.comments||0} Bình luận</button>
+    ${vidBtn}
+  </div>`;
+
+  return `<article id="${esc(o.domId)}" class="q-card">
+    <div class="q-body">
+      ${sec}
+      <div class="math-body">${order}${o.qText||''}</div>
+      ${mid}
+      <div class="meta-line">${ansLabel}${qid}</div>
+    </div>
+    ${o.answer?`<div class="solution-box math-body ans">${o.answer}</div>`:''}
+    ${toolbar}
+  </article>`;
+}
+
+async function loadSingle(bookId,search){
+  setModeFull(false);
+  const iid=search.id;
+  const [cmsQ,itemQ,cmsV]=await Promise.all([
+    api(CMS+'/course/SearchByBookID/'+encodeURIComponent(bookId)),
+    api(COURSE+'/Course/ItemQuestion/'+encodeURIComponent(iid)),
+    api(CMS+'/bookid/VideoDetail/'+encodeURIComponent(bookId))
+  ]);
+  const hasC=cmsQ&&!cmsQ._err, hasI=itemQ&&!itemQ._err&&itemQ.questionId;
+  if(!hasC&&!hasI)throw new Error('Không có dữ liệu');
+  let typeID=Number(search.typeID!=null?search.typeID:(hasI?itemQ.typeID:(hasC?(cmsQ.typeId??cmsQ.typeID):0)))||0;
+  const pick=k=>{const a=hasC&&cmsQ[k]?String(cmsQ[k]).trim():'';const b=hasI&&itemQ[k]?String(itemQ[k]).trim():'';return a||b||'';};
+  let key='';
+  if(hasI&&itemQ.key&&String(itemQ.key).trim())key=String(itemQ.key).trim();
+  else if(hasC&&cmsQ.key&&String(cmsQ.key).trim())key=String(cmsQ.key).trim();
+  let videoUrl='';
+  if(hasI&&itemQ.listTikTokVideoModel&&itemQ.listTikTokVideoModel[0])videoUrl=itemQ.listTikTokVideoModel[0].urlVideo||'';
+  if(!videoUrl&&cmsV&&!cmsV._err)videoUrl=cmsV.videoUrl||'';
+
+  const card=questionCard({
+    domId:'q-single', idLabel:bookId, showOrder:false, typeID, hideToolbar:true,
+    qText:(hasC&&cmsQ.questionText)||(hasI&&itemQ.questionText)||'',
+    a:pick('a'),b:pick('b'),c:pick('c'),d:pick('d'),
+    plans:hasI&&Array.isArray(itemQ.plans)?itemQ.plans:[],
+    fillKey:String((hasI&&itemQ.fillKey)||(hasC&&cmsQ.fillKey)||'').trim(),
+    answer:(hasC&&cmsQ.answer)||(hasI&&itemQ.answer)||'',
+    key, bookId,
+    bookmarks:hasI?itemQ.bookmarks:0, comments:hasI?itemQ.comments:0,
+    isVideo:!!videoUrl||(hasI&&itemQ.isVideo)
+  });
+  const vid=videoUrl?`<div class="panel mt-4 overflow-hidden">
+    <div class="px-4 py-3 border-b border-slate-100 font-bold text-moon text-[16px]">Video lời giải [ID: ${esc(bookId)}]</div>
+    <video id="vPlayer" playsinline class="w-full bg-white"></video>
+  </div>`:'';
+  const root=document.getElementById('contentRoot');
+  root.innerHTML=viewHead('ID '+bookId)+card+vid;
+  root.classList.remove('hidden');
+  finish(root);
+  if(videoUrl)setupVideo('vPlayer',videoUrl,true);
+}
+
+async function loadFull(bookId,search){
+  const lessonId=search.id;
+  const title=search.name||('Đề '+bookId);
+  const [detail,readings]=await Promise.all([
+    api(COURSE+'/Course/LessonDetail/'+lessonId),
+    api(COURSE+'/testing/ReadingInLesson/'+lessonId)
+  ]);
+  if(!readings||readings._err||!Array.isArray(readings))throw new Error('Không tải được đề');
+
+  const uniq=[];
+  readings.forEach(s=>(s.listQuestion||[]).forEach(q=>{if(q.bookId)uniq.push(q.bookId);}));
+  const ids=[...new Set(uniq)];
+  const cmsMap={};
+  await mapPool(ids,6,async bid=>{
+    const c=await api(CMS+'/course/SearchByBookID/'+encodeURIComponent(bid));
+    if(c&&!c._err)cmsMap[bid]=c;
+  });
+  readings.forEach(sec=>{
+    (sec.listQuestion||[]).forEach(q=>{
+      const c=cmsMap[q.bookId]; if(!c)return;
+      if(c.questionText)q.questionText=c.questionText;
+      if(c.answer)q.answer=c.answer;
+      ['a','b','c','d'].forEach(k=>{if(c[k]&&String(c[k]).trim())q[k]=c[k];});
+      if(c.key&&String(c.key).trim())q.key=c.key;
+      if(c.fillKey)q.fillKey=c.fillKey;
+    });
+  });
+
+  const keys={};
+  ((detail&&!detail._err&&detail.keyAllEnglish)||[]).forEach(k=>{keys[k.questionId]=k.key;});
+
+  let html='';
+  (readings||[]).forEach((sec,si)=>{
+    const part=si+1;
+    const sc=sec.questionScore!=null?sec.questionScore:'';
+    const secTitle=`${esc(sec.title||('Phần '+part))}${sc!==''?` <span style="color:#ef4444">(${sc} điểm)</span>`:''}`;
+    (sec.listQuestion||[]).forEach((q,qi)=>{
+      const ansKey=(q.key&&String(q.key).trim())||keys[q.questionId]||'';
+      const domId='q-p'+part+'-'+q.order+'-'+(q.questionId||q.bookId||'x');
+      html+=questionCard({
+        domId, idLabel:q.bookId||q.questionId, order:q.order, showOrder:true, typeID:q.typeId,
+        qText:q.questionText||'', a:q.a,b:q.b,c:q.c,d:q.d,
+        plans:q.plans||[], fillKey:(q.fillKey||'').trim(),
+        answer:q.answer||'', key:ansKey, bookId:q.bookId||q.questionId,
+        bookmarks:q.bookmarks, comments:q.comments, isVideo:q.isVideo,
+        secTitle: qi===0 ? secTitle : ''
+      });
+    });
+  });
+  const root=document.getElementById('contentRoot');
+  window.__examData={title:title, readings:readings, keys:keys};
+  root.innerHTML=viewHead(title,{download:true})+html;
+  root.classList.remove('hidden');
+  renderGrid(readings,keys,title);
+  setModeFull(true);
+  finish(root);
+  document.getElementById('colMain').scrollTop=0;
+}
+
+async function mapPool(arr,limit,fn){
+  let i=0; async function w(){while(i<arr.length){const c=i++;await fn(arr[c]);}}
+  await Promise.all(Array.from({length:Math.min(limit,arr.length||1)},()=>w()));
+}
+
+function mcCols(n){
+  if(n<=12)return 2;
+  if(n<=24)return 3;
+  return 4;
+}
+
+function openMobSheet(){document.getElementById('mobSheet').classList.add('open');document.body.style.overflow='hidden';}
+function closeMobSheet(){document.getElementById('mobSheet').classList.remove('open');if(!document.body.classList.contains('mode-full')||window.innerWidth<=980){document.body.style.overflow='';}else{document.body.style.overflow='hidden';}}
+function renderGrid(readings,keys,title){
+  const ttl=title||'Đáp án nhanh';
+  document.getElementById('gridTitle').textContent=ttl;
+  const mt=document.getElementById('mobGridTitle'); if(mt) mt.textContent=ttl;
+  let html='',p=0;
+  (readings||[]).forEach(sec=>{
+    p++;
+    const qs=sec.listQuestion||[];
+    if(!qs.length) return;
+    // label = section title if any, else Phần n
+    const rawTitle=(sec.title||'').replace(/<[^>]+>/g,' ').trim();
+    const label=rawTitle || ('Phần '+p);
+    html+=`<div class="part-label">${esc(label)}</div>`;
+
+    // group consecutive same typeId for layout
+    let i=0;
+    while(i<qs.length){
+      const t=Number(qs[i].typeId)||0;
+      let j=i+1;
+      while(j<qs.length && (Number(qs[j].typeId)||0)===t) j++;
+      const chunk=qs.slice(i,j);
+
+      if(t===0){
+        const cols=mcCols(chunk.length);
+        const gcls=cols===2?'g2':(cols===3?'g3':'g4');
+        html+=`<div class="${gcls}">`;
+        chunk.forEach(q=>{
+          const ord=q.order!=null?q.order:'';
+          const k=(q.key&&String(q.key).trim())||keys[q.questionId]||'-';
+          const domId='q-p'+p+'-'+ord+'-'+(q.questionId||q.bookId||'x');
+          html+=`<button type="button" class="g-btn" onclick="goQ('${domId}')">${ord}. ${esc(k)}</button>`;
+        });
+        html+=`</div>`;
+      }else if(t===2){
+        html+=`<div class="g2">`;
+        chunk.forEach(q=>{
+          const ord=q.order!=null?q.order:'';
+          const boxes=(q.plans||[]).map(x=>`<span>${String(x.key)==='1'?'Đ':'S'}</span>`).join('');
+          const domId='q-p'+p+'-'+ord+'-'+(q.questionId||q.bookId||'x');
+          html+=`<div class="g-row" onclick="goQ('${domId}')"><span class="num">${ord}</span><span class="tf-chain">${boxes||'-'}</span></div>`;
+        });
+        html+=`</div>`;
+      }else if(t===1){
+        html+=`<div class="g-fill-list">`;
+        chunk.forEach(q=>{
+          const ord=q.order!=null?q.order:'';
+          const domId='q-p'+p+'-'+ord+'-'+(q.questionId||q.bookId||'x');
+          const fk=(q.fillKey&&String(q.fillKey).trim())||(q.key&&String(q.key).trim())||'-';
+          html+=`<div class="g-row" onclick="goQ('${domId}')"><span class="num">${ord}</span><span class="fill-ans">${esc(fk)}</span></div>`;
+        });
+        html+=`</div>`;
+      }else{
+        // unknown / essay / other — show order + key if any
+        const cols=mcCols(chunk.length);
+        const gcls=cols===2?'g2':(cols===3?'g3':'g4');
+        html+=`<div class="${gcls}">`;
+        chunk.forEach(q=>{
+          const ord=q.order!=null?q.order:'';
+          const k=(q.key&&String(q.key).trim())||'';
+          const domId='q-p'+p+'-'+ord+'-'+(q.questionId||q.bookId||'x');
+          html+=`<button type="button" class="g-btn" onclick="goQ('${domId}')">${ord}${k?'. '+esc(k):''}</button>`;
+        });
+        html+=`</div>`;
+      }
+      i=j;
+    }
+  });
+  document.getElementById('answerGrid').innerHTML=html;
+  const mob=document.getElementById('mobAnswerGrid');
+  if(mob) mob.innerHTML=html;
+}
+
+function goQ(id){
+  const el=document.getElementById(id);
+  if(!el)return;
+  closeMobSheet();
+  const mobile=window.innerWidth<=980;
+  if(isFull && !mobile){
+    const main=document.getElementById('colMain');
+    const top=el.offsetTop - 8;
+    main.scrollTo({top:Math.max(0,top),behavior:'smooth'});
+  }else{
+    el.scrollIntoView({behavior:'smooth',block:'start'});
+  }
+  el.classList.add('ring-2','ring-blue-400');
+  setTimeout(()=>el.classList.remove('ring-2','ring-blue-400'),800);
+}
+
+async function playVideo(bookId){
+  let url='';
+  const s=await api(COURSE+'/Course/SearchID/'+encodeURIComponent(bookId));
+  if(s&&s.id){const iq=await api(COURSE+'/Course/ItemQuestion/'+s.id);if(iq&&iq.listTikTokVideoModel&&iq.listTikTokVideoModel[0])url=iq.listTikTokVideoModel[0].urlVideo||'';}
+  if(!url){const v=await api(CMS+'/bookid/VideoDetail/'+encodeURIComponent(bookId));if(v&&!v._err)url=v.videoUrl||'';}
+  if(!url){Swal.fire({icon:'info',title:'Chưa có video',confirmButtonColor:'#0247df'});return;}
+  let ov=document.getElementById('vidOv');
+  if(ov)ov.remove();
+  ov=document.createElement('div');ov.id='vidOv';
+  ov.className='fixed inset-0 z-50 bg-black/50 flex items-center justify-center p-4';
+  ov.innerHTML=`<div class="bg-white w-full max-w-3xl rounded-xl overflow-hidden shadow-xl">
+    <div class="flex justify-between items-center px-4 py-3 border-b">
+      <span class="font-bold text-moon text-[16px]">Video lời giải [ID: ${esc(bookId)}]</span>
+      <button type="button" class="text-2xl text-slate-500 px-2 leading-none" onclick="document.getElementById('vidOv').remove()">&times;</button>
+    </div>
+    <video id="ovPlayer" playsinline class="w-full bg-white"></video>
+  </div>`;
+  document.body.appendChild(ov);
+  setupVideo('ovPlayer',url,true);
+}
+function resolveVideoUrl(url){
+  if(!url) return url;
+  var u=String(url);
+  // Older lessonvid100 / year paths often need Authorization via query is not possible;
+  // try alternate hosts + stream variants
+  var alts=[u];
+  try{
+    // lessonvid100.khaothi.ai <-> lessonvid.khaothi.ai
+    if(/lessonvid100\.khaothi\.ai/i.test(u)){
+      alts.push(u.replace(/lessonvid100\.khaothi\.ai/ig,'lessonvid.khaothi.ai'));
+    }
+    if(/lessonvid\.khaothi\.ai/i.test(u) && !/lessonvid100/i.test(u)){
+      alts.push(u.replace(/lessonvid\.khaothi\.ai/ig,'lessonvid100.khaothi.ai'));
+    }
+    // year folder rewrites for re-uploaded content
+    var m=u.match(/\/(20\d{2})\//);
+    if(m){
+      var y=parseInt(m[1],10);
+      if(y<=2024){
+        // try current year path if structure similar
+        alts.push(u.replace('/'+m[1]+'/','/2025/'));
+        alts.push(u.replace('/'+m[1]+'/','/2026/'));
+      }
+    }
+  }catch(e){}
+  return alts;
+}
+function stopAllVideo(leaveView){
+  try{
+    if(window.__plyrLesson){ try{ window.__plyrLesson.pause(); }catch(e){} }
+    var v=document.getElementById('vPlayer');
+    if(v){ try{ v.pause(); }catch(e){} }
+    if(leaveView){
+      if(v){ try{ v.removeAttribute('src'); v.load(); }catch(e){} }
+      if(window.__hls){ try{ window.__hls.destroy(); }catch(e){} window.__hls=null; }
+      if(typeof hls!=='undefined' && hls){ try{ hls.destroy(); }catch(e){} hls=null; }
+      document.body.classList.remove('video-open');
+      document.body.classList.remove('doc-open');
+    }
+    document.querySelectorAll('audio').forEach(function(a){ try{ a.pause(); }catch(e){} });
+  }catch(e){}
+}
+function setupVideo(id,url,autoplay){
+  var video=document.getElementById(id); if(!video||!url) return;
+  if(window.__hls){ try{ window.__hls.destroy(); }catch(e){} window.__hls=null; }
+  if(typeof hls!=='undefined' && hls){ try{ hls.destroy(); }catch(e){} hls=null; }
+  try{ video.pause(); }catch(e){}
+
+  if(!video._plyr){
+    video._plyr=new Plyr(video,{
+      controls:['play-large','play','progress','current-time','duration','mute','volume','settings','fullscreen'],
+      autoplay:!!autoplay,
+      ratio:'16:9',
+      fullscreen:{enabled:true,fallback:true,iosNative:true}
+    });
+    window.__plyrLesson=video._plyr;
+  }else{
+    window.__plyrLesson=video._plyr;
+  }
+
+  var hosts=typeof resolveVideoUrl==='function'?resolveVideoUrl(url):[url];
+  var candidates=[];
+  hosts.forEach(function(u){
+    candidates.push(u);
+    if(/master\.m3u8/i.test(u)){
+      candidates.push(u.replace(/master\.m3u8/i,'stream_1.m3u8'));
+      candidates.push(u.replace(/master\.m3u8/i,'stream_0.m3u8'));
+    }
+  });
+  // unique
+  candidates=candidates.filter(function(v,i,a){ return a.indexOf(v)===i; });
+
+  var tried=0;
+  var startPlay=function(){
+    if(!autoplay) return;
+    if(video._plyr) video._plyr.play().catch(function(){});
+    else video.play().catch(function(){});
+  };
+  var tryNext=function(){
+    if(tried>=candidates.length) return;
+    var src=candidates[tried++];
+    if(window.__hls){ try{ window.__hls.destroy(); }catch(e){} window.__hls=null; }
+    if(window.Hls && Hls.isSupported() && /\.m3u8/i.test(src)){
+      var h=new Hls({ enableWorker:true, startLevel:0, capLevelToPlayerSize:true });
+      h.loadSource(src);
+      h.attachMedia(video);
+      var ok=false;
+      h.on(Hls.Events.MANIFEST_PARSED, function(){ ok=true; startPlay(); });
+      h.on(Hls.Events.ERROR, function(_, data){
+        if(data&&data.fatal){
+          try{h.destroy();}catch(e){}
+          window.__hls=null;
+          if(tried<candidates.length) tryNext();
+        }
+      });
+      window.__hls=h; hls=h;
+    }else if(video.canPlayType('application/vnd.apple.mpegurl')){
+      video.src=src;
+      video.addEventListener('loadedmetadata', startPlay, {once:true});
+      video.addEventListener('error', function onE(){ video.removeEventListener('error', onE); if(tried<candidates.length) tryNext(); });
+    }else{
+      video.src=src; video.load();
+      video.addEventListener('loadeddata', startPlay, {once:true});
+    }
+  };
+  tryNext();
+}
+
+function finish(root){
+  const empty=document.getElementById('emptyState');
+  empty.classList.add('hidden');
+  empty.style.display='none';
+  document.getElementById('skeleton').classList.add('hidden');
+  document.getElementById('contentRoot').classList.remove('hidden');
+  if(window.MathJax&&MathJax.typesetPromise)MathJax.typesetPromise([root]).catch(()=>{});
+  requestAnimationFrame(()=>{normImg(root);bindZoom(root);});
+}
+function normImg(root){
+  if(!root)return;
+  root.querySelectorAll('img').forEach(img=>{
+    img.style.height='';img.removeAttribute('height');
+    const s=(img.getAttribute('src')||'').toLowerCase();
+    if(s.includes('latex')){img.style.maxHeight=img.closest('.solution-box, .ans')?'2em':'1.55em';img.style.display='inline-block';img.style.verticalAlign='middle';img.classList.remove('fig');}
+    else{img.classList.add('fig');img.style.maxHeight='none';img.style.maxWidth='min(100%,440px)';img.style.display='block';}
+    img.onerror=function(){this.style.display='none';};
+  });
+}
+function bindZoom(root){
+  if(!root)return;
+  root.querySelectorAll('img').forEach(img=>{
+    if(img.dataset.z)return;
+    if(img.classList.contains('thumb')||img.classList.contains('av')||img.classList.contains('fc-img')||img.classList.contains('fc-i-img')||img.closest('.vid-side')||img.closest('.vid-item')||img.closest('.fc-wrap')||img.closest('.fc-flip')) return;
+    img.dataset.z='1';
+    img.addEventListener('click',e=>{e.preventDefault();openLb(img.src);});
+  });
+}
+function openLb(src){lbScale=1;const im=document.getElementById('lbImg');im.src=src;im.style.transform='scale(1)';document.getElementById('imgLightbox').classList.add('open');}
+function closeLb(){document.getElementById('imgLightbox').classList.remove('open');}
+document.getElementById('imgLightbox').addEventListener('click',e=>{if(e.target.id==='imgLightbox')closeLb();});
+document.getElementById('imgLightbox').addEventListener('wheel',e=>{e.preventDefault();lbScale=Math.min(5,Math.max(0.35,lbScale+(e.deltaY<0?0.12:-0.12)));document.getElementById('lbImg').style.transform='scale('+lbScale+')';},{passive:false});
+
+function esc(s){if(s==null)return'';return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
+
+function saveHistory(id){let h=JSON.parse(localStorage.getItem('moon_u_hist')||'[]').filter(x=>x!==id);h.unshift(id);if(h.length>24)h=h.slice(0,24);localStorage.setItem('moon_u_hist',JSON.stringify(h));}
+function loadHistory(){
+  const h=JSON.parse(localStorage.getItem('moon_u_hist')||'[]');
+  const box=document.getElementById('historyBox');
+  const tags=document.getElementById('historyTags');
+  if(!h.length){box.classList.add('hidden');return;}
+  box.classList.remove('hidden');
+  tags.innerHTML=h.map(id=>`<div class="chip" onclick="startFetch('${id}')">
+    <span class="w-7 h-7 rounded-full bg-white flex items-center justify-center shadow-sm"><i class="fa-solid fa-lightbulb text-amber-500 text-sm"></i></span>
+    <span>ID ${id}</span>
+    <button type="button" class="x" onclick="event.stopPropagation();rmHist('${id}')">&times;</button>
+  </div>`).join('');
+}
+function rmHist(id){localStorage.setItem('moon_u_hist',JSON.stringify(JSON.parse(localStorage.getItem('moon_u_hist')||'[]').filter(x=>x!==id)));loadHistory();}
+function clearHistory(){localStorage.removeItem('moon_u_hist');loadHistory();}
+
+window.addEventListener('resize',()=>{
+  if(isFull) setModeFull(true);
+});
+document.addEventListener('keydown',e=>{if(e.key==='Escape'){closeLb();closeMobSheet();}});
+
+
+async function downloadExamDocx(mode){
+  const data=window.__examData;
+  if(!data||!data.readings){ Swal.fire({icon:'info',title:'Chưa có đề để tải',confirmButtonColor:'#0247df'}); return; }
+  if(typeof docx==='undefined'){ Swal.fire({icon:'error',title:'Thiếu thư viện docx',confirmButtonColor:'#0247df'}); return; }
+  const D=docx;
+  const Document=D.Document, Packer=D.Packer, Paragraph=D.Paragraph, TextRun=D.TextRun, AlignmentType=D.AlignmentType;
+  const title=data.title||'De thi';
+  const keys=data.keys||{};
+  const children=[];
+  const SZ=26;
+
+  children.push(new Paragraph({
+    alignment:AlignmentType.CENTER,
+    spacing:{after:240},
+    children:[new TextRun({text:String(title).toUpperCase(), bold:true, size:SZ, font:'Times New Roman'})]
+  }));
+
+  let qNum=0;
+  (data.readings||[]).forEach((sec)=>{
+    const secTitle=(sec.title||'').replace(/<[^>]+>/g,' ').trim();
+    const hasContent=(sec.content||'').trim();
+    const hasAudio=!!(sec.isAudio&&sec.audioUrl);
+
+    // Group instruction / passage — bold in parentheses so import tools treat as section header not MC stem
+    if(secTitle){
+      children.push(new Paragraph({
+        spacing:{before:280, after:100},
+        children:[new TextRun({text:secTitle, bold:true, size:SZ, font:'Times New Roman'})]
+      }));
+    }
+    if(hasAudio){
+      children.push(new Paragraph({
+        spacing:{after:80},
+        children:[
+          new TextRun({text:'Link nghe: ', bold:true, size:SZ, font:'Times New Roman'}),
+          new TextRun({text:String(sec.audioUrl), size:SZ, font:'Times New Roman'})
+        ]
+      }));
+    }
+    if(hasContent){
+      htmlToLines(sec.content).forEach(line=>{
+        children.push(new Paragraph({
+          spacing:{after:40},
+          children:[new TextRun({text:line, size:SZ, font:'Times New Roman'})]
+        }));
+      });
+      children.push(new Paragraph({ spacing:{after:100}, children:[] }));
+    }
+
+    (sec.listQuestion||[]).forEach((q)=>{
+      qNum++;
+      const ord=q.order!=null?q.order:qNum;
+      const bookId=q.bookId||q.questionId||'';
+      const ansKey=((q.key&&String(q.key).trim())||keys[q.questionId]||'').toUpperCase();
+      const fillKey=(q.fillKey||'').trim();
+      const qText=stripHtml(q.questionText||'');
+      const typeId=Number(q.typeId)||0;
+
+      if(mode==='key'){
+        let ansLine=String(ord)+'. '+(fillKey||ansKey||'—');
+        if(typeId===2 && (q.plans||[]).length){
+          ansLine=String(ord)+'. '+(q.plans||[]).map((p,i)=>(String.fromCharCode(65+i)+':'+(String(p.key)==='1'?'Đ':'S'))).join('  ');
+        }
+        children.push(new Paragraph({
+          spacing:{after:60},
+          children:[new TextRun({text:ansLine, size:SZ, font:'Times New Roman'})]
+        }));
+        return;
+      }
+
+      // Standard question line for import tools
+      const head='Câu '+ord+(bookId?' ['+bookId+']':'')+'. ';
+      children.push(new Paragraph({
+        spacing:{before:140, after:60},
+        children:[
+          new TextRun({text:head, bold:true, size:SZ, font:'Times New Roman'}),
+          new TextRun({text:qText, size:SZ, font:'Times New Roman'})
+        ]
+      }));
+
+      if(typeId===0 || (q.a||q.b||q.c||q.d)){
+        const opts=[['A',q.a],['B',q.b],['C',q.c],['D',q.d]].filter(x=>x[1]!=null&&String(x[1]).trim()!=='');
+        const parts=opts.map(([k,v])=>{
+          const isCorrect = mode==='full' && ansKey && ansKey.indexOf(k)>=0;
+          return {label:(isCorrect?'*':'')+k+'.', text:stripHtml(v)};
+        });
+        const lens=parts.map(p=>p.label.length+1+p.text.length);
+        const total=lens.reduce((a,b)=>a+b,0)+(parts.length-1)*3;
+        const maxOne=Math.max.apply(null, lens.length?lens:[0]);
+        const makeRuns=function(slice){
+          const runs=[];
+          slice.forEach(function(p,i){
+            if(i>0) runs.push(new TextRun({text:'    ', size:SZ, font:'Times New Roman'}));
+            runs.push(new TextRun({text:p.label+' ', bold:true, size:SZ, font:'Times New Roman'}));
+            runs.push(new TextRun({text:p.text, size:SZ, font:'Times New Roman'}));
+          });
+          return runs;
+        };
+        if(parts.length<=4 && total<=95 && maxOne<=28){
+          children.push(new Paragraph({spacing:{after:60}, indent:{left:120}, children: makeRuns(parts)}));
+        }else if(parts.length===4 && maxOne<=40){
+          children.push(new Paragraph({spacing:{after:40}, indent:{left:120}, children: makeRuns(parts.slice(0,2))}));
+          children.push(new Paragraph({spacing:{after:60}, indent:{left:120}, children: makeRuns(parts.slice(2,4))}));
+        }else{
+          parts.forEach(function(p){
+            children.push(new Paragraph({
+              spacing:{after:40}, indent:{left:120},
+              children:[
+                new TextRun({text:p.label+' ', bold:true, size:SZ, font:'Times New Roman'}),
+                new TextRun({text:p.text, size:SZ, font:'Times New Roman'})
+              ]
+            }));
+          });
+        }
+      }
+
+      if(typeId===2 && (q.plans||[]).length){
+        (q.plans||[]).forEach(function(p,i){
+          const k=String.fromCharCode(65+i);
+          const isCorrect = mode==='full' && String(p.key)==='1';
+          children.push(new Paragraph({
+            spacing:{after:40}, indent:{left:120},
+            children:[
+              new TextRun({text:(isCorrect?'*':'')+k+'. ', bold:true, size:SZ, font:'Times New Roman'}),
+              new TextRun({text:stripHtml(p.content||''), size:SZ, font:'Times New Roman'})
+            ]
+          }));
+        });
+      }
+
+      if(mode==='full'){
+        // Always export key when available (fill / MC / TF)
+        var finalAns = fillKey || ansKey || '';
+        if(!finalAns && typeId===2 && (q.plans||[]).length){
+          finalAns = (q.plans||[]).map(function(p,i){
+            return String.fromCharCode(65+i)+':'+(String(p.key)==='1'?'Đ':'S');
+          }).join(' ');
+        }
+        if(finalAns){
+          children.push(new Paragraph({
+            spacing:{before:50, after:40},
+            children:[
+              new TextRun({text:'Đáp án: ', bold:true, size:SZ, font:'Times New Roman'}),
+              new TextRun({text:String(finalAns), size:SZ, font:'Times New Roman'})
+            ]
+          }));
+        }
+        var solLines=htmlToLines(q.answer||'');
+        var solPlain=solLines.join(' ').trim().toLowerCase();
+        var fk=(fillKey||ansKey||'').toLowerCase();
+        if(solLines.length && !(fk && solPlain===fk)){
+          children.push(new Paragraph({
+            spacing:{before:40, after:30},
+            children:[new TextRun({text:'Lời giải:', bold:true, size:SZ, font:'Times New Roman'})]
+          }));
+          solLines.forEach(function(line){
+            children.push(new Paragraph({
+              spacing:{after:30},
+              children:[new TextRun({text:line, size:SZ, font:'Times New Roman'})]
+            }));
+          });
+        }
+      }
+    });
+  });
+
+  const doc=new Document({
+    sections:[{
+      properties:{ page:{ margin:{ top:720, bottom:720, left:720, right:720 } } },
+      children: children
+    }]
+  });
+  const blob=await Packer.toBlob(doc);
+  const a=document.createElement('a');
+  const suffix=mode==='exam'?'_de':(mode==='key'?'_dap_an':'');
+  a.href=URL.createObjectURL(blob);
+  a.download=safeFileName(title)+suffix+'.docx';
+  document.body.appendChild(a); a.click(); a.remove();
+  setTimeout(function(){ URL.revokeObjectURL(a.href); }, 2000);
+  const menu=document.getElementById('dlMenu'); if(menu) menu.classList.remove('open');
+}
+
+function htmlToLines(htmlStr){
+  if(!htmlStr) return [];
+  let s=String(htmlStr)
+    .replace(/<\s*br\s*\/?\s*>/gi,'\n')
+    .replace(/<\s*\/\s*p\s*>/gi,'\n')
+    .replace(/<\s*\/\s*div\s*>/gi,'\n')
+    .replace(/<\s*\/\s*li\s*>/gi,'\n')
+    .replace(/<\s*li[^>]*>/gi,'• ');
+  const d=document.createElement('div');
+  d.innerHTML=s;
+  const text=(d.textContent||d.innerText||'').replace(/\r/g,'');
+  return text.split('\n').map(x=>x.replace(/[ \t]+/g,' ').trim()).filter(Boolean);
+}
+
+function stripHtml(s){
+  if(!s) return '';
+  const d=document.createElement('div');
+  d.innerHTML=String(s);
+  return (d.textContent||d.innerText||'').replace(/\\s+/g,' ').trim();
+}
+function safeFileName(s){
+  return String(s||'de_thi').replace(/[\\\\/:*?"<>|]/g,'_').slice(0,80);
+}
+
+
+/* ===== Course home ===== */
+function chIcon(type,page){
+  const t=((type||'')+' '+(page||'')).toLowerCase();
+  let src=CH_ICON.video;
+  if(t.includes('panel')) src=CH_ICON.panel;
+  else if(t.includes('vocab')||t.includes('flash')) src=CH_ICON.flash;
+  else if(t.includes('exercise')||t.includes('stest')||t.includes('test')) src=CH_ICON.test;
+  else if(t.includes('file')||t.includes('document')||t.includes('open')) src=CH_ICON.file;
+  else if(t.includes('key')) src=CH_ICON.key;
+  return '<img class="ico" src="'+src+'" alt="" loading="lazy">';
+}
+function chCount(lessons){
+  let n=0;
+  (lessons||[]).forEach(x=>{
+    if(x.lessonsInPanel&&x.lessonsInPanel.length) n+=x.lessonsInPanel.length;
+    else n+=1;
+  });
+  return n;
+}
+function chLessonBtn(l){
+  const page=l.pageName||l.contentViewTypeLMS||'';
+  const type=l.iconViewType||'';
+  const kind=lessonFilterKind(page, type);
+  return '<button type="button" class="ch-lesson" data-id="'+l.id+'" data-page="'+esc(page)+'" data-type="'+esc(type)+'" data-kind="'+kind+'" data-name="'+esc(l.name||'')+'" onclick="openCourseLesson(this)">'
+    +chIcon(type,page)
+    +'<span class="nm">'+esc(l.name||'')+'</span>'
+    +'</button>';
+}
+async function loadCourseHome(){
+  const list=document.getElementById('chList');
+  if(!list) return;
+  try{
+    const data=await api(COURSE+'/Course/CourseDetail/'+COURSE_ID);
+    if(!data||data._err) throw new Error('Không tải được khóa học');
+    document.getElementById('chTitle').textContent=data.name||'';
+    document.getElementById('chTeacher').textContent=data.teacherName||data.fullName||'';
+    document.getElementById('chSum').textContent=(data.sumDeThi||0)+' bài';
+    if(data.expireDate){
+      const d=new Date(data.expireDate);
+      document.getElementById('chExpire').textContent='HSD '+String(d.getDate()).padStart(2,'0')+'/'+String(d.getMonth()+1).padStart(2,'0')+'/'+d.getFullYear();
+    }
+    document.getElementById('chBanner').src=data.avatarCourseFull||data.avatarCourse||'';
+    const groups=data.groupList||[];
+    const results=await Promise.all(groups.map(async g=>{
+      if(chCache[g.id]) return {group:g, lessons:chCache[g.id]};
+      try{
+        const lessons=await api(COURSE+'/Course/LessonInGroup/'+g.id);
+        const arr=Array.isArray(lessons)?lessons:[];
+        chCache[g.id]=arr;
+        return {group:g, lessons:arr};
+      }catch(e){ return {group:g, lessons:[]}; }
+    }));
+    list.innerHTML=results.map((item,gi)=>{
+      const group=item.group, lessons=item.lessons;
+      const hasPanels=lessons.some(x=>x.contentViewTypeLMS==='panel'||(x.lessonsInPanel&&x.lessonsInPanel.length));
+      const live=chCount(lessons);
+      const cnt=live>0?live:(group.sumBG||0);
+      let inner='';
+      if(hasPanels){
+        inner=lessons.map((p,pi)=>{
+          const kids=p.lessonsInPanel||[];
+          return '<div class="ch-panel'+(pi===0&&gi===0?' open':'')+'">'
+            +'<button type="button" class="ch-panel-hd" onclick="this.parentElement.classList.toggle(\'open\')">'
+            +'<div class="ch-left"><img class="ico" src="'+CH_ICON.panel+'" alt=""><h3>'+(pi+1)+'. '+esc(p.name)+'</h3></div>'
+            +'<span class="ch-pbadge">'+kids.length+'</span></button>'
+            +'<div class="ch-panel-bd">'+kids.map(chLessonBtn).join('')+'</div></div>';
+        }).join('');
+      }else{
+        inner='<div class="ch-flat">'+lessons.map(chLessonBtn).join('')+'</div>';
+      }
+      return '<section class="ch-sec'+(gi===0?' open':'')+'">'
+        +'<button type="button" class="ch-sec-hd" onclick="this.parentElement.classList.toggle(\'open\')">'
+        +'<div class="ch-left"><h2>'+esc(group.name)+'</h2></div>'
+        +'<span class="ch-badge">'+cnt+'</span></button>'
+        +'<div class="ch-sec-bd">'+inner+'</div></section>';
+    }).join('');
+    list.dataset.loaded='1';
+    const active=document.querySelector('#chFilters .ch-tab.active');
+    applyCourseFilter((active&&active.getAttribute('data-filter'))||'all');
+    if(typeof updateToTopBtn==='function') setTimeout(updateToTopBtn, 300);
+  }catch(e){
+    list.innerHTML='<div style="padding:28px;text-align:center;color:#dc2626;font-size:14px">'+esc(e.message||String(e))+'</div>';
+  }
+}
+
+async function openCourseLesson(btn){
+  const id=btn.getAttribute('data-id');
+  const page=(btn.getAttribute('data-page')||'').toLowerCase();
+  const name=btn.getAttribute('data-name')||'';
+  if(!id) return;
+  setBusy(true);
+  document.getElementById('emptyState').classList.add('hidden');
+  document.getElementById('emptyState').style.display='none';
+  document.getElementById('contentRoot').classList.add('hidden');
+  setModeFull(false);
+  try{
+    // video lesson
+    if(page.includes('video')||page.includes('videolesson')||page.includes('live')){
+      await openCourseVideo(id, name);
+    }
+    // test / exercise offline or online
+    else if(page.includes('stest')||page.includes('test')||page.includes('exercise')){
+      await openCourseTest(id, name);
+    }
+    // vocabulary / flash - show as open file or message
+    else if(page.includes('vocab')||page.includes('flash')){
+      await openCourseFlash(id, name);
+    }
+    // file / document
+    else if(page.includes('file')||page.includes('document')||page.includes('open')){
+      await openCourseDoc(id, name);
+    }
+    else {
+      // try video first, then test, then doc
+      try{ await openCourseVideo(id, name); }
+      catch(e1){
+        try{ await openCourseTest(id, name); }
+        catch(e2){ await openCourseDoc(id, name); }
+      }
+    }
+  }catch(e){
+    Swal.fire({icon:'error',title:'Lỗi',text:e.message||String(e),confirmButtonColor:'#0247df'});
+    document.getElementById('emptyState').classList.remove('hidden');
+    document.getElementById('emptyState').style.display='block';
+  }finally{
+    setBusy(false);
+  }
+}
+
+
+
+function viewHead(title, opts){
+  opts=opts||{};
+  const dl=opts.download?`<div class="dl-wrap">
+    <button type="button" class="dl-btn" onclick="toggleDlMenu(event)"><i class="fa-solid fa-download"></i> Tải đề <i class="fa-solid fa-caret-down" style="font-size:11px;opacity:.7"></i></button>
+    <div class="dl-menu" id="dlMenu">
+      <button type="button" onclick="downloadExamDocx('exam')">File đề thi</button>
+      <button type="button" onclick="downloadExamDocx('key')">File đáp án</button>
+      <button type="button" onclick="downloadExamDocx('full')">File đề thi kèm đáp án chi tiết</button>
+    </div>
+  </div>`:'';
+  return '<div class="view-head"><button type="button" class="back-btn" onclick="goHome()" title="Quay lại"><i class="fa-solid fa-arrow-left"></i></button><h2>'+esc(title||'')+'</h2>'+dl+'</div>';
+}
+function toggleDlMenu(e){
+  e.stopPropagation();
+  const m=document.getElementById('dlMenu');
+  if(!m) return;
+  m.classList.toggle('open');
+}
+document.addEventListener('click',()=>{const m=document.getElementById('dlMenu'); if(m) m.classList.remove('open');});
+
+function hideViewer(){ /* no sticky bar */ }
+
+function fmtDur(sec){
+  sec=Number(sec)||0;
+  const m=Math.floor(sec/60), s=sec%60;
+  return String(m).padStart(2,'0')+':'+String(s).padStart(2,'0');
+}
+function fmtViews(n){
+  n=Number(n)||0;
+  if(n>=1000000) return (n/1000000).toFixed(1).replace(/\\.0$/,'')+'M';
+  if(n>=1000) return (n/1000).toFixed(1).replace(/\\.0$/,'')+'K';
+  return String(n);
+}
+
+async function openCourseVideo(lessonId, name){
+  stopAllVideo(true);
+  const arr=await api(COURSE+'/course/VideoLessonTikTok/'+lessonId);
+  if(!arr||arr._err) throw new Error('Không tải được video');
+  const list=Array.isArray(arr)?arr:(arr.data?arr.data:[]);
+  if(!list.length) throw new Error('Chưa có video cho bài này');
+
+  window.__courseVideos=list;
+  window.__courseVideoIdx=0;
+  const pick=list[0];
+  const title=pick.playListName||pick.fileName||name||('Video '+lessonId);
+  const sideTitle=name||pick.playListName||title;
+  const avEl=document.getElementById('chBanner');
+  const av=avEl&&avEl.src?avEl.src:'';
+
+  function itemHtml(v,i,active){
+    const tn=v.urlImage||'';
+    const nm=v.fileName||v.playListName||('Video '+(i+1));
+    const idLabel=v.videoId||v.tikTokVideoId||'';
+    const du=fmtDur(v.duration);
+    const views=v.views!=null?(fmtViews(v.views)+' lượt xem'):'';
+    const label=(idLabel?String(idLabel)+' - ':'')+nm;
+    return '<button type="button" class="vid-item'+(active?' active':'')+'" data-idx="'+i+'" onclick="switchCourseVideo('+i+')">'
+      +(tn?'<img class="thumb" src="'+esc(tn)+'" alt="" draggable="false" onerror="this.style.opacity=.3">':'<div class="thumb"></div>')
+      +'<div class="meta"><div class="ti">'+esc(label)+'</div>'
+      +'<div class="du">'+du+(views?' · '+views:'')+'</div></div></button>';
+  }
+
+  const items=list.map((v,i)=>itemHtml(v,i,i===0)).join('');
+  const root=document.getElementById('contentRoot');
+  root.innerHTML=viewHead(title)+`
+    <div class="vid-layout">
+      <div class="vid-main"><video id="vPlayer" playsinline controls class="w-full h-full"></video></div>
+      <aside class="vid-side">
+        <div class="vid-side-hd">
+          ${av?'<img class="av" src="'+esc(av)+'" alt="">':''}
+          <div>
+            <div class="s-title">${esc(sideTitle)}</div>
+            <div class="s-sub">Mã ID: ${esc(String(lessonId))} · ${list.length} video</div>
+          </div>
+        </div>
+        <div class="vid-side-list">${items}</div>
+      </aside>
+    </div>`;
+  root.classList.remove('hidden');
+  setModeFull(false);
+  document.body.classList.add('video-open');
+  finish(root);
+  setupVideo('vPlayer', pick.urlVideo||'', true);
+}
+
+window.switchCourseVideo=function(idx){
+  const list=window.__courseVideos||[];
+  const v=list[idx]; if(!v||!v.urlVideo) return;
+  window.__courseVideoIdx=idx;
+  document.querySelectorAll('.vid-item').forEach(function(b,i){
+    b.classList.toggle('active', i===idx);
+  });
+  // only swap hls source — same plyr (Moon Offline pattern)
+  setupVideo('vPlayer', v.urlVideo, true);
+};
+
+async function openCourseTest(lessonId, name){
+  stopAllVideo(true);
+  // Try offline listening API first, then standard ReadingInLesson, then Testing
+  let readings=null;
+  const tryUrls=[
+    COURSE+'/testing/STestOffline/ReadingInLesson/'+lessonId+'/1',
+    COURSE+'/testing/ReadingInLesson/'+lessonId,
+    COURSE+'/Course/Testing/'+lessonId+'/1'
+  ];
+  for(const url of tryUrls){
+    const res=await api(url);
+    if(!res||res._err) continue;
+    if(Array.isArray(res)&&res.length){
+      // Testing endpoint returns flat questions
+      if(res[0]&&res[0].questionId!=null&&!res[0].listQuestion&&!res[0].readingId){
+        readings=[{title:name||('Đề '+lessonId), listQuestion:res, questionScore:''}];
+      }else{
+        readings=res;
+      }
+      if(readings&&readings.length) break;
+    }
+    if(res.data&&Array.isArray(res.data)&&res.data.length){
+      readings=res.data; break;
+    }
+  }
+  if(!Array.isArray(readings)||!readings.length){
+    throw new Error('Không tải được đề (API trả về rỗng). Thử ID tra cứu thủ công.');
+  }
+
+  // Enrich CMS for bookIds
+  const ids=[];
+  readings.forEach(s=>(s.listQuestion||[]).forEach(q=>{if(q.bookId) ids.push(q.bookId);}));
+  const uniq=[...new Set(ids)];
+  const cmsMap={};
+  if(uniq.length){
+    await mapPool(uniq,6,async bid=>{
+      const c=await api(CMS+'/course/SearchByBookID/'+encodeURIComponent(bid));
+      if(c&&!c._err) cmsMap[bid]=c;
+    });
+    readings.forEach(sec=>{
+      (sec.listQuestion||[]).forEach(q=>{
+        const c=cmsMap[q.bookId]; if(!c) return;
+        if(c.questionText&&!(q.questionText||'').trim()) q.questionText=c.questionText;
+        if(c.answer&&!(q.answer||'').trim()) q.answer=c.answer;
+        ['a','b','c','d'].forEach(k=>{ if(c[k]&&String(c[k]).trim()) q[k]=c[k]; });
+        if(c.key&&String(c.key).trim()) q.key=c.key;
+        if(c.fillKey) q.fillKey=c.fillKey;
+      });
+    });
+  }
+
+  const detail=await api(COURSE+'/Course/LessonDetail/'+lessonId);
+  const keys={};
+  if(detail&&!detail._err&&Array.isArray(detail.keyAllEnglish)){
+    detail.keyAllEnglish.forEach(k=>{ if(k.questionId!=null) keys[k.questionId]=k.key; });
+  }
+
+  let totalQ=0;
+  readings.forEach(s=> totalQ+=(s.listQuestion||[]).length);
+  if(totalQ===0 && !readings.some(r=>(r.content||'').trim())) throw new Error('Đề không có câu hỏi');
+
+  const title=name||(detail&&detail.name)||('Đề '+lessonId);
+  window.__examData={title:title, readings:readings, keys:keys};
+
+  let html='';
+  readings.forEach((sec,si)=>{
+    const part=si+1;
+    const sc=sec.questionScore!=null?sec.questionScore:'';
+    const secTitle=`${esc(sec.title||('Phần '+part))}${sc!==''&&sc!=null?` <span style="color:#ef4444">(${sc} điểm)</span>`:''}`;
+    const hasContent=(sec.content||'').trim();
+    const hasAudio=sec.isAudio&&sec.audioUrl;
+
+    // Reading / listening: title → audio → passage → translation
+    if(hasContent||hasAudio){
+      html+=`<div class="reading-block">
+        <div class="rb-hd">${secTitle}</div>
+        ${hasAudio?`<div class="rb-audio"><audio class="rb-plyr" controls preload="metadata" src="${esc(sec.audioUrl)}"></audio></div>`:''}
+        ${hasContent?`<div class="rb-body math-body">${sec.content}</div>`:''}
+        ${sec.answer?`<div class="rb-ans math-body ans">${sec.answer}</div>`:''}
+      </div>`;
+    }
+
+    (sec.listQuestion||[]).forEach((q,qi)=>{
+      const ansKey=(q.key&&String(q.key).trim())||keys[q.questionId]||'';
+      let fillKey=(q.fillKey||'').trim();
+      let qText=q.questionText||'';
+      const domId='q-p'+part+'-'+(q.order||qi+1)+'-'+(q.questionId||q.bookId||'x');
+      // short fill answer: fillKey > key > short plain answer
+      if(!fillKey && ansKey && ansKey.trim()) fillKey=ansKey.trim();
+      if(!fillKey && q.answer){
+        const plain=String(q.answer).replace(/<[^>]+>/g,'').trim();
+        if(plain && plain.length<=40 && plain.indexOf('\n')<0) fillKey=plain;
+      }
+      const shortAns=fillKey||ansKey;
+      // persist onto q for DOCX export
+      if(fillKey) q.fillKey=fillKey;
+      if(shortAns && !(q.key&&String(q.key).trim())) q.key=shortAns;
+      // typeId 1 fill: answer field may be same as fillKey OR a long explanation
+      let longAns=q.answer||'';
+      if(Number(q.typeId)===1 && longAns){
+        const plain=String(longAns).replace(/<[^>]+>/g,'').trim().toLowerCase();
+        const fk=shortAns.trim().toLowerCase();
+        // same as fillKey → don't duplicate under solution box
+        if(fk && plain===fk) longAns='';
+      }
+      html+=questionCard({
+        domId, idLabel:q.bookId||q.questionId, order:q.order||(qi+1), showOrder:true, typeID:q.typeId||0,
+        qText:qText, a:q.a,b:q.b,c:q.c,d:q.d,
+        plans:q.plans||[], fillKey:shortAns,
+        answer:longAns, key:shortAns||ansKey, bookId:q.bookId||q.questionId,
+        bookmarks:q.bookmarks, comments:q.comments, isVideo:q.isVideo,
+        secTitle: (!hasContent&&!hasAudio&&qi===0) ? secTitle : ''
+      });
+    });
+  });
+
+  const root=document.getElementById('contentRoot');
+  root.innerHTML=viewHead(title,{download:true})+html;
+  root.classList.remove('hidden');
+  renderGrid(readings, keys, title);
+  setModeFull(true);
+  finish(root);
+  document.getElementById('colMain').scrollTop=0;
+  // Plyr audio skins
+  root.querySelectorAll('audio.rb-plyr').forEach(function(a){
+    try{ new Plyr(a, {controls:['play','progress','current-time','duration','mute','volume']}); }catch(e){}
+  });
+}
+
+
+async function openCourseFlash(lessonId, name){
+  stopAllVideo(true);
+  const res=await api(COURSE+'/Quiz/QuizFlashCardByLesson/'+lessonId);
+  if(!res||res._err) throw new Error('Không tải được bộ từ vựng');
+  const list=res.listVocabularyModel||res.data?.listVocabularyModel||(Array.isArray(res)?res:[]);
+  if(!list.length) throw new Error('Bộ từ vựng trống');
+
+  window.__fc={
+    all: list.map(function(v,i){
+      return {
+        id:v.id||i,
+        name:(v.name||'').trim(),
+        definition:(v.definition||'').trim(),
+        spelling:(v.spelling||'').trim(),
+        type:String(v.type||'').replace(/[\t\n\r]/g,'').trim(),
+        imageUrl:v.imageUrl||'',
+        audioUrl:v.audioUrl||'',
+        examples:v.listExamVocabulary||[]
+      };
+    }),
+    idx:0,
+    shuffled:false,
+    filter:'all',
+    q: '',
+    mode:'cards',
+    auto:false,
+    title: name||'Từ vựng'
+  };
+
+  const root=document.getElementById('contentRoot');
+  root.innerHTML=`<div class="view-head">
+    <button type="button" class="back-btn" onclick="goHome()" title="Quay lại"><i class="fa-solid fa-arrow-left"></i></button>
+    <h2>${esc(name||'Từ vựng')}</h2>
+    <div class="fc-tabs" id="fcTabsHead" style="margin:0;margin-left:8px"></div>
+  </div>
+  <div class="fc-wrap" id="fcRoot"></div>`;
+  root.classList.remove('hidden');
+  setModeFull(false);
+  renderFlashUI();
+  finish(root);
+}
+
+function fcFiltered(){
+  const fc=window.__fc; if(!fc) return [];
+  let arr=fc.all.slice();
+  if(fc.q){
+    const q=fc.q.toLowerCase();
+    arr=arr.filter(function(v){
+      return (v.name||'').toLowerCase().indexOf(q)>=0 || (v.definition||'').toLowerCase().indexOf(q)>=0;
+    });
+  }
+  return arr;
+}
+function fcSpeak(url, word){
+  if(url){
+    try{ const a=new Audio(url); a.play().catch(function(){}); return; }catch(e){}
+  }
+  if(word && window.speechSynthesis){
+    const u=new SpeechSynthesisUtterance(word);
+    u.lang='en-US'; speechSynthesis.speak(u);
+  }
+}
+function renderFlashUI(){
+  const box=document.getElementById('fcRoot'); if(!box) return;
+  const fc=window.__fc;
+  const tabsHtml=`
+    <button type="button" class="fc-tab${fc.mode==='cards'?' active':''}" onclick="fcSetMode('cards')"><i class="fa-solid fa-clone"></i> Thẻ ghi nhớ</button>
+    <button type="button" class="fc-tab${fc.mode==='list'?' active':''}" onclick="fcSetMode('list')"><i class="fa-solid fa-table-cells"></i> Bảng từ</button>
+    <button type="button" class="fc-tab${fc.mode==='quiz'?' active':''}" onclick="fcSetMode('quiz')"><i class="fa-solid fa-circle-check"></i> Kiểm tra</button>`;
+  const th=document.getElementById('fcTabsHead');
+  if(th) th.innerHTML=tabsHtml;
+
+  if(fc.mode==='cards') box.innerHTML=renderFcCards();
+  else if(fc.mode==='list') box.innerHTML=renderFcList();
+  else if(fc.mode==='quiz' && window.__fcQuiz && window.__fcQuiz.playing) box.innerHTML=renderFcQuizPlayHTML();
+  else box.innerHTML=renderFcQuizSetup();
+
+  const stage=document.getElementById('fcStage');
+  if(stage){
+    stage.onclick=function(e){
+      if(e.target.closest('button')) return;
+      fcFlipAndSpeak();
+    };
+  }
+}
+window.fcSetMode=function(m){ fcStopAuto(); window.__fc.mode=m; if(m!=='quiz') window.__fcQuiz=null; renderFlashUI(); };
+
+function renderFcCards(){
+  const fc=window.__fc;
+  let arr=fcFiltered();
+  if(fc.shuffled){
+    if(!fc._shuf || fc._shuf.length!==arr.length){
+      fc._shuf=arr.slice().sort(function(){return Math.random()-0.5;});
+    }
+    arr=fc._shuf;
+  }else fc._shuf=null;
+  if(!arr.length) return '<div class="panel p-8 text-center text-slate-500">Không có từ nào.</div>';
+  if(fc.idx>=arr.length) fc.idx=0;
+  if(fc.idx<0) fc.idx=arr.length-1;
+  const v=arr[fc.idx];
+  const imgHtml=v.imageUrl?`<div class="fc-side-img"><img class="fc-img" src="${esc(v.imageUrl)}" alt="" onerror="this.parentNode.style.display='none'"></div>`:'';
+  return `<div class="fc-toolbar">
+      <input class="fc-search" placeholder="Tìm kiếm từ vựng..." value="${esc(fc.q||'')}" oninput="window.__fc.q=this.value;window.__fc.idx=0;renderFlashUI()">
+    </div>
+    <div class="fc-flip" id="fcStage">
+      <div class="fc-flip-inner" id="fcFlipInner">
+        <div class="fc-face front">
+          <div class="fc-side-text">
+            <div class="fc-word-row">
+              <button type="button" class="fc-speak" onclick="event.stopPropagation();fcSpeak('${esc(v.audioUrl)}','${esc(v.name)}')"><i class="fa-solid fa-volume-high"></i></button>
+              <span class="fc-word">${esc(v.name)}</span>
+            </div>
+            <div class="fc-type">${esc(v.type)}</div>
+            <div class="fc-spell">${esc(v.spelling)}</div>
+          </div>
+          ${imgHtml}
+          
+        </div>
+        <div class="fc-face back">
+          <div class="fc-side-text">
+            <div class="fc-word-row">
+              <button type="button" class="fc-speak" onclick="event.stopPropagation();fcSpeak('${esc(v.audioUrl)}','${esc(v.name)}')"><i class="fa-solid fa-volume-high"></i></button>
+              <span class="fc-word">${esc(v.name)}</span>
+            </div>
+            <div class="fc-def">${esc(v.definition)}</div>
+            <div class="fc-spell">${esc(v.spelling)}</div>
+          </div>
+          ${imgHtml}
+          
+        </div>
+      </div>
+    </div>
+    <div class="fc-card-nav">
+      <div class="fc-nav-btns">
+        <button type="button" class="ghost ${fc.auto?'active-auto':''}" title="Tự động lật" onclick="fcToggleAuto()"><i class="fa-solid fa-${fc.auto?'pause':'play'}"></i></button>
+        <button type="button" class="ghost" title="Xáo trộn" onclick="window.__fc.shuffled=!window.__fc.shuffled;window.__fc._shuf=null;window.__fc.idx=0;renderFlashUI()"><i class="fa-solid fa-shuffle"></i></button>
+      </div>
+      <div class="fc-pager">
+        <button type="button" onclick="window.__fc.idx--;renderFlashUI()"><i class="fa-solid fa-chevron-left"></i></button>
+        <span>${fc.idx+1} / ${arr.length}</span>
+        <button type="button" onclick="window.__fc.idx++;renderFlashUI()"><i class="fa-solid fa-chevron-right"></i></button>
+      </div>
+    </div>`;
+}
+function fcStopAuto(){
+  if(window.__fcAutoTimer){ clearInterval(window.__fcAutoTimer); window.__fcAutoTimer=null; }
+  if(window.__fc) window.__fc.auto=false;
+}
+function fcToggleAuto(){
+  const fc=window.__fc; if(!fc) return;
+  if(fc.auto){ fcStopAuto(); renderFlashUI(); return; }
+  fc.auto=true;
+  renderFlashUI();
+  // cycle: show front -> speak -> flip -> wait -> next
+  window.__fcAutoTimer=setInterval(function(){
+    if(!window.__fc||!window.__fc.auto) return;
+    const stage=document.getElementById('fcStage');
+    if(stage && !stage.classList.contains('flipped')){
+      fcFlipAndSpeak();
+    }else{
+      if(stage) stage.classList.remove('flipped');
+      window.__fc.idx++;
+      renderFlashUI();
+      // speak new word front
+      setTimeout(function(){
+        const f=window.__fc; if(!f) return;
+        let arr=fcFiltered();
+        if(f.shuffled&&f._shuf) arr=f._shuf;
+        const v=arr[f.idx];
+        if(v) fcSpeak(v.audioUrl, v.name);
+      }, 200);
+    }
+  }, 2200);
+}
+
+function fcFlipAndSpeak(){
+  const stage=document.getElementById('fcStage');
+  if(!stage) return;
+  stage.classList.toggle('flipped');
+  const fc=window.__fc; if(!fc) return;
+  let arr=fcFiltered();
+  if(fc.shuffled&&fc._shuf) arr=fc._shuf;
+  const v=arr[fc.idx];
+  if(v) fcSpeak(v.audioUrl, v.name);
+}
+function renderFcList(){
+  const fc=window.__fc;
+  const arr=fcFiltered();
+  return `<div class="fc-toolbar">
+      <input class="fc-search" placeholder="Tìm kiếm từ vựng..." value="${esc(fc.q||'')}" oninput="window.__fc.q=this.value;renderFlashUI()">
+    </div>
+    <div class="fc-list">${arr.map(function(v,i){
+      return `<div class="fc-item">
+        <div class="fc-i-body">
+          <div class="fc-i-name"><span>${i+1}. ${esc(v.name)}</span>
+            <button type="button" class="fc-speak" onclick="fcSpeak('${esc(v.audioUrl)}','${esc(v.name)}')"><i class="fa-solid fa-volume-high"></i></button>
+          </div>
+          <div class="fc-i-meta">${esc(v.type)} ${esc(v.spelling)}</div>
+          <div class="fc-i-def">${esc(v.definition)}</div>
+          ${v.imageUrl?`<img class="fc-i-img" src="${esc(v.imageUrl)}" alt="" onerror="this.style.display='none'">`:''}
+        </div>
+      </div>`;
+    }).join('')}</div>`;
+}
+
+function renderFcQuizSetup(){
+  const n=window.__fc.all.length;
+  return `<div class="fc-quiz-setup">
+    <h3>Thiết lập bài kiểm tra</h3>
+    <div class="fc-quiz-row"><span>Câu hỏi (tối đa ${n})</span>
+      <input type="number" id="fcQCount" min="1" max="${n}" value="${n}">
+    </div>
+    <div class="fc-quiz-row"><span>Đúng/Sai</span><label class="fc-sw"><input type="checkbox" id="fcTF" checked><span></span></label></div>
+    <div class="fc-quiz-row"><span>Trắc nghiệm</span><label class="fc-sw"><input type="checkbox" id="fcMC" checked><span></span></label></div>
+    <div class="fc-quiz-row"><span>Tự luận</span><label class="fc-sw"><input type="checkbox" id="fcWR" checked><span></span></label></div>
+    <div class="fc-quiz-row"><span>Ghép thẻ</span><label class="fc-sw"><input type="checkbox" id="fcMT" checked><span></span></label></div>
+    <button type="button" class="fc-start" onclick="fcStartQuiz()">Bắt đầu làm kiểm tra</button>
+  </div>`;
+}
+
+function shuffleArr(a){
+  const b=a.slice();
+  for(let i=b.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); const t=b[i]; b[i]=b[j]; b[j]=t; }
+  return b;
+}
+function pickWrongDefs(correct, all, n){
+  const pool=all.filter(function(x){ return x.definition && x.definition!==correct.definition; });
+  return shuffleArr(pool).slice(0,n).map(function(x){ return x.definition; });
+}
+function pickWrongNames(correct, all, n){
+  const pool=all.filter(function(x){ return x.name && x.name!==correct.name; });
+  return shuffleArr(pool).slice(0,n).map(function(x){ return x.name; });
+}
+
+window.fcStartQuiz=function(){
+  const all=window.__fc.all;
+  let count=parseInt((document.getElementById('fcQCount')||{}).value,10);
+  if(!count||count<1) count=all.length;
+  count=Math.max(1, Math.min(all.length, count));
+  const types=[];
+  if(document.getElementById('fcTF')?.checked) types.push('tf');
+  if(document.getElementById('fcMC')?.checked) types.push('mc');
+  if(document.getElementById('fcWR')?.checked) types.push('wr');
+  if(document.getElementById('fcMT')?.checked) types.push('mt');
+  if(!types.length){ Swal.fire({icon:'info',title:'Chọn ít nhất một dạng câu',confirmButtonColor:'#0247df'}); return; }
+
+  // Build exactly `count` questions; match uses 1 slot for a group of pairs
+  const pool=shuffleArr(all);
+  const questions=[];
+  let pi=0;
+  while(questions.length<count && pi<pool.length*3){
+    const v=pool[pi % pool.length]; pi++;
+    const t=types[questions.length % types.length];
+    if(t==='tf'){
+      const truth=Math.random()>0.45;
+      const def=truth?v.definition:(pickWrongDefs(v,all,1)[0]||v.definition);
+      questions.push({type:'tf', word:v.name, prompt:'Từ <b>'+esc(v.name)+'</b> có nghĩa là “'+esc(def)+'”?', answer:truth, audio:v.audioUrl});
+    }else if(t==='mc'){
+      const opts=shuffleArr([v.definition].concat(pickWrongDefs(v,all,3))).slice(0,4);
+      questions.push({type:'mc', word:v.name, prompt:'Nghĩa của <b>'+esc(v.name)+'</b> là gì?', options:opts, answer:v.definition, audio:v.audioUrl});
+    }else if(t==='wr'){
+      questions.push({type:'wr', word:v.name, prompt:'Viết nghĩa tiếng Việt của <b>'+esc(v.name)+'</b>:', answer:v.definition, audio:v.audioUrl});
+    }else if(t==='mt'){
+      // one match question = up to 4 pairs, counts as 1 question
+      const pairs=[];
+      const used={};
+      for(let k=0;k<4 && pi<pool.length*2;k++){
+        const w=pool[pi % pool.length]; pi++;
+        if(used[w.name]) continue;
+        used[w.name]=1;
+        pairs.push({word:w.name, def:w.definition});
+      }
+      if(pairs.length>=2) questions.push({type:'mt', pairs:pairs});
+      else {
+        const w=pairs[0]||{word:v.name,def:v.definition};
+        questions.push({type:'mc', word:w.word, prompt:'Nghĩa của <b>'+esc(w.word)+'</b>?', options:shuffleArr([w.def].concat(pickWrongDefs({definition:w.def,name:w.word},all,3))), answer:w.def});
+      }
+    }
+  }
+  window.__fcQuiz={qs:questions.slice(0,count), i:0, score:0, answered:false, playing:true};
+  window.__fc.mode='quiz';
+  renderFcQuizPlay();
+};
+
+function renderFcQuizPlayHTML(){
+  const st=window.__fcQuiz;
+  if(!st || st.i>=st.qs.length){
+    const total=st?st.qs.length:0;
+    const ok=st?st.score:0;
+    const bad=Math.max(0, total-ok);
+    return `<div class="fc-quiz-setup">
+      <h3>Kết quả kiểm tra</h3>
+      <p style="text-align:center;font-size:15px;color:#64748b;margin:0 0 8px">Tổng ${total} câu</p>
+      <div style="display:flex;justify-content:center;gap:28px;margin:16px 0 20px">
+        <div style="text-align:center"><div style="font-size:28px;font-weight:800;color:#16a34a">${ok}</div><div style="font-size:14px;color:#64748b">Đúng</div></div>
+        <div style="text-align:center"><div style="font-size:28px;font-weight:800;color:#dc2626">${bad}</div><div style="font-size:14px;color:#64748b">Sai</div></div>
+      </div>
+      <button type="button" class="fc-start" onclick="window.__fcQuiz=null;fcSetMode('quiz')">Làm lại</button>
+    </div>`;
+  }
+  const q=st.qs[st.i];
+  let body='';
+  if(q.type==='tf'){
+    body=`<div class="q-prompt">${q.prompt}</div>
+      <div class="q-opts">
+        <button type="button" class="q-opt" onclick="fcAnswerTF(true,this)">Đúng</button>
+        <button type="button" class="q-opt" onclick="fcAnswerTF(false,this)">Sai</button>
+      </div>`;
+  }else if(q.type==='mc'){
+    body=`<div class="q-prompt">${q.prompt}</div>
+      <div class="q-opts">${q.options.map(function(o){
+        return `<button type="button" class="q-opt" onclick="fcAnswerMC(this)" data-val="${esc(o)}">${esc(o)}</button>`;
+      }).join('')}</div>`;
+  }else if(q.type==='wr'){
+    body=`<div class="q-prompt">${q.prompt}</div>
+      <input type="text" id="fcWrIn" placeholder="Nhập nghĩa..." onkeydown="if(event.key==='Enter')fcAnswerWR()">
+      <button type="button" class="fc-start" style="margin-top:12px" onclick="fcAnswerWR()">Kiểm tra</button>`;
+  }else if(q.type==='mt'){
+    const left=shuffleArr(q.pairs.map(function(p){return p.word;}));
+    const right=shuffleArr(q.pairs.map(function(p){return p.def;}));
+    window.__fcMatch={pairs:q.pairs, sel:null, ok:0, need:q.pairs.length};
+    body=`<div class="q-prompt">Ghép từ (EN) với nghĩa (VI)</div>
+      <div class="fc-match" id="fcMatchBox">
+        <div class="fc-match-col">${left.map(function(w){return `<button type="button" data-side="L" data-v="${esc(w)}" onclick="fcMatchClick(this)">${esc(w)}</button>`;}).join('')}</div>
+        <div class="fc-match-col">${right.map(function(d){return `<button type="button" data-side="R" data-v="${esc(d)}" onclick="fcMatchClick(this)">${esc(d)}</button>`;}).join('')}</div>
+      </div>`;
+  }
+  const done=st.i; // already answered count before current
+  const ok=st.score;
+  // approximate wrong among answered: answered so far = i when on question i (0-based)
+  // score is correct among completed; wrong = i - score (for questions fully done)
+  const wrong=Math.max(0, st.i - st.score);
+  const left=Math.max(0, st.qs.length - st.i);
+  return `<div class="fc-toolbar" style="justify-content:space-between">
+      <div class="fc-count" style="color:#64748b">Câu ${st.i+1} / ${st.qs.length}</div>
+      <div style="display:flex;gap:14px;font-size:14px;font-weight:700">
+        <span style="color:#16a34a">Đúng: ${ok}</span>
+        <span style="color:#dc2626">Sai: ${wrong}</span>
+        <span style="color:#64748b">Còn: ${left}</span>
+      </div>
+    </div>
+    <div class="fc-qcard">${body}</div>`;
+}
+function renderFcQuizPlay(){
+  if(window.__fcQuiz) window.__fcQuiz.playing=true;
+  renderFlashUI();
+}
+
+window.fcAnswerTF=function(val, btn){
+  const st=window.__fcQuiz; if(!st||st.answered) return;
+  st.answered=true;
+  const q=st.qs[st.i];
+  const ok=val===q.answer;
+  if(ok) st.score++;
+  document.querySelectorAll('.q-opt').forEach(function(b){
+    const isTrue=b.textContent.trim()==='Đúng';
+    if((isTrue&&q.answer)||(!isTrue&&!q.answer)) b.classList.add('correct');
+    if(b===btn && !ok) b.classList.add('wrong');
+  });
+  setTimeout(function(){ st.i++; st.answered=false; renderFcQuizPlay(); }, 700);
+};
+window.fcAnswerMC=function(btn){
+  const st=window.__fcQuiz; if(!st||st.answered) return;
+  st.answered=true;
+  const q=st.qs[st.i];
+  const val=btn.getAttribute('data-val')||btn.textContent;
+  const ok=val===q.answer;
+  if(ok) st.score++;
+  document.querySelectorAll('.q-opt').forEach(function(b){
+    if((b.getAttribute('data-val')||b.textContent)===q.answer) b.classList.add('correct');
+    if(b===btn && !ok) b.classList.add('wrong');
+  });
+  setTimeout(function(){ st.i++; st.answered=false; renderFcQuizPlay(); }, 800);
+};
+window.fcAnswerWR=function(){
+  const st=window.__fcQuiz; if(!st||st.answered) return;
+  const inp=document.getElementById('fcWrIn'); if(!inp) return;
+  st.answered=true;
+  const q=st.qs[st.i];
+  const norm=function(s){ return String(s||'').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/\s+/g,' ').trim(); };
+  const ok=norm(inp.value)===norm(q.answer) || norm(inp.value).indexOf(norm(q.answer))>=0 || norm(q.answer).indexOf(norm(inp.value))>=0 && norm(inp.value).length>=3;
+  if(ok) st.score++;
+  inp.style.borderColor=ok?'#16a34a':'#dc2626';
+  if(!ok) inp.value=inp.value+' → '+q.answer;
+  setTimeout(function(){ st.i++; st.answered=false; renderFcQuizPlay(); }, 900);
+};
+window.fcMatchClick=function(btn){
+  const m=window.__fcMatch; if(!m) return;
+  const side=btn.getAttribute('data-side');
+  const val=btn.getAttribute('data-v');
+  if(btn.classList.contains('done')) return;
+  if(!m.sel){
+    document.querySelectorAll('#fcMatchBox button.sel').forEach(function(b){ b.classList.remove('sel'); });
+    btn.classList.add('sel'); m.sel={side:side, val:val, el:btn};
+    return;
+  }
+  if(m.sel.side===side){
+    document.querySelectorAll('#fcMatchBox button.sel').forEach(function(b){ b.classList.remove('sel'); });
+    btn.classList.add('sel'); m.sel={side:side, val:val, el:btn};
+    return;
+  }
+  // check pair
+  const a=m.sel.side==='L'?m.sel.val:val;
+  const b=m.sel.side==='R'?m.sel.val:val;
+  const ok=m.pairs.some(function(p){ return p.word===a && p.def===b; });
+  if(ok){
+    m.sel.el.classList.add('done'); btn.classList.add('done');
+    m.sel.el.classList.remove('sel'); btn.classList.remove('sel');
+    m.ok++; m.sel=null;
+    if(m.ok>=m.need){
+      window.__fcQuiz.score++;
+      setTimeout(function(){ window.__fcQuiz.i++; window.__fcQuiz.answered=false; renderFcQuizPlay(); }, 500);
+    }
+  }else{
+    btn.classList.add('wrong');
+    m.sel.el.classList.add('wrong');
+    const s=m.sel.el;
+    setTimeout(function(){ btn.classList.remove('wrong','sel'); s.classList.remove('wrong','sel'); }, 400);
+    m.sel=null;
+  }
+};
+
+
+async function openCourseDoc(lessonId, name){
+  stopAllVideo(true);
+  const res=await api(COURSE+'/course/OpenLesson/'+lessonId);
+  if(!res||res._err) throw new Error('Không mở được tài liệu');
+  const data=res.data||res;
+  const url=data.nextUrl||data.fileUrl||data.url||'';
+  const openType=(data.openType||'').toLowerCase();
+  const title=data.lessonName||name||('Tài liệu '+lessonId);
+  const root=document.getElementById('contentRoot');
+
+  if(url && (openType==='pdf' || String(url).toLowerCase().includes('.pdf'))){
+    document.body.classList.add('doc-open');
+    root.innerHTML=`
+      <div class="view-head">
+        <button type="button" class="back-btn" onclick="goHome()" title="Quay lại"><i class="fa-solid fa-arrow-left"></i></button>
+        <h2>${esc(title)}</h2>
+        <div class="dl-wrap" style="display:flex;gap:6px">
+          <button type="button" class="dl-btn" onclick="toggleDocFs()" id="docFsBtn" title="Toàn màn hình"><i class="fa-solid fa-expand"></i></button>
+          <a class="dl-btn" href="${esc(url)}" target="_blank" rel="noopener" title="Tab mới"><i class="fa-solid fa-external-link-alt"></i></a>
+        </div>
+      </div>
+      <div class="doc-frame-wrap" id="docFrameWrap">
+        <div class="doc-fs-bar">
+          <button type="button" onclick="toggleDocFs()"><i class="fa-solid fa-compress"></i> Thoát toàn màn hình</button>
+          <span style="font-size:13px;opacity:.85;flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${esc(title)}</span>
+          <button type="button" onclick="goHome()"><i class="fa-solid fa-arrow-left"></i> Về khóa học</button>
+        </div>
+        <iframe src="${esc(url)}" title="${esc(title)}"></iframe>
+      </div>`;
+  }else if(url){
+    document.body.classList.remove('doc-open');
+    root.innerHTML=viewHead(title)+`<div class="panel p-6 text-center">
+      <p class="font-bold text-slate-800 mb-3">${esc(title)}</p>
+      <a href="${esc(url)}" target="_blank" rel="noopener" class="inline-flex items-center gap-2 px-4 py-2.5 bg-moon text-white rounded-lg font-medium">Mở tài liệu <i class="fa-solid fa-external-link-alt"></i></a>
+    </div>`;
+  }else{
+    document.body.classList.remove('doc-open');
+    root.innerHTML=viewHead(title)+`<div class="panel p-6 text-center text-slate-500">Chưa có tài liệu cho bài này.</div>`;
+  }
+  root.classList.remove('hidden');
+  finish(root);
+}
+window.toggleDocFs=function(){
+  const w=document.getElementById('docFrameWrap');
+  if(!w) return;
+  w.classList.toggle('fs-on');
+  const on=w.classList.contains('fs-on');
+  const btn=document.getElementById('docFsBtn');
+  if(btn) btn.innerHTML=on?'<i class="fa-solid fa-compress"></i>':'<i class="fa-solid fa-expand"></i>';
+  document.body.style.overflow=on?'hidden':'';
+};
+window.addEventListener('keydown', function(e){
+  if(e.key==='Escape'){
+    const w=document.getElementById('docFrameWrap');
+    if(w && w.classList.contains('fs-on')) toggleDocFs();
+  }
+});
+
+function lessonFilterKind(page, type){
+  const t=((page||'')+' '+(type||'')).toLowerCase();
+  if(t.includes('video')||t.includes('live')) return 'video';
+  if(t.includes('stest')||t.includes('test')||t.includes('exercise')) return 'test';
+  if(t.includes('vocab')||t.includes('flash')) return 'vocab';
+  if(t.includes('file')||t.includes('document')||t.includes('open')||t.includes('pdf')) return 'file';
+  return 'other';
+}
+function applyCourseFilter(filter){
+  document.querySelectorAll('#chFilters .ch-tab').forEach(x=>{
+    x.classList.toggle('active', x.getAttribute('data-filter')===filter);
+  });
+  const list=document.getElementById('chList');
+  if(!list) return;
+
+  const oldFlat=list.querySelector('.ch-flat-filter');
+  if(oldFlat) oldFlat.remove();
+
+  // restore hierarchy visibility base
+  list.querySelectorAll('.ch-sec, .ch-panel, .ch-flat').forEach(el=>{ el.style.display=''; });
+
+  list.querySelectorAll('.ch-lesson').forEach(btn=>{
+    const kind=btn.getAttribute('data-kind')||lessonFilterKind(btn.getAttribute('data-page'), btn.getAttribute('data-type'));
+    const show = filter==='all' || kind===filter || (filter==='file' && (kind==='other'||kind==='file'));
+    btn.style.display = show ? '' : 'none';
+  });
+
+  // keep panels that still have visible lessons
+  list.querySelectorAll('.ch-panel').forEach(p=>{
+    const any=[...p.querySelectorAll('.ch-lesson')].some(b=>b.style.display!=='none');
+    p.style.display = any ? '' : 'none';
+    if(any && filter!=='all') p.classList.add('open'); // expand for easier scan
+  });
+  list.querySelectorAll('.ch-sec').forEach(s=>{
+    const any=[...s.querySelectorAll('.ch-lesson')].some(b=>b.style.display!=='none');
+    s.style.display = any ? '' : 'none';
+    if(any && filter!=='all') s.classList.add('open');
+  });
+}
+
+document.addEventListener('DOMContentLoaded',()=>{
+  document.querySelectorAll('#chFilters .ch-tab').forEach(t=>{
+    t.addEventListener('click',()=>applyCourseFilter(t.getAttribute('data-filter')||'all'));
+  });
+  loadCourseHome();
+});
+
+window.addEventListener('pagehide', function(){ if(typeof stopAllVideo==='function') stopAllVideo(true); });
+window.fcKeyHandler=function(e){
+  if(!window.__fc||window.__fc.mode!=='cards') return;
+  if(e.target && (e.target.tagName==='INPUT'||e.target.tagName==='TEXTAREA'||e.target.isContentEditable)) return;
+  if(e.code==='Space'||e.key===' '){
+    e.preventDefault();
+    fcFlipAndSpeak();
+    return;
+  }
+  if(e.code==='ArrowRight'||e.key==='ArrowRight'){
+    e.preventDefault();
+    window.__fc.idx++;
+    const st=document.getElementById('fcStage'); if(st) st.classList.remove('flipped');
+    renderFlashUI();
+    return;
+  }
+  if(e.code==='ArrowLeft'||e.key==='ArrowLeft'){
+    e.preventDefault();
+    window.__fc.idx--;
+    const st=document.getElementById('fcStage'); if(st) st.classList.remove('flipped');
+    renderFlashUI();
+    return;
+  }
+};
+window.addEventListener('keydown', window.fcKeyHandler);
+</script>
+</body>
+</html>
