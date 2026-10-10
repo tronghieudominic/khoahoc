@@ -132,9 +132,15 @@ body.mode-full .col-right.show{display:flex;flex-direction:column;height:100%;mi
 #imgLightbox.open{display:flex}
 #imgLightbox img{max-width:96vw;max-height:92vh;object-fit:contain;transition:transform .08s linear;user-select:none}
 
-#toTop{position:fixed;right:16px;bottom:20px;z-index:9998;width:48px;height:48px;border-radius:999px;background:#fff;border:1px solid #e2e8f0;box-shadow:0 6px 20px rgba(15,23,42,.18);color:#334155;display:none;align-items:center;justify-content:center;cursor:pointer;font-size:17px}
+#toTop{position:fixed;right:16px;bottom:20px;z-index:54;width:48px;height:48px;border-radius:999px;background:#fff;border:1px solid #e2e8f0;box-shadow:0 6px 20px rgba(15,23,42,.18);color:#334155;display:none;align-items:center;justify-content:center;cursor:pointer;font-size:17px}
 #toTop.show{display:flex!important}
 #toTop:hover{color:var(--moon);border-color:#93c5fd}
+/* mobile full-test: toTop above answer-grid FAB */
+body.mode-full #toTop{bottom:88px;right:16px}
+body.mode-full #mobGridBtn{bottom:16px;right:16px;z-index:55}
+@media(min-width:981px){
+  body.mode-full #toTop{bottom:20px}
+}
 
 /* mobile FAB for answer grid */
 #mobGridBtn{display:none;position:fixed;right:16px;bottom:16px;z-index:55;width:52px;height:52px;border-radius:999px;background:var(--moon);color:#fff;border:none;box-shadow:0 6px 20px rgba(2,71,223,.35);align-items:center;justify-content:center;font-size:18px;cursor:pointer}
@@ -405,6 +411,25 @@ body.doc-open .doc-frame-wrap iframe{flex:1;height:100%!important;min-height:0}
 .g-fill-list .g-row{display:flex;align-items:flex-start;gap:8px;border:1px solid #d1d5db;border-radius:10px;padding:10px 12px;cursor:pointer;background:#fff;font-size:15px}
 .g-fill-list .g-row .fill-ans{font-weight:600;word-break:break-word;flex:1;min-width:0;line-height:1.4}
 
+
+/* Course switcher */
+#courseSwitchWrap{position:relative;flex-shrink:0}
+#courseSwitchBtn{display:inline-flex;align-items:center;gap:8px;max-width:220px;padding:8px 12px;border-radius:12px;border:1px solid #c7d2fe;background:#eef2ff;color:#1e3a8a;font-family:inherit;font-size:13px;font-weight:700;cursor:pointer;white-space:nowrap}
+#courseSwitchBtn .cs-label{overflow:hidden;text-overflow:ellipsis;max-width:140px}
+#courseSwitchBtn .cs-chevron{font-size:11px;opacity:.7}
+#coursePicker{display:none;position:absolute;right:0;top:calc(100% + 6px);min-width:260px;max-width:min(92vw,320px);background:#fff;border:1px solid #e2e8f0;border-radius:14px;box-shadow:0 12px 32px rgba(15,23,42,.14);z-index:80;padding:8px;max-height:60vh;overflow:auto}
+#coursePicker.open{display:block}
+.course-pick-item{display:flex;align-items:center;gap:8px;width:100%;text-align:left;padding:10px 12px;border:none;background:transparent;border-radius:10px;cursor:pointer;font-family:inherit;font-size:14px;color:#0f172a}
+.course-pick-item:hover{background:#f1f5f9}
+.course-pick-item.active{background:#eff6ff;color:#1d4ed8;font-weight:700}
+.course-pick-item .cp-name{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis}
+.course-pick-item .cp-id{font-size:12px;color:#94a3b8;font-weight:600}
+.course-pick-empty{padding:14px;text-align:center;color:#94a3b8;font-size:13px}
+@media(max-width:640px){
+  #courseSwitchBtn{max-width:150px;padding:8px 10px;font-size:12px}
+  #courseSwitchBtn .cs-label{max-width:90px}
+}
+
 </style>
 </head>
 <body class="min-h-screen flex flex-col">
@@ -418,7 +443,17 @@ body.doc-open .doc-frame-wrap iframe{flex:1;height:100%!important;min-height:0}
         <path fill="#0247df" fill-rule="evenodd" d="M97.54 12.72C112.48 11.76 140.14 11.12 149.71 25.07C155.14 32.99 159.37 53.25 162.76 63.2C167.12 76.02 171.69 88.83 176.82 101.37C178.33 105.06 181.02 112.32 186 112.05C191.27 111.76 194.07 99.78 195.11 95.67C199.63 77.89 200.8 59.41 205.3 41.67C206.6 36.55 208.76 30.92 212.38 27C225.51 12.81 254.17 12.08 272 12.65C278.08 12.84 284.07 12.86 290.07 13.76C299.15 15.13 308.95 16.64 316.66 22.06C324.03 27.24 327.07 36.39 323.76 44.95C319.82 55.16 307.76 59.51 304.17 70.15C301.74 77.36 302.67 85.7 303.01 93.16C303.8 110.34 306.75 127.28 309.21 144.25C312.34 165.86 317.54 187.26 321.88 208.65C323.95 218.89 324.62 231.13 329.36 240.53C333.26 248.25 342.22 250.5 346.98 257.16C352.41 264.79 349.53 274.6 343.2 280.57C334.21 289.05 319.38 291.88 307.52 292.96C285.84 294.92 263.76 295.46 242.09 292.98C230.63 291.67 215.75 288.45 209.09 277.91C207.39 275.23 206.58 272.03 206.53 268.87C206.34 258.08 216.71 254.34 219.7 245C224.1 231.2 225.25 208.85 226.25 194.11C226.73 187.04 228.81 165.26 216.54 166.86C210.21 167.69 208.92 176.16 207.65 181.06C204.52 193.11 201.46 215.89 184.76 215.08C168.31 214.29 167.85 187.64 164.51 176.04C162.86 170.33 157.91 163.63 152.42 170.8C149.27 174.91 149.08 181.69 148.81 186.63C148.17 198.87 147.12 213.72 154.13 224.47C161.4 235.63 171.33 240.12 170.4 255.29C169.79 265.37 167.63 275.37 160.33 282.78C153.33 289.88 141.27 292 131.8 292.85C113.22 294.51 94.36 295.21 75.71 294.26C61.13 293.51 43.49 293.59 31.22 284.39C21.71 277.26 16.68 264.1 19.02 252.42C21.32 241 34.33 235.19 38.94 224.34C41.9 217.37 42.85 209.6 44.37 202.24C47.56 186.73 50.3 171.11 52.86 155.46C55.44 139.74 57.8 123.99 59.31 108.12C60.27 98 61.13 87.51 58.75 77.5C57.37 71.66 54.76 65.59 50.85 60.98C43.75 52.61 32.74 47.62 38.33 34.24C40.92 28.03 48.51 23.98 54.4 21.68C68.47 16.19 82.47 13.68 97.54 12.72ZM449.01 79.36C490.59 75.2 523.78 109.73 534.35 147.08C540.97 170.45 542.24 194.6 535.63 218.21C523.86 260.25 485.57 296.56 440.24 294.52C429 294.01 417.61 291.85 407.35 287.14C399.85 283.7 392.4 279.53 386.25 273.96C362.37 252.31 350.3 217.28 354.53 185.39C357.56 162.55 366.76 142.12 379.77 123.35C396.26 99.53 419.69 82.29 449.01 79.36ZM634.1 79.35C674.74 74.32 707.48 105.69 721.24 140.94C728.92 160.64 733.12 182.97 729.67 204.08C722.48 248.01 684.31 293.94 637.17 294.63C625.51 294.8 614.09 293.27 603.05 289.56C568.02 277.77 547.31 242.7 544.55 207.2C541.02 161.91 565.78 106.69 608.03 86.17C616.26 82.16 625.09 80.47 634.1 79.35ZM813.1 105.62C817.05 106.74 819.94 104.04 822.82 101.56C829.09 96.17 834.22 89.99 841.77 86.24C859.67 77.37 885.26 76.65 903.55 85.09C922.69 93.92 921.94 110.93 921.15 129.3C920.77 138.23 920.5 147.18 921.08 156.1C922.84 183.16 937.29 213.88 945.71 239.77C950.07 253.19 960.26 273.08 945.59 283.53C935.15 290.97 921.19 292.1 908.84 293.29C900.75 294.07 892.54 293.9 884.46 293.15C866 291.43 843.86 280.83 845.3 258.92C845.87 250.26 851.91 243.6 853.02 235.24C855.24 218.57 855.56 201.53 856.85 184.76C857.83 171.95 859.44 158.09 856.33 145.46C854.98 139.96 852.24 134.14 846.44 132.23C825.38 125.29 825.43 156.18 825.65 168.56C825.7 171.68 825.9 174.8 826.22 177.91C828.01 194.78 831.13 211.55 833.25 228.38C834.94 241.81 835.5 256.52 828.73 268.8C825.34 274.93 820.57 279.03 815.21 283.36C811.1 286.67 805.7 289.09 800.68 290.66C793.15 293.02 785.25 294.03 777.38 294.31C767.22 294.68 756.32 294.01 747.05 289.52C738.25 285.27 732.62 276.24 733.86 266.38C735.12 256.39 741.07 246.41 744.74 237.13C749.88 224.13 753.7 210.64 756.84 197.03C760.13 182.73 761.93 160.58 755.54 147.08C750.3 136.02 735.65 137.57 736.31 123.07C737.25 102.35 765.54 90.7 782.27 85.82C789.27 83.77 798.23 80.77 805.28 84.26C814.62 88.88 807.73 99.14 813.1 105.62ZM1136.45 79.37C1140.64 78.66 1145.16 78.75 1149.39 78.94C1156.13 79.25 1164.49 80.71 1168.8 86.49C1172.94 92.04 1171.34 99.98 1170.5 106.32C1169.12 116.77 1168.57 127.5 1168.92 138.03C1169.21 146.5 1172.94 167.94 1184.29 168.17C1194.56 168.37 1200.67 148.64 1200.98 140.52C1201.47 127.66 1190.02 116.37 1194.22 103.97C1197.19 95.23 1205.57 89.89 1213.72 86.8C1229.94 80.67 1258.34 80.68 1271.81 93.21C1275.14 96.31 1276.91 100.49 1277.06 105C1277.58 120.54 1262.93 130.19 1254.48 141.26C1244.63 154.14 1237.76 173.7 1231.64 188.84C1222.36 211.82 1210.96 234.12 1200.18 256.43C1195.98 265.12 1191.51 273.58 1186.02 281.5C1182.21 287 1177.7 293.41 1170.56 294.63C1157.15 296.93 1150.53 282.83 1144.69 273.33C1127.81 245.83 1118.56 218.06 1109.74 187.29C1106.36 175.48 1104.69 160.75 1095.13 152.09C1090.13 147.56 1084.06 144.07 1077.98 141.22C1073.59 139.16 1068.35 137.03 1066.52 132.11C1063.07 122.84 1070.19 111.14 1076.77 104.97C1093.23 89.52 1114.77 83.04 1136.45 79.37ZM1418.67 79.41C1425.04 78.96 1431.34 79.71 1437.62 80.68C1442.55 81.45 1447.27 82.52 1451.88 84.48C1472.09 93.09 1471.55 110.39 1470.93 129.51C1470.6 139.67 1470.07 149.69 1471.04 159.83C1472.71 177.42 1479.69 194.1 1485.25 210.68C1490.62 226.69 1496.81 242.59 1501.22 258.89C1503.6 267.66 1503.93 276.42 1496.33 282.72C1486.53 290.85 1472.19 291.76 1460.13 293.22C1452.08 294.2 1443.5 294.25 1435.42 293.55C1417.25 291.96 1396.49 283.52 1394.31 262.9C1393.25 252.9 1399.98 246.13 1401.82 236.94C1403.58 228.16 1403.63 218.94 1404.26 210.03C1404.74 203.25 1405.68 196.54 1406 189.75C1406.67 175.47 1408.99 160.28 1405.7 146.16C1403.91 138.48 1399.1 131.63 1390.55 131.45C1373.59 131.09 1373.71 157.12 1374.23 168.56C1374.36 171.47 1374.62 174.38 1374.81 177.29C1375.6 188.74 1377.49 200.16 1379.23 211.5C1383.26 237.58 1388.55 267.9 1362.22 284.47C1357.42 287.49 1351.95 289.68 1346.52 291.26C1339.01 293.45 1331.08 294.55 1323.25 294.63C1312.57 294.74 1300.91 293.48 1291.69 287.64C1280.58 280.6 1280.3 267.38 1283.3 255.96C1289.95 230.62 1302.03 206.96 1306.54 180.94C1308.57 169.22 1308.17 153.82 1300.97 143.78C1294.04 134.13 1282.63 136.15 1284.82 120.58C1287.59 100.9 1315.87 90.08 1332.37 85.7C1338.65 84.03 1346.04 81.09 1352.56 83.43C1359.67 85.98 1359.29 92.35 1359.64 98.77C1359.8 101.71 1360.27 106.42 1364.34 106.26C1366.91 106.16 1369.29 103.63 1371.06 102.01C1375.44 98.04 1379.36 93.7 1384.16 90.2C1394.42 82.73 1406.24 80.29 1418.67 79.41ZM444.79 122.38C436.58 123.91 432.24 133 430.98 140.43C428.5 155.08 430.7 171.91 437.71 185.1C441.41 192.07 447.17 198.32 455.83 197C463.49 195.82 466.22 188.35 467.44 181.65C469.84 168.4 465.63 148.35 460.82 135.8C458.31 129.26 453 120.84 444.79 122.38ZM631.65 122.26C624.1 124.2 620.92 133.16 619.27 139.86C615.65 154.53 619.58 172.51 626.64 185.61C630.55 192.86 637.07 198.6 645.86 196.78C653.67 195.17 656.68 186.8 657.23 179.78C658.38 165.05 656.08 147.84 649.85 134.37C646.56 127.26 640.42 120.02 631.65 122.26ZM1008.03 193.41C1039.83 189.41 1063.67 230.41 1058.87 258.29C1054.16 285.62 1030.48 298.87 1004.2 297.86C999.48 297.67 994.8 296.53 990.38 294.93C942.35 277.57 964.08 198.94 1008.03 193.41Z"/>
       </svg>
     </a>
-    <div class="w-full max-w-sm">
+    <div class="flex items-center gap-2 w-full max-w-xl justify-end">
+      <div id="courseSwitchWrap">
+        <button type="button" id="courseSwitchBtn" onclick="event.stopPropagation();toggleCoursePicker()" title="Đổi khóa học">
+          <i class="fa-solid fa-graduation-cap"></i><span class="cs-label">Khóa học</span><i class="fa-solid fa-chevron-down cs-chevron"></i>
+        </button>
+        <div id="coursePicker" onclick="event.stopPropagation()">
+          <div style="padding:6px 10px 4px;font-size:11px;font-weight:700;color:#94a3b8;text-transform:uppercase;letter-spacing:.04em">Chọn khóa học</div>
+          <div id="coursePickerList"></div>
+        </div>
+      </div>
+      <div class="flex-1 max-w-sm min-w-0">
       <div class="flex items-center bg-[#f1f5f9] border border-[#c7d2fe] rounded-xl overflow-hidden focus-within:border-[#0247df] focus-within:ring-2 focus-within:ring-[#0247df]/15">
         <input id="idInput" type="text" inputmode="numeric" pattern="[0-9]*" autocomplete="off" placeholder="Tìm ID" class="w-full pl-4 pr-2 py-2.5 bg-transparent text-[16px] font-medium outline-none placeholder:text-slate-400"
           onkeydown="if(event.key==='Enter')startFetch()">
@@ -426,6 +461,7 @@ body.doc-open .doc-frame-wrap iframe{flex:1;height:100%!important;min-height:0}
         <button type="button" id="searchBtn" onclick="startFetch()" class="h-11 w-12 bg-moon text-white shrink-0 hover:bg-blue-700 flex items-center justify-center">
           <i class="fa-solid fa-magnifying-glass"></i>
         </button>
+      </div>
       </div>
     </div>
   </div>
@@ -517,9 +553,159 @@ body.doc-open .doc-frame-wrap iframe{flex:1;height:100%!important;min-height:0}
 <div id="imgLightbox"><img id="lbImg" alt="" draggable="false"/></div>
 
 <script>
-const AUTH="Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1laWRlbnRpZmllciI6IjNVRzZLT1Q0MUFaS0ZTRzIiLCJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoiM1VHNktPVDQxQVpLRlNHMiIsImh0dHA6Ly9zY2hlbWFzLm1pY3Jvc29mdC5jb20vd3MvMjAwOC8wNi9pZGVudGl0eS9jbGFpbXMvcm9sZSI6Im1lbWJlciIsInVzZXJuYW1lIjoiM1VHNktPVDQxQVpLRlNHMiIsImF2YXRhciI6IjIwMjYvOS85NWQ3MDlhMC05NzU3LTRkNjgtYTE0Ny1kYzgwYzUwZGU4YzcuanBnIiwiZnVsbG5hbWUiOiJOZ-G7jWMgS2jDoW5oIiwiZXhwaXJlcyI6IjE4MjMwMDkwNzgiLCJzZXNzaW9ubG9naW50b2tlbiI6IlUzQ1pXR1NTV1BBTzVMMllDRlk0VEpBTEdKVUM1QVlCIiwibmJmIjoxNzkxNDczMDc4LCJleHAiOjE4MjMwMDkwNzgsImlzcyI6Imh0dHBzOi8vbW9vbi52biIsImF1ZCI6Imh0dHBzOi8vbW9vbi52biJ9.PeO4IBR-W0s1gxo0PnYzttnqThyqpe5vPAEsQs6_1z1KjSgFzYgddVU7G5ITlYxSkm0cSFvYMVX8BXEEjcZnBNaRsGagTJBnlLPO966lghedQvFNyiDHTksYTp9HFWKc-ItGDi9BPGm2IULNsY-2-i1WLXDWj7F7ZytD3TrmR3j8kDeTHauwNI5214Wu5tWkn77V34dTadF1q179iB2xHEfuIP9BgdJf7F1QRwYq1CEmgg-rUkUx9KmkJr8wmnpD10GTt9cYh7-KzUrkm089LfBjvRd-yi8dVTSfnYMioAKB1qN2p0iAitVVZ7GzMU4I2MDW4BDbJi7iW4QQY7KKbg";
-const COURSE="https://courseapi.moon.vn/api", CMS="https://cmsapi.moon.vn/api/admin/cms";
-const COURSE_ID=21907376;
+/* Course profiles — thêm object vào mảng khi có khóa mới; token không log */
+const COURSE_PROFILES=[
+  {
+    id: 21907376,
+    label: 'Ngữ Pháp Toàn Diện',
+    api: 'https://courseapi.moon.vn/api',
+    cms: 'https://cmsapi.moon.vn/api/admin/cms',
+    _t: 'Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1laWRlbnRpZmllciI6IjNVRzZLT1Q0MUFaS0ZTRzIiLCJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoiM1VHNktPVDQxQVpLRlNHMiIsImh0dHA6Ly9zY2hlbWFzLm1pY3Jvc29mdC5jb20vd3MvMjAwOC8wNi9pZGVudGl0eS9jbGFpbXMvcm9sZSI6Im1lbWJlciIsInVzZXJuYW1lIjoiM1VHNktPVDQxQVpLRlNHMiIsImF2YXRhciI6IjIwMjYvOS85NWQ3MDlhMC05NzU3LTRkNjgtYTE0Ny1kYzgwYzUwZGU4YzcuanBnIiwiZnVsbG5hbWUiOiJOZ-G7jWMgS2jDoW5oIiwiZXhwaXJlcyI6IjE4MjMwMDkwNzgiLCJzZXNzaW9ubG9naW50b2tlbiI6IlUzQ1pXR1NTV1BBTzVMMllDRlk0VEpBTEdKVUM1QVlCIiwibmJmIjoxNzkxNDczMDc4LCJleHAiOjE4MjMwMDkwNzgsImlzcyI6Imh0dHBzOi8vbW9vbi52biIsImF1ZCI6Imh0dHBzOi8vbW9vbi52biJ9.PeO4IBR-W0s1gxo0PnYzttnqThyqpe5vPAEsQs6_1z1KjSgFzYgddVU7G5ITlYxSkm0cSFvYMVX8BXEEjcZnBNaRsGagTJBnlLPO966lghedQvFNyiDHTksYTp9HFWKc-ItGDi9BPGm2IULNsY-2-i1WLXDWj7F7ZytD3TrmR3j8kDeTHauwNI5214Wu5tWkn77V34dTadF1q179iB2xHEfuIP9BgdJf7F1QRwYq1CEmgg-rUkUx9KmkJr8wmnpD10GTt9cYh7-KzUrkm089LfBjvRd-yi8dVTSfnYMioAKB1qN2p0iAitVVZ7GzMU4I2MDW4BDbJi7iW4QQY7KKbg'
+  },
+  {
+    id: 21907410,
+    label: 'Từ Vựng - Đọc Hiểu Nâng Cao',
+    api: 'https://courseapi.moon.vn/api',
+    cms: 'https://cmsapi.moon.vn/api/admin/cms',
+    _t: 'Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1laWRlbnRpZmllciI6IjY2MzYxMzk0ODUwODg0MTMxMzEiLCJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoiNjYzNjEzOTQ4NTA4ODQxMzEzMSIsImh0dHA6Ly9zY2hlbWFzLm1pY3Jvc29mdC5jb20vd3MvMjAwOC8wNi9pZGVudGl0eS9jbGFpbXMvcm9sZSI6Im1lbWJlciIsInVzZXJuYW1lIjoiNjYzNjEzOTQ4NTA4ODQxMzEzMSIsImF2YXRhciI6IjIwMjQvOC9iZjBiNjMyNS03NWE3LTQxOWMtODdhYi0wMGZiOTViMzc5YTkuanBnIiwiZnVsbG5hbWUiOiJWw7UgUXXhu5FjIFZp4buHdCIsImV4cGlyZXMiOiIxODIzMTU0MzA3Iiwic2Vzc2lvbmxvZ2ludG9rZW4iOiJFN09FTUVHRTI2UlFQM05GNlJLRjI0Sk1SWVlUTFBMUyIsIm5iZiI6MTc5MTYxODMwNywiZXhwIjoxODIzMTU0MzA3LCJpc3MiOiJodHRwczovL21vb24udm4iLCJhdWQiOiJodHRwczovL21vb24udm4ifQ.AraqKHm0w4pgjgWecuuVphxPSSamo4F2GllVH1YVrwexd_PonOn4yeOQyDMyW5xXKg_uuY0qObGv6ipKHQRNEWn2CsZnrVRKHXDmFgwMPgcw6LVop_lO5IjxQGnA8F0_Y6z7S-L9R2fHGy-fqXIh1MSbH39DG2xr8phhSP8xDlJm7qzZtjWoQd8jHAzgplgrLfHmYcRv3TLAgtRyOE4OHrMH-BfOtBK9dEA5f_N86PhjXBYeaWC0k7zAGjmU1JWq7s4WHhQux6p2Wr-HBpMQ3F-sZvleHkx8gk8PflQr-VgsqYFitETUWLjxjcVuMmPgUNFkBQIMuJ3piGu_q0xgig'
+  }
+];
+
+let ACTIVE_COURSE=0;
+function listValidCourses(){
+  var out=[];
+  var fallbackT='';
+  (COURSE_PROFILES||[]).forEach(function(c){
+    if(!c) return;
+    var t=(c._t||c.token||'').toString().trim();
+    if(t) fallbackT=t;
+  });
+  (COURSE_PROFILES||[]).forEach(function(c,i){
+    if(!c) return;
+    var id=Number(c.id)||0;
+    if(id<=0) return;
+    // accept token field alias; empty token -> reuse first available token
+    var t=(c._t||c.token||'').toString().trim() || fallbackT;
+    if(!t) return;
+    out.push({index:i, id:id, label:c.label||('Khóa '+id), api:c.api, cms:c.cms, _t:t});
+  });
+  return out;
+}
+function currentCourse(){
+  var list=listValidCourses();
+  if(!list.length) return COURSE_PROFILES[0]||{};
+  var hit=list.find(function(x){ return x.index===ACTIVE_COURSE; });
+  if(!hit){ ACTIVE_COURSE=list[0].index; hit=list[0]; }
+  return COURSE_PROFILES[ACTIVE_COURSE]||{};
+}
+function getAuth(){
+  try{
+    const c=currentCourse();
+    let t=(c&&(c._t||c.token))?String(c._t||c.token).trim():'';
+    if(!t){
+      // fallback first profile with token
+      for(var i=0;i<(COURSE_PROFILES||[]).length;i++){
+        var x=COURSE_PROFILES[i];
+        var tt=(x&&(x._t||x.token))?String(x._t||x.token).trim():'';
+        if(tt){ t=tt; break; }
+      }
+    }
+    if(t&&t.indexOf('Bearer')!==0) t='Bearer '+t;
+    return t;
+  }catch(e){ return ''; }
+}
+function getCourseApi(){ return (currentCourse().api)||'https://courseapi.moon.vn/api'; }
+function getCmsApi(){ return (currentCourse().cms)||'https://cmsapi.moon.vn/api/admin/cms'; }
+function getCourseId(){ return Number(currentCourse().id)||0; }
+var COURSE=getCourseApi(), CMS=getCmsApi(), COURSE_ID=getCourseId();
+function refreshCourseAliases(){
+  COURSE=getCourseApi(); CMS=getCmsApi(); COURSE_ID=getCourseId();
+}
+async function switchCourse(idx){
+  var list=listValidCourses();
+  var found=list.find(function(x){ return x.index===Number(idx); });
+  if(!found){
+    if(window.Swal) Swal.fire({icon:'warning',title:'Khóa không hợp lệ',text:'Thiếu id hoặc token',confirmButtonColor:'#0247df'});
+    return;
+  }
+  ACTIVE_COURSE=found.index;
+  refreshCourseAliases();
+  try{ sessionStorage.setItem('moon_active_course', String(ACTIVE_COURSE)); }catch(e){}
+  // clear lesson cache so groups of other course are not reused
+  chCache={};
+  stopAllVideo(true);
+  document.body.classList.remove('video-open','doc-open','mode-full');
+  setModeFull(false);
+  var listEl=document.getElementById('chList');
+  if(listEl){ listEl.innerHTML='<div style="padding:24px;text-align:center;color:#64748b">Đang tải khóa…</div>'; delete listEl.dataset.loaded; }
+  var root=document.getElementById('contentRoot');
+  if(root){ root.classList.add('hidden'); root.innerHTML=''; }
+  var empty=document.getElementById('emptyState');
+  if(empty){ empty.classList.remove('hidden'); empty.style.display='block'; }
+  var ch=document.getElementById('courseHome');
+  if(ch) ch.style.display='block';
+  updateCourseSwitcherUI();
+  closeCoursePicker();
+  setBusy(true);
+  try{
+    await loadCourseHome();
+  }catch(e){
+    if(listEl) listEl.innerHTML='<div style="padding:28px;text-align:center;color:#dc2626">'+String((e&&e.message)||e)+'</div>';
+    if(window.Swal) Swal.fire({icon:'error',title:'Không tải được khóa',text:String((e&&e.message)||e),confirmButtonColor:'#0247df'});
+  }finally{
+    setBusy(false);
+    if(empty){ empty.classList.remove('hidden'); empty.style.display='block'; }
+    if(ch) ch.style.display='block';
+  }
+}
+function updateCourseSwitcherUI(){
+  function s(v){
+    try{ return (typeof esc==='function')?esc(v):String(v==null?'':v).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/"/g,'&quot;'); }
+    catch(e){ return String(v||''); }
+  }
+  var btn=document.getElementById('courseSwitchBtn');
+  var list=[];
+  try{ list=listValidCourses(); }catch(e){ console.warn(e); list=[]; }
+  var c={};
+  try{ c=currentCourse()||{}; }catch(e){}
+  if(btn){
+    var label=(c&&c.label)?c.label:('ID '+(c&&c.id||''));
+    if(!label) label='Khóa học';
+    btn.innerHTML='<i class="fa-solid fa-graduation-cap"></i><span class="cs-label">'+s(label)+'</span><i class="fa-solid fa-chevron-down cs-chevron"></i>';
+    btn.title=label+' ('+list.length+' khóa)';
+  }
+  var menu=document.getElementById('coursePickerList');
+  if(!menu) return;
+  if(!list.length){
+    menu.innerHTML='<div class="course-pick-empty">Chưa có khóa hợp lệ (cần id &gt; 0 và token).</div>';
+    return;
+  }
+  menu.innerHTML=list.map(function(x){
+    var active=x.index===ACTIVE_COURSE?' active':'';
+    return '<button type="button" class="course-pick-item'+active+'" onclick="switchCourse('+x.index+')">'
+      +'<span class="cp-name">'+s(x.label)+'</span>'
+      +'<span class="cp-id">#'+x.id+'</span>'
+      +(active?'<i class="fa-solid fa-check"></i>':'')
+      +'</button>';
+  }).join('');
+}
+function toggleCoursePicker(){
+  var p=document.getElementById('coursePicker');
+  if(!p) return;
+  updateCourseSwitcherUI();
+  p.classList.toggle('open');
+}
+function closeCoursePicker(){
+  var p=document.getElementById('coursePicker');
+  if(p) p.classList.remove('open');
+}
+document.addEventListener('click', function(e){
+  var wrap=document.getElementById('courseSwitchWrap');
+  if(wrap && !wrap.contains(e.target)) closeCoursePicker();
+});
+
+
+
 const CH_ICON={
   flash:'https://rescdn.moon.vn/assets/cdn-moon/assets/assets/icons/ic_flash_card_active.svg',
   video:'https://rescdn.moon.vn/assets/cdn-moon/assets/assets/icons/ic_lesson_video_active.svg',
@@ -585,25 +771,59 @@ document.addEventListener('DOMContentLoaded',()=>{
   setInterval(updateToTopBtn, 800);
 });
 
-function headers(){return{Authorization:AUTH,Accept:'application/json',Referer:'https://moon.vn/',Origin:'https://moon.vn'};}
+function headers(){
+  // Chỉ auth + accept — không Referer/Origin/session phụ để giảm footprint
+  return {Authorization:getAuth(),Accept:'application/json'};
+}
+/* Chỉ GET lấy nội dung. Không POST/PUT tiến độ, không gọi endpoint ghi dấu vết học. */
+var TRACK_BLOCK=/\/(Progress|Tracking|History|LogView|MarkAs|MarkLesson|UpdateProgress|SaveProgress|ViewCount|UserActivity|ClickLog|RecordView)\b/i;
 async function api(url){
   try{
-    const r=await fetch(url,{headers:headers(),mode:'cors'});
+    refreshCourseAliases();
+    var u=String(url||'');
+    if(TRACK_BLOCK.test(u)){
+      console.warn('[moon] blocked tracking endpoint');
+      return {_err:'blocked'};
+    }
+    // GET only — server may still see the request, but we never write progress/activity
+    const r=await fetch(u,{
+      method:'GET',
+      headers:headers(),
+      mode:'cors',
+      credentials:'omit',   // không gửi cookie phiên Moon
+      cache:'no-store',
+      referrerPolicy:'no-referrer',
+      keepalive:false
+    });
     if(r.status===401||r.status===403)return{_err:'auth'};
     if(!r.ok)return{_err:'http'};
     return await r.json();
   }catch(e){return{_err:'net'};}
 }
+// Cấm ghi hoạt động qua API
+async function apiPost(){ return {_err:'blocked'}; }
+async function apiWrite(){ return {_err:'blocked'}; }
+
 
 function setBusy(on){
   if(on) stopAllVideo(true);
   document.getElementById('skeleton').classList.toggle('hidden',!on);
+  const empty=document.getElementById('emptyState');
+  const root=document.getElementById('contentRoot');
   if(on){
-    const empty=document.getElementById('emptyState');
-    empty.classList.add('hidden');
-    empty.style.display='none';
+    if(empty){ empty.classList.add('hidden'); empty.style.display='none'; }
+  }else{
+    // restore course home when not viewing a lesson
+    const viewing=root && !root.classList.contains('hidden') && (root.innerHTML||'').trim();
+    if(!viewing && empty){
+      empty.classList.remove('hidden');
+      empty.style.display='block';
+      const ch=document.getElementById('courseHome');
+      if(ch) ch.style.display='block';
+    }
   }
-  document.getElementById('searchBtn').disabled=on;
+  const sb=document.getElementById('searchBtn');
+  if(sb) sb.disabled=!!on;
 }
 function clearInput(){
   const inp=document.getElementById('idInput');
@@ -662,7 +882,13 @@ function goHome(){
   if(window.hls){try{hls.destroy();}catch(e){} hls=null;}
   loadHistory();
   scrollMainTop();
-  if(!document.getElementById('chList').dataset.loaded) loadCourseHome();
+  if(!document.getElementById('chList').dataset.loaded) try{
+    var saved=sessionStorage.getItem('moon_active_course');
+    if(saved!=null && !isNaN(Number(saved))) ACTIVE_COURSE=Number(saved);
+  }catch(e){}
+  refreshCourseAliases();
+  updateCourseSwitcherUI();
+  loadCourseHome();
 }
 function scrollMainTop(){
   if(typeof scrollToTopAll==='function') scrollToTopAll();
@@ -700,17 +926,23 @@ async function startFetch(custom){
   }finally{setBusy(false);}
 }
 
+function normMcKey(k){
+  // only keep A-D letters; drop bookId / numeric noise
+  const s=String(k==null?'':k).toUpperCase().replace(/[^A-D]/g,'');
+  return s;
+}
 function questionCard(o){
   const sec=o.secTitle?`<div class="sec-inline">${o.secTitle}</div>`:'';
   const order=o.showOrder&&o.order!=null?`<b>${o.order}.</b> `:'';
   let mid='';
   const t=Number(o.typeID)||0;
-  const keyStr=(o.key&&String(o.key).trim())||'';
+  const keyRaw=(o.key&&String(o.key).trim())||'';
+  const keyStr=t===0?normMcKey(keyRaw):keyRaw;
   if(t===0){
     mid=['A','B','C','D'].map(L=>{
       const h=o[L.toLowerCase()]; if(!h)return'';
-      const ok=keyStr&&keyStr.toUpperCase()===L;
-      return `<div class="opt-row${ok?' correct':''}"><span class="opt-key">${L}.</span><span>${h}</span></div>`;
+      const ok=keyStr && keyStr.indexOf(L)>=0;
+      return `<div class="opt-row${ok?' correct':''}"><span class="opt-key">${L}.</span><span class="opt-val">${h}</span></div>`;
     }).join('');
     if(mid)mid=`<div class="math-body pt-1">${mid}</div>`;
   }else if(t===2&&o.plans&&o.plans.length){
@@ -722,7 +954,7 @@ function questionCard(o){
     const fk=(o.fillKey&&String(o.fillKey).trim())||keyStr;
     if(fk) mid=`<div class="pt-2"><span class="inline-block px-3 py-1.5 border border-blue-200 rounded-md text-blue-600 font-bold">${esc(fk)}</span></div>`;
   }
-  const ansLabel=(t===1||!keyStr)?'<span></span>':`<span class="ans-label">Đáp án ${esc(keyStr)}</span>`;
+  const ansLabel=(t===1||!keyStr)?'<span></span>':(t===0?`<span class="ans-label">Đáp án ${esc(keyStr)}</span>`:`<span class="ans-label">Đáp án ${esc(keyStr)}</span>`);
   const qid=o.bookId!=null?`<span class="qid">[${o.bookId}]</span>`:'';
   const vidBtn=o.isVideo?`<button type="button" onclick="playVideo('${o.bookId||o.idLabel}')"><i class="fa-solid fa-circle-play"></i> Video lời giải</button>`:'';
   const toolbar=o.hideToolbar?'':`<div class="q-toolbar">
@@ -884,7 +1116,8 @@ function renderGrid(readings,keys,title){
         html+=`<div class="${gcls}">`;
         chunk.forEach(q=>{
           const ord=q.order!=null?q.order:'';
-          const k=(q.key&&String(q.key).trim())||keys[q.questionId]||'-';
+          let k=(q.key&&String(q.key).trim())||keys[q.questionId]||'-';
+          if(typeof normMcKey==='function'){ const nk=normMcKey(k); if(nk) k=nk; }
           const domId='q-p'+p+'-'+ord+'-'+(q.questionId||q.bookId||'x');
           html+=`<button type="button" class="g-btn" onclick="goQ('${domId}')">${ord}. ${esc(k)}</button>`;
         });
@@ -1107,9 +1340,9 @@ document.getElementById('imgLightbox').addEventListener('wheel',e=>{e.preventDef
 
 function esc(s){if(s==null)return'';return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
 
-function saveHistory(id){let h=JSON.parse(localStorage.getItem('moon_u_hist')||'[]').filter(x=>x!==id);h.unshift(id);if(h.length>24)h=h.slice(0,24);localStorage.setItem('moon_u_hist',JSON.stringify(h));}
+function saveHistory(id){let h=JSON.parse(localStorage.getItem('moon_u_hist')||'[]').filter(x=>x!==id);h.unshift(id);if(h.length>24)h=h.slice(0,24);/* hist disabled */;}
 function loadHistory(){
-  const h=JSON.parse(localStorage.getItem('moon_u_hist')||'[]');
+  const h=[]; /* privacy */ const _ignored=localStorage.getItem('moon_u_hist');
   const box=document.getElementById('historyBox');
   const tags=document.getElementById('historyTags');
   if(!h.length){box.classList.add('hidden');return;}
@@ -1120,7 +1353,7 @@ function loadHistory(){
     <button type="button" class="x" onclick="event.stopPropagation();rmHist('${id}')">&times;</button>
   </div>`).join('');
 }
-function rmHist(id){localStorage.setItem('moon_u_hist',JSON.stringify(JSON.parse(localStorage.getItem('moon_u_hist')||'[]').filter(x=>x!==id)));loadHistory();}
+function rmHist(id){/* hist disabled */;loadHistory();}
 function clearHistory(){localStorage.removeItem('moon_u_hist');loadHistory();}
 
 window.addEventListener('resize',()=>{
@@ -1368,8 +1601,12 @@ async function loadCourseHome(){
   const list=document.getElementById('chList');
   if(!list) return;
   try{
-    const data=await api(COURSE+'/Course/CourseDetail/'+COURSE_ID);
-    if(!data||data._err) throw new Error('Không tải được khóa học');
+    refreshCourseAliases();
+    const cid=getCourseId();
+    if(!cid) throw new Error('Chưa chọn / cấu hình khóa học (thiếu id)');
+    if(!getAuth()) throw new Error('Thiếu token của khóa học');
+    const data=await api(getCourseApi()+'/Course/CourseDetail/'+cid);
+    if(!data||data._err) throw new Error('Không tải được khóa học (id '+cid+') — kiểm tra token');
     document.getElementById('chTitle').textContent=data.name||'';
     document.getElementById('chTeacher').textContent=data.teacherName||data.fullName||'';
     document.getElementById('chSum').textContent=(data.sumDeThi||0)+' bài';
@@ -1382,7 +1619,7 @@ async function loadCourseHome(){
     const results=await Promise.all(groups.map(async g=>{
       if(chCache[g.id]) return {group:g, lessons:chCache[g.id]};
       try{
-        const lessons=await api(COURSE+'/Course/LessonInGroup/'+g.id);
+        const lessons=await api(getCourseApi()+'/Course/LessonInGroup/'+g.id);
         const arr=Array.isArray(lessons)?lessons:[];
         chCache[g.id]=arr;
         return {group:g, lessons:arr};
@@ -1416,40 +1653,45 @@ async function loadCourseHome(){
     const active=document.querySelector('#chFilters .ch-tab.active');
     applyCourseFilter((active&&active.getAttribute('data-filter'))||'all');
     if(typeof updateToTopBtn==='function') setTimeout(updateToTopBtn, 300);
+    const empty=document.getElementById('emptyState');
+    if(empty){ empty.classList.remove('hidden'); empty.style.display='block'; }
+    const ch=document.getElementById('courseHome');
+    if(ch) ch.style.display='block';
   }catch(e){
     list.innerHTML='<div style="padding:28px;text-align:center;color:#dc2626;font-size:14px">'+esc(e.message||String(e))+'</div>';
+    const empty=document.getElementById('emptyState');
+    if(empty){ empty.classList.remove('hidden'); empty.style.display='block'; }
+    const ch=document.getElementById('courseHome');
+    if(ch) ch.style.display='block';
   }
 }
 
 async function openCourseLesson(btn){
+  refreshCourseAliases();
   const id=btn.getAttribute('data-id');
   const page=(btn.getAttribute('data-page')||'').toLowerCase();
   const name=btn.getAttribute('data-name')||'';
   if(!id) return;
+
+  // Tài liệu: mở tab mới ngay, không loading / không ẩn trang chủ
+  if(page.includes('file')||page.includes('document')||page.includes('open')||page.includes('pdf')){
+    await openCourseDoc(id, name);
+    return;
+  }
+
   setBusy(true);
   document.getElementById('emptyState').classList.add('hidden');
   document.getElementById('emptyState').style.display='none';
   document.getElementById('contentRoot').classList.add('hidden');
   setModeFull(false);
   try{
-    // video lesson
     if(page.includes('video')||page.includes('videolesson')||page.includes('live')){
       await openCourseVideo(id, name);
-    }
-    // test / exercise offline or online
-    else if(page.includes('stest')||page.includes('test')||page.includes('exercise')){
+    }else if(page.includes('stest')||page.includes('test')||page.includes('exercise')){
       await openCourseTest(id, name);
-    }
-    // vocabulary / flash - show as open file or message
-    else if(page.includes('vocab')||page.includes('flash')){
+    }else if(page.includes('vocab')||page.includes('flash')){
       await openCourseFlash(id, name);
-    }
-    // file / document
-    else if(page.includes('file')||page.includes('document')||page.includes('open')){
-      await openCourseDoc(id, name);
-    }
-    else {
-      // try video first, then test, then doc
+    }else{
       try{ await openCourseVideo(id, name); }
       catch(e1){
         try{ await openCourseTest(id, name); }
@@ -1464,6 +1706,7 @@ async function openCourseLesson(btn){
     setBusy(false);
   }
 }
+
 
 
 
@@ -2117,47 +2360,22 @@ window.fcMatchClick=function(btn){
 
 
 async function openCourseDoc(lessonId, name){
-  stopAllVideo(true);
-  const res=await api(COURSE+'/course/OpenLesson/'+lessonId);
-  if(!res||res._err) throw new Error('Không mở được tài liệu');
-  const data=res.data||res;
-  const url=data.nextUrl||data.fileUrl||data.url||'';
-  const openType=(data.openType||'').toLowerCase();
-  const title=data.lessonName||name||('Tài liệu '+lessonId);
-  const root=document.getElementById('contentRoot');
-
-  if(url && (openType==='pdf' || String(url).toLowerCase().includes('.pdf'))){
-    document.body.classList.add('doc-open');
-    root.innerHTML=`
-      <div class="view-head">
-        <button type="button" class="back-btn" onclick="goHome()" title="Quay lại"><i class="fa-solid fa-arrow-left"></i></button>
-        <h2>${esc(title)}</h2>
-        <div class="dl-wrap" style="display:flex;gap:6px">
-          <button type="button" class="dl-btn" onclick="toggleDocFs()" id="docFsBtn" title="Toàn màn hình"><i class="fa-solid fa-expand"></i></button>
-          <a class="dl-btn" href="${esc(url)}" target="_blank" rel="noopener" title="Tab mới"><i class="fa-solid fa-external-link-alt"></i></a>
-        </div>
-      </div>
-      <div class="doc-frame-wrap" id="docFrameWrap">
-        <div class="doc-fs-bar">
-          <button type="button" onclick="toggleDocFs()"><i class="fa-solid fa-compress"></i> Thoát toàn màn hình</button>
-          <span style="font-size:13px;opacity:.85;flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${esc(title)}</span>
-          <button type="button" onclick="goHome()"><i class="fa-solid fa-arrow-left"></i> Về khóa học</button>
-        </div>
-        <iframe src="${esc(url)}" title="${esc(title)}"></iframe>
-      </div>`;
-  }else if(url){
-    document.body.classList.remove('doc-open');
-    root.innerHTML=viewHead(title)+`<div class="panel p-6 text-center">
-      <p class="font-bold text-slate-800 mb-3">${esc(title)}</p>
-      <a href="${esc(url)}" target="_blank" rel="noopener" class="inline-flex items-center gap-2 px-4 py-2.5 bg-moon text-white rounded-lg font-medium">Mở tài liệu <i class="fa-solid fa-external-link-alt"></i></a>
-    </div>`;
-  }else{
-    document.body.classList.remove('doc-open');
-    root.innerHTML=viewHead(title)+`<div class="panel p-6 text-center text-slate-500">Chưa có tài liệu cho bài này.</div>`;
+  // Lấy URL rồi mở tab mới — không skeleton, không ẩn trang chủ, không goHome
+  try{
+    const res=await api(getCourseApi()+'/course/OpenLesson/'+lessonId);
+    if(!res||res._err) throw new Error('Không mở được tài liệu');
+    const data=res.data||res;
+    const url=data.nextUrl||data.fileUrl||data.url||'';
+    if(!url) throw new Error('Chưa có liên kết tài liệu');
+    const a=document.createElement('a');
+    a.href=url; a.target='_blank'; a.rel='noopener noreferrer';
+    document.body.appendChild(a); a.click(); a.remove();
+  }catch(e){
+    if(window.Swal) Swal.fire({icon:'error',title:'Tài liệu',text:e.message||String(e),confirmButtonColor:'#0247df'});
+    else alert(e.message||e);
   }
-  root.classList.remove('hidden');
-  finish(root);
 }
+
 window.toggleDocFs=function(){
   const w=document.getElementById('docFrameWrap');
   if(!w) return;
